@@ -1,0 +1,83 @@
+class Song
+{
+  title;
+  int duration;
+  int position;
+}
+
+class HAS
+{
+  singleton;
+  1 -> * Room;
+  1 -> * Artist;
+  1 -> * Album;
+  1 -> * Playlist;
+}
+
+class Room
+{
+  name;
+  int volume;
+  boolean mute;
+}
+
+class Artist
+{
+  name;
+  * -- * Album;
+}
+
+class Album
+{
+  name;
+  genre;
+  Date releaseDate;
+  1 -- * Song;
+}
+
+class Playlist
+{
+  name;
+  * -> * Song;
+}
+
+//$?[End_of_model]$?
+
+class Song
+{
+  position 109 293 109 92;
+}
+
+class HAS
+{
+  position 268 32 109 41;
+  position.association HAS__Room 109,34 0,6;
+  position.association HAS__Playlist 0,10 112,10;
+  position.association Artist__HAS 25,41 51,0;
+  position.association Album__HAS 81,41 65,0;
+}
+
+class Room
+{
+  position 543 101 121 92;
+}
+
+class Artist
+{
+  position 212 144 112 58;
+  position.association Artist__HAS 81,0 15,41;
+  position.association Album__Artist 112,27 0,18;
+}
+
+class Album
+{
+  position 347 209 146 92;
+  position.association Album__Artist 0,37 112,56;
+  position.association Album__Song 0,60 109,10;
+}
+
+class Playlist
+{
+  position 41 51 112 58;
+  position.association Playlist__Song 67,58 27,0;
+}

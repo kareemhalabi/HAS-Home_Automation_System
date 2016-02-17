@@ -16,7 +16,7 @@ class HAS
 
 class Room
 {
-  name;
+  name;//a
   int volume;
   boolean mute;
 }

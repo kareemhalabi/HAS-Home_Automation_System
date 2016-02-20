@@ -88,50 +88,39 @@ class Artist
     return 0;
   }
 
+  public function addAlbumVia($aName, $aGenre, $aReleaseDate)
+  {
+    return new Album($aName, $aGenre, $aReleaseDate, $this);
+  }
+
   public function addAlbum($aAlbum)
   {
     $wasAdded = false;
     if ($this->indexOfAlbum($aAlbum) !== -1) { return false; }
-    $this->albums[] = $aAlbum;
-    if ($aAlbum->indexOfArtist($this) != -1)
+    $existingArtist = $aAlbum->getArtist();
+    $isNewArtist = $existingArtist != null && $this !== $existingArtist;
+    if ($isNewArtist)
     {
-      $wasAdded = true;
+      $aAlbum->setArtist($this);
     }
     else
     {
-      $wasAdded = $aAlbum->addArtist($this);
-      if (!$wasAdded)
-      {
-        array_pop($this->albums);
-      }
+      $this->albums[] = $aAlbum;
     }
+    $wasAdded = true;
     return $wasAdded;
   }
 
   public function removeAlbum($aAlbum)
   {
     $wasRemoved = false;
-    if ($this->indexOfAlbum($aAlbum) == -1)
+    //Unable to remove aAlbum, as it must always have a artist
+    if ($this !== $aAlbum->getArtist())
     {
-      return $wasRemoved;
-    }
-
-    $oldIndex = $this->indexOfAlbum($aAlbum);
-    unset($this->albums[$oldIndex]);
-    if ($aAlbum->indexOfArtist($this) == -1)
-    {
+      unset($this->albums[$this->indexOfAlbum($aAlbum)]);
+      $this->albums = array_values($this->albums);
       $wasRemoved = true;
     }
-    else
-    {
-      $wasRemoved = $aAlbum->removeArtist($this);
-      if (!$wasRemoved)
-      {
-        $this->albums[$oldIndex] = $aAlbum;
-        ksort($this->albums);
-      }
-    }
-    $this->albums = array_values($this->albums);
     return $wasRemoved;
   }
 
@@ -174,11 +163,9 @@ class Artist
 
   public function delete()
   {
-    $copyOfAlbums = $this->albums;
-    $this->albums = array();
-    foreach ($copyOfAlbums as $aAlbum)
+    foreach ($this->albums as $aAlbum)
     {
-      $aAlbum->removeArtist($this);
+      $aAlbum->delete();
     }
   }
 

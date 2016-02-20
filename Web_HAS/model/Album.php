@@ -16,19 +16,23 @@ class Album
 
   //Album Associations
   private $songs;
-  private $artists;
+  private $artist;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aName, $aGenre, $aReleaseDate)
+  public function __construct($aName, $aGenre, $aReleaseDate, $aArtist)
   {
     $this->name = $aName;
     $this->genre = $aGenre;
     $this->releaseDate = $aReleaseDate;
     $this->songs = array();
-    $this->artists = array();
+    $didAddArtist = $this->setArtist($aArtist);
+    if (!$didAddArtist)
+    {
+      throw new Exception("Unable to create album due to artist");
+    }
   }
 
   //------------------------
@@ -115,55 +119,25 @@ class Album
     return $index;
   }
 
-  public function getArtist_index($index)
+  public function getArtist()
   {
-    $aArtist = $this->artists[$index];
-    return $aArtist;
+    return $this->artist;
   }
 
-  public function getArtists()
+  public function isNumberOfSongsValid()
   {
-    $newArtists = $this->artists;
-    return $newArtists;
-  }
-
-  public function numberOfArtists()
-  {
-    $number = count($this->artists);
-    return $number;
-  }
-
-  public function hasArtists()
-  {
-    $has = $this->numberOfArtists() > 0;
-    return $has;
-  }
-
-  public function indexOfArtist($aArtist)
-  {
-    $wasFound = false;
-    $index = 0;
-    foreach($this->artists as $artist)
-    {
-      if ($artist->equals($aArtist))
-      {
-        $wasFound = true;
-        break;
-      }
-      $index += 1;
-    }
-    $index = $wasFound ? $index : -1;
-    return $index;
+    $isValid = $this->numberOfSongs() >= self::minimumNumberOfSongs();
+    return $isValid;
   }
 
   public static function minimumNumberOfSongs()
   {
-    return 0;
+    return 1;
   }
 
-  public function addSongVia($aTitle, $aDuration, $aPosition)
+  public function addSongVia($aName, $aDuration, $aPosition)
   {
-    return new Song($aTitle, $aDuration, $aPosition, $this);
+    return new Song($aName, $aDuration, $aPosition, $this);
   }
 
   public function addSong($aSong)
@@ -172,6 +146,12 @@ class Album
     if ($this->indexOfSong($aSong) !== -1) { return false; }
     $existingAlbum = $aSong->getAlbum();
     $isNewAlbum = $existingAlbum != null && $this !== $existingAlbum;
+
+    if ($isNewAlbum && $existingAlbum->numberOfSongs() <= self::minimumNumberOfSongs())
+    {
+      return $wasAdded;
+    }
+
     if ($isNewAlbum)
     {
       $aSong->setAlbum($this);
@@ -188,12 +168,20 @@ class Album
   {
     $wasRemoved = false;
     //Unable to remove aSong, as it must always have a album
-    if ($this !== $aSong->getAlbum())
+    if ($this === $aSong->getAlbum())
     {
-      unset($this->songs[$this->indexOfSong($aSong)]);
-      $this->songs = array_values($this->songs);
-      $wasRemoved = true;
+      return $wasRemoved;
     }
+
+    //album already at minimum (1)
+    if ($this->numberOfSongs() <= self::minimumNumberOfSongs())
+    {
+      return $wasRemoved;
+    }
+
+    unset($this->songs[$this->indexOfSong($aSong)]);
+    $this->songs = array_values($this->songs);
+    $wasRemoved = true;
     return $wasRemoved;
   }
 
@@ -229,88 +217,23 @@ class Album
     return $wasAdded;
   }
 
-  public static function minimumNumberOfArtists()
+  public function setArtist($aArtist)
   {
-    return 0;
-  }
-
-  public function addArtist($aArtist)
-  {
-    $wasAdded = false;
-    if ($this->indexOfArtist($aArtist) !== -1) { return false; }
-    $this->artists[] = $aArtist;
-    if ($aArtist->indexOfAlbum($this) != -1)
+    $wasSet = false;
+    if ($aArtist == null)
     {
-      $wasAdded = true;
+      return $wasSet;
     }
-    else
+    
+    $existingArtist = $this->artist;
+    $this->artist = $aArtist;
+    if ($existingArtist != null && $existingArtist != $aArtist)
     {
-      $wasAdded = $aArtist->addAlbum($this);
-      if (!$wasAdded)
-      {
-        array_pop($this->artists);
-      }
+      $existingArtist->removeAlbum($this);
     }
-    return $wasAdded;
-  }
-
-  public function removeArtist($aArtist)
-  {
-    $wasRemoved = false;
-    if ($this->indexOfArtist($aArtist) == -1)
-    {
-      return $wasRemoved;
-    }
-
-    $oldIndex = $this->indexOfArtist($aArtist);
-    unset($this->artists[$oldIndex]);
-    if ($aArtist->indexOfAlbum($this) == -1)
-    {
-      $wasRemoved = true;
-    }
-    else
-    {
-      $wasRemoved = $aArtist->removeAlbum($this);
-      if (!$wasRemoved)
-      {
-        $this->artists[$oldIndex] = $aArtist;
-        ksort($this->artists);
-      }
-    }
-    $this->artists = array_values($this->artists);
-    return $wasRemoved;
-  }
-
-  public function addArtistAt($aArtist, $index)
-  {  
-    $wasAdded = false;
-    if($this->addArtist($aArtist))
-    {
-      if($index < 0 ) { $index = 0; }
-      if($index > $this->numberOfArtists()) { $index = $this->numberOfArtists() - 1; }
-      array_splice($this->artists, $this->indexOfArtist($aArtist), 1);
-      array_splice($this->artists, $index, 0, array($aArtist));
-      $wasAdded = true;
-    }
-    return $wasAdded;
-  }
-
-  public function addOrMoveArtistAt($aArtist, $index)
-  {
-    $wasAdded = false;
-    if($this->indexOfArtist($aArtist) !== -1)
-    {
-      if($index < 0 ) { $index = 0; }
-      if($index > $this->numberOfArtists()) { $index = $this->numberOfArtists() - 1; }
-      array_splice($this->artists, $this->indexOfArtist($aArtist), 1);
-      array_splice($this->artists, $index, 0, array($aArtist));
-      $wasAdded = true;
-    } 
-    else 
-    {
-      $wasAdded = $this->addArtistAt($aArtist, $index);
-    }
-    return $wasAdded;
+    $this->artist->addAlbum($this);
+    $wasSet = true;
+    return $wasSet;
   }
 
   public function equals($compareTo)
@@ -324,12 +247,9 @@ class Album
     {
       $aSong->delete();
     }
-    $copyOfArtists = $this->artists;
-    $this->artists = array();
-    foreach ($copyOfArtists as $aArtist)
-    {
-      $aArtist->removeAlbum($this);
-    }
+    $placeholderArtist = $this->artist;
+    $this->artist = null;
+    $placeholderArtist->removeAlbum($this);
   }
 
 }

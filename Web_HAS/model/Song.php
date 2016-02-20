@@ -10,7 +10,7 @@ class Song
   //------------------------
 
   //Song Attributes
-  private $title;
+  private $name;
   private $duration;
   private $position;
 
@@ -21,9 +21,9 @@ class Song
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aTitle, $aDuration, $aPosition, $aAlbum)
+  public function __construct($aName, $aDuration, $aPosition, $aAlbum)
   {
-    $this->title = $aTitle;
+    $this->name = $aName;
     $this->duration = $aDuration;
     $this->position = $aPosition;
     $didAddAlbum = $this->setAlbum($aAlbum);
@@ -37,10 +37,10 @@ class Song
   // INTERFACE
   //------------------------
 
-  public function setTitle($aTitle)
+  public function setName($aName)
   {
     $wasSet = false;
-    $this->title = $aTitle;
+    $this->name = $aName;
     $wasSet = true;
     return $wasSet;
   }
@@ -61,9 +61,9 @@ class Song
     return $wasSet;
   }
 
-  public function getTitle()
+  public function getName()
   {
-    return $this->title;
+    return $this->name;
   }
 
   public function getDuration()
@@ -84,16 +84,27 @@ class Song
   public function setAlbum($aAlbum)
   {
     $wasSet = false;
+    //Must provide album to song
     if ($aAlbum == null)
     {
       return $wasSet;
     }
-    
+
+    if ($this->album != null && $this->album->numberOfSongs() <= Album::minimumNumberOfSongs())
+    {
+      return $wasSet;
+    }
+
     $existingAlbum = $this->album;
     $this->album = $aAlbum;
     if ($existingAlbum != null && $existingAlbum != $aAlbum)
     {
-      $existingAlbum->removeSong($this);
+      $didRemove = $existingAlbum->removeSong($this);
+      if (!$didRemove)
+      {
+        $this->album = $existingAlbum;
+        return $wasSet;
+      }
     }
     $this->album->addSong($this);
     $wasSet = true;

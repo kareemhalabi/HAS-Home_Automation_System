@@ -20,6 +20,7 @@ class HAS
   private $artists;
   private $albums;
   private $playlists;
+  private $songs;
 
   //------------------------
   // CONSTRUCTOR
@@ -31,6 +32,7 @@ class HAS
     $this->artists = array();
     $this->albums = array();
     $this->playlists = array();
+    $this->songs = array();
   }
 
   public static function getInstance()
@@ -200,6 +202,47 @@ class HAS
     foreach($this->playlists as $playlist)
     {
       if ($playlist->equals($aPlaylist))
+      {
+        $wasFound = true;
+        break;
+      }
+      $index += 1;
+    }
+    $index = $wasFound ? $index : -1;
+    return $index;
+  }
+
+  public function getSong_index($index)
+  {
+    $aSong = $this->songs[$index];
+    return $aSong;
+  }
+
+  public function getSongs()
+  {
+    $newSongs = $this->songs;
+    return $newSongs;
+  }
+
+  public function numberOfSongs()
+  {
+    $number = count($this->songs);
+    return $number;
+  }
+
+  public function hasSongs()
+  {
+    $has = $this->numberOfSongs() > 0;
+    return $has;
+  }
+
+  public function indexOfSong($aSong)
+  {
+    $wasFound = false;
+    $index = 0;
+    foreach($this->songs as $song)
+    {
+      if ($song->equals($aSong))
       {
         $wasFound = true;
         break;
@@ -442,6 +485,64 @@ class HAS
     return $wasAdded;
   }
 
+  public static function minimumNumberOfSongs()
+  {
+    return 0;
+  }
+
+  public function addSong($aSong)
+  {
+    $wasAdded = false;
+    if ($this->indexOfSong($aSong) !== -1) { return false; }
+    $this->songs[] = $aSong;
+    $wasAdded = true;
+    return $wasAdded;
+  }
+
+  public function removeSong($aSong)
+  {
+    $wasRemoved = false;
+    if ($this->indexOfSong($aSong) != -1)
+    {
+      unset($this->songs[$this->indexOfSong($aSong)]);
+      $this->songs = array_values($this->songs);
+      $wasRemoved = true;
+    }
+    return $wasRemoved;
+  }
+
+  public function addSongAt($aSong, $index)
+  {  
+    $wasAdded = false;
+    if($this->addSong($aSong))
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfSongs()) { $index = $this->numberOfSongs() - 1; }
+      array_splice($this->songs, $this->indexOfSong($aSong), 1);
+      array_splice($this->songs, $index, 0, array($aSong));
+      $wasAdded = true;
+    }
+    return $wasAdded;
+  }
+
+  public function addOrMoveSongAt($aSong, $index)
+  {
+    $wasAdded = false;
+    if($this->indexOfSong($aSong) !== -1)
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfSongs()) { $index = $this->numberOfSongs() - 1; }
+      array_splice($this->songs, $this->indexOfSong($aSong), 1);
+      array_splice($this->songs, $index, 0, array($aSong));
+      $wasAdded = true;
+    } 
+    else 
+    {
+      $wasAdded = $this->addSongAt($aSong, $index);
+    }
+    return $wasAdded;
+  }
+
   public function equals($compareTo)
   {
     return $this == $compareTo;
@@ -453,6 +554,7 @@ class HAS
     $this->artists = array();
     $this->albums = array();
     $this->playlists = array();
+    $this->songs = array();
   }
 
 }

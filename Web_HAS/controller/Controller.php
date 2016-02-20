@@ -1,7 +1,10 @@
 <?php
 require_once (__DIR__.'/../model/Album.php');
 require_once (__DIR__.'/../model/Artist.php');
+require_once (__DIR__.'/../model/Song.php');
 require_once (__DIR__.'/../model/HAS.php');
+require_once (__DIR__.'/../model/Playlist.php');
+require_once (__DIR__.'/../model/Room.php');
 require_once (__DIR__.'/../persistence/PersistenceHAS.php');
 
 class Controller{
@@ -10,7 +13,20 @@ class Controller{
 		
 	}
 	
-	public function createAlbum($albumName, $genre, $releaseDate) {
+	public function createAlbum($albumName, $genre, $releaseDate, $aArtist) {
+		$pm = new PersistenceHAS();
+		$hm = $pm->loadDataFromStore();
+		if ($aArtist == null) {
+			throw new Exception ( "Artist does not exist! " );
+		} else {
+			$myArtist = NULL;
+			foreach ( $hm->getArtists () as $artist ) {
+				if (strcmp ( $artist->getName (), $aArtist ) == 0) {
+					$myArtist = $artist;
+					break;
+				}
+			}
+		}
 		if ($albumName == null || strlen($albumName) == 0){
 			throw new Exception ("Album name cannot be empty! ");
 		}else if ($genre == null || strlen($genre) == 0){
@@ -21,9 +37,61 @@ class Controller{
 			$pm = new PersistenceHAS();
 			$hm = $pm -> loadDataFromStore();
 			
-			$album = new Album ($albumName, $genre, $releaseDate);
+			$album = new Album ($albumName, $genre, $releaseDate, $artist);
 			$hm -> addAlbum($album);
 			
+			$pm->writeDataToStore($hm);
+		}
+	}
+	
+	public function createSong($songName, $duration, $position, $aAlbum){
+		$pm = new PersistenceHAS();
+		$hm = $pm->loadDataFromStore();
+		if ($aAlbum == null) {
+			throw new Exception ( "Album does not exist! " );
+		} else {
+			$myAlbum = NULL;
+			foreach ( $hm->getAlbums () as $album ) {
+				if (strcmp ( $album->getName (), $aAlbum ) == 0) {
+					$myAlbum = $album;
+					break;
+				}
+			}
+		}
+		
+		if ($songName == null || strlen($songName) == 0){
+			throw new Exception ("Song name cannot be empty! ");
+		}
+		else if($duration <=0 || $duration == null){
+			throw new Exception ("Duration needs to be greater than 0! ");
+		}
+		else if ($position <=0 || $position == null){
+			throw new Exception ("Position needs to be greater than 0! ");
+		}
+		else if ($album == null){
+			throw new Exception ("Album does not exist! ");
+		}
+		else{
+			$pm = new PersistenceHAS();
+			$hm = $pm -> loadDataFromStore();
+				
+			$song = new Song ($songName, $duration, $position, $myAlbum);
+			$hm -> addSong($song);
+				
+			$pm->writeDataToStore($hm);
+		}
+	}
+	
+	public function createArtist($name){
+		if ($name == null || strlen($name) == 0){
+			throw new Exception("Artist name cannot be empty!");
+		}else{
+			$pm = new PersistenceHAS();
+			$hm = $pm->loadDataFromStore();
+				
+			$artist = new Artist($name);
+			$hm->addArtist($artist);
+				
 			$pm->writeDataToStore($hm);
 		}
 	}

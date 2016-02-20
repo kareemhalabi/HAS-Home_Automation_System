@@ -1,22 +1,23 @@
 class Song
 {
-  title;
+  name;
   int duration;
   int position;
 }
 
 class HAS
 {
-  singleton
+  singleton;
   1 -> * Room;
   1 -> * Artist;
   1 -> * Album;
   1 -> * Playlist;
+  1 -> * Song;
 }
 
 class Room
 {
-  name;//a
+  name;
   int volume;
   boolean mute;
 }
@@ -24,7 +25,7 @@ class Room
 class Artist
 {
   name;
-  * -- * Album;
+  1 -- * Album;
 }
 
 class Album
@@ -32,13 +33,13 @@ class Album
   name;
   genre;
   Date releaseDate;
-  1 -- * Song;
+  1 -- 1..* Song;
 }
 
 class Playlist
 {
   name;
-  * -> * Song;
+  * -> 1..* Song;
 }
 
 //$?[End_of_model]$?
@@ -55,6 +56,7 @@ class HAS
   position.association HAS__Playlist 0,10 112,10;
   position.association Artist__HAS 25,41 51,0;
   position.association Album__HAS 81,41 65,0;
+  position.association HAS__Song 0,34 74,0;
 }
 
 class Room

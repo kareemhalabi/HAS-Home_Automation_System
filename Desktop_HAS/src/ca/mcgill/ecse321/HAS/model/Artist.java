@@ -1,11 +1,13 @@
+package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-package ca.mcgill.ecse321.HAS.model;
-import java.util.*;
 
-// line 26 "../../../../../HAS_domain_model.ump"
-// line 67 "../../../../../HAS_domain_model.ump"
+import java.util.*;
+import java.sql.Date;
+
+// line 24 "HAS_Domain_Model.ump"
+// line 65 "HAS_Domain_Model.ump"
 public class Artist
 {
 
@@ -81,47 +83,37 @@ public class Artist
     return 0;
   }
 
+  public Album addAlbum(String aName, String aGenre, Date aReleaseDate)
+  {
+    return new Album(aName, aGenre, aReleaseDate, this);
+  }
+
   public boolean addAlbum(Album aAlbum)
   {
     boolean wasAdded = false;
     if (albums.contains(aAlbum)) { return false; }
-    albums.add(aAlbum);
-    if (aAlbum.indexOfArtist(this) != -1)
+    Artist existingArtist = aAlbum.getArtist();
+    boolean isNewArtist = existingArtist != null && !this.equals(existingArtist);
+    if (isNewArtist)
     {
-      wasAdded = true;
+      aAlbum.setArtist(this);
     }
     else
     {
-      wasAdded = aAlbum.addArtist(this);
-      if (!wasAdded)
-      {
-        albums.remove(aAlbum);
-      }
+      albums.add(aAlbum);
     }
+    wasAdded = true;
     return wasAdded;
   }
 
   public boolean removeAlbum(Album aAlbum)
   {
     boolean wasRemoved = false;
-    if (!albums.contains(aAlbum))
+    //Unable to remove aAlbum, as it must always have a artist
+    if (!this.equals(aAlbum.getArtist()))
     {
-      return wasRemoved;
-    }
-
-    int oldIndex = albums.indexOf(aAlbum);
-    albums.remove(oldIndex);
-    if (aAlbum.indexOfArtist(this) == -1)
-    {
+      albums.remove(aAlbum);
       wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aAlbum.removeArtist(this);
-      if (!wasRemoved)
-      {
-        albums.add(oldIndex,aAlbum);
-      }
     }
     return wasRemoved;
   }
@@ -160,11 +152,10 @@ public class Artist
 
   public void delete()
   {
-    ArrayList<Album> copyOfAlbums = new ArrayList<Album>(albums);
-    albums.clear();
-    for(Album aAlbum : copyOfAlbums)
+    for(int i=albums.size(); i > 0; i--)
     {
-      aAlbum.removeArtist(this);
+      Album aAlbum = albums.get(i - 1);
+      aAlbum.delete();
     }
   }
 

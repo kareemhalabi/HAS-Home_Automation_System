@@ -1,0 +1,14 @@
+<ca.mcgill.ecse321.HAS.model.HAS id="1">
+  <rooms id="2"/>
+  <artists id="3"/>
+  <albums id="4">
+    <ca.mcgill.ecse321.HAS.model.Album id="5">
+      <name>Flume</name>
+      <genre>Indie</genre>
+      <releaseDate id="6">3907-02-25</releaseDate>
+      <songs id="7"/>
+      <artists id="8"/>
+    </ca.mcgill.ecse321.HAS.model.Album>
+  </albums>
+  <playlists id="9"/>
+</ca.mcgill.ecse321.HAS.model.HAS>

@@ -1,12 +1,13 @@
+package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-package ca.mcgill.ecse321.HAS.model;
+
 import java.util.*;
 import java.sql.Date;
 
-// line 10 "../../../../../HAS_domain_model.ump"
-// line 53 "../../../../../HAS_domain_model.ump"
+// line 8 "HAS_Domain_Model.ump"
+// line 51 "HAS_Domain_Model.ump"
 public class HAS
 {
 

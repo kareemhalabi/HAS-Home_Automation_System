@@ -1,0 +1,35 @@
+<HAS id="1">
+  <rooms id="2"/>
+  <artists id="3"/>
+  <albums id="4">
+    <album id="5">
+      <name>Flume</name>
+      <genre>Indie</genre>
+      <releaseDate id="6">3907-02-25</releaseDate>
+      <songs id="7"/>
+      <artists id="8">
+        <artist id="9">
+          <name>Flume</name>
+          <albums id="10">
+            <album reference="5"/>
+          </albums>
+        </artist>
+      </artists>
+    </album>
+    <album id="11">
+      <name>Sigh No More</name>
+      <genre>Folk</genre>
+      <releaseDate id="12">3909-11-09</releaseDate>
+      <songs id="13"/>
+      <artists id="14">
+        <artist id="15">
+          <name>Mumford and Sons</name>
+          <albums id="16">
+            <album reference="11"/>
+          </albums>
+        </artist>
+      </artists>
+    </album>
+  </albums>
+  <playlists id="17"/>
+</HAS>

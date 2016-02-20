@@ -1,10 +1,11 @@
+package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-package ca.mcgill.ecse321.HAS.model;
 
-// line 3 "../../../../../HAS_domain_model.ump"
-// line 48 "../../../../../HAS_domain_model.ump"
+
+// line 1 "HAS_Domain_Model.ump"
+// line 46 "HAS_Domain_Model.ump"
 public class Song
 {
 
@@ -13,7 +14,7 @@ public class Song
   //------------------------
 
   //Song Attributes
-  private String title;
+  private String name;
   private int duration;
   private int position;
 
@@ -24,9 +25,9 @@ public class Song
   // CONSTRUCTOR
   //------------------------
 
-  public Song(String aTitle, int aDuration, int aPosition, Album aAlbum)
+  public Song(String aName, int aDuration, int aPosition, Album aAlbum)
   {
-    title = aTitle;
+    name = aName;
     duration = aDuration;
     position = aPosition;
     boolean didAddAlbum = setAlbum(aAlbum);
@@ -40,10 +41,10 @@ public class Song
   // INTERFACE
   //------------------------
 
-  public boolean setTitle(String aTitle)
+  public boolean setName(String aName)
   {
     boolean wasSet = false;
-    title = aTitle;
+    name = aName;
     wasSet = true;
     return wasSet;
   }
@@ -64,9 +65,9 @@ public class Song
     return wasSet;
   }
 
-  public String getTitle()
+  public String getName()
   {
-    return title;
+    return name;
   }
 
   public int getDuration()
@@ -87,7 +88,13 @@ public class Song
   public boolean setAlbum(Album aAlbum)
   {
     boolean wasSet = false;
+    //Must provide album to song
     if (aAlbum == null)
+    {
+      return wasSet;
+    }
+
+    if (album != null && album.numberOfSongs() <= Album.minimumNumberOfSongs())
     {
       return wasSet;
     }
@@ -96,7 +103,12 @@ public class Song
     album = aAlbum;
     if (existingAlbum != null && !existingAlbum.equals(aAlbum))
     {
-      existingAlbum.removeSong(this);
+      boolean didRemove = existingAlbum.removeSong(this);
+      if (!didRemove)
+      {
+        album = existingAlbum;
+        return wasSet;
+      }
     }
     album.addSong(this);
     wasSet = true;
@@ -115,7 +127,7 @@ public class Song
   {
 	  String outputString = "";
     return super.toString() + "["+
-            "title" + ":" + getTitle()+ "," +
+            "name" + ":" + getName()+ "," +
             "duration" + ":" + getDuration()+ "," +
             "position" + ":" + getPosition()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "album = "+(getAlbum()!=null?Integer.toHexString(System.identityHashCode(getAlbum())):"null")

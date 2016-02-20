@@ -1,10 +1,11 @@
+package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-package ca.mcgill.ecse321.HAS.model;
 
-// line 19 "../../../../../HAS_domain_model.ump"
-// line 62 "../../../../../HAS_domain_model.ump"
+
+// line 17 "HAS_Domain_Model.ump"
+// line 60 "HAS_Domain_Model.ump"
 public class Room
 {
 

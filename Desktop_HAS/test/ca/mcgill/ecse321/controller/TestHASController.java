@@ -80,8 +80,8 @@ public class TestHASController
 		{
 			assertEquals(1, h.getAlbums().size());
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
-		} 
-		
+		}
+
 		catch (InvalidInputException e)
 		{
 			fail();
@@ -102,7 +102,7 @@ public class TestHASController
 		String genre = "Indie";
 		String artName = "Oscar";
 		Date d1 = new Date(2007, 01, 25);
-		
+
 		String error = "";
 
 		// create the artist
@@ -113,12 +113,11 @@ public class TestHASController
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
-		} 
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Album name cannot be empty! ", error);
 		assertEquals(0, h.getAlbums().size());
 
@@ -135,7 +134,7 @@ public class TestHASController
 		String genre = "";
 		String artName = "Oscar";
 		Date d1 = new Date(2007, 01, 25);
-		
+
 		String error = "";
 
 		// create the artist
@@ -146,15 +145,13 @@ public class TestHASController
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
-		} 
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Genre name cannot be empty! ", error);
 		assertEquals(0, h.getAlbums().size());
-
 
 	}
 
@@ -169,7 +166,7 @@ public class TestHASController
 		String genre = "Indie";
 		String artName = "Oscar";
 		Date d1 = null;
-		
+
 		String error = "";
 
 		// create the artist
@@ -180,12 +177,11 @@ public class TestHASController
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
-		} 
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Release date cannot be empty! ", error);
 		assertEquals(0, h.getAlbums().size());
 	}
@@ -201,7 +197,7 @@ public class TestHASController
 		String genre = "Indie";
 		String artName = null;
 		Date d1 = new Date(2007, 01, 25);
-		
+
 		String error = "";
 
 		// create the artist
@@ -212,38 +208,255 @@ public class TestHASController
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
-		} 
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Album must have an artist! ", error);
 		assertEquals(0, h.getAlbums().size());
 	}
-	
+
 	@Test
 	public void testCreateArtistNull()
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getAlbums().size());
 		assertEquals(0, h.getArtists().size());
-		
+
 		String artName = "";
 		String error = "";
-		
+
 		HASController hc = new HASController();
 		try
 		{
 			hc.createArtist(artName);
-		}
-		catch(InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Artist name cannot be empty! ", error);
 		assertEquals(0, h.getArtists().size());
+	}
+
+	@Test
+	public void testAddSongNoName()
+	{
+		// make sure the has has been reset
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getAlbums().size());
+
+		// album attributes of the album
+		String name = "Flume";
+		String genre = "Indie";
+		String artName = "Oscar";
+		Date d1 = new Date(2007, 01, 25);
+
+		String error = "";
+
+		// create the artist
+		Artist ar1 = new Artist(artName);
+
+		// create controller and create the album
+		HASController hc = new HASController();
+
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			// check that no error has occurred in the creation of the album
+			fail();
+		}
+
+		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+
+		// check file contents
+		checkResultAlbum(h2, name, genre, artName, d1);
+
+		// new song 1 on album 1
+		String testSongName1 = "   ";
+		int songDuration1 = 213;
+		int songPosition1 = 1;
+
+		// add song to an album
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+		}
+
+		catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Song must have a name! ", error);
+
+	}
+
+	@Test
+	public void testAddSongNoAlbum()
+	{
+		// make sure the has has been reset
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getAlbums().size());
+
+		// album attributes of the album
+		String name = "Flume";
+		String genre = "Indie";
+		String artName = "Oscar";
+		Date d1 = new Date(2007, 01, 25);
+
+		String error = "";
+
+		// create the artist
+		Artist ar1 = new Artist(artName);
+
+		// create controller and create the album
+		HASController hc = new HASController();
+
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			// check that no error has occurred in the creation of the album
+			fail();
+		}
+
+		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+
+		// check file contents
+		checkResultAlbum(h2, name, genre, artName, d1);
+
+		// new song 1 on album 1
+		String testSongName1 = "testName";
+		int songDuration1 = 213;
+		int songPosition1 = 1;
+
+		// add song to an album
+		try
+		{
+			hc.addSongtoAlbum(null, testSongName1, songDuration1, songPosition1);
+		}
+
+		catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Song must belong to an album! ", error);
+
+	}
+
+	@Test
+	public void testAddSongNoDuration()
+	{
+		// make sure the has has been reset
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getAlbums().size());
+
+		// album attributes of the album
+		String name = "Flume";
+		String genre = "Indie";
+		String artName = "Oscar";
+		Date d1 = new Date(2007, 01, 25);
+
+		String error = "";
+
+		// create the artist
+		Artist ar1 = new Artist(artName);
+
+		// create controller and create the album
+		HASController hc = new HASController();
+
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			// check that no error has occurred in the creation of the album
+			fail();
+		}
+
+		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+
+		// check file contents
+		checkResultAlbum(h2, name, genre, artName, d1);
+
+		// new song 1 on album 1
+		String testSongName1 = "testName";
+		int songDuration1 = 0;
+		int songPosition1 = 1;
+
+		// add song to an album
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+		}
+
+		catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Song must have a duration! ", error);
+	}
+
+	@Test
+	public void testAddSongNoPosition()
+	{
+		// make sure the has has been reset
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getAlbums().size());
+
+		// album attributes of the album
+		String name = "Flume";
+		String genre = "Indie";
+		String artName = "Oscar";
+		Date d1 = new Date(2007, 01, 25);
+
+		String error = "";
+
+		// create the artist
+		Artist ar1 = new Artist(artName);
+
+		// create controller and create the album
+		HASController hc = new HASController();
+
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			// check that no error has occurred in the creation of the album
+			fail();
+		}
+
+		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+
+		// check file contents
+		checkResultAlbum(h2, name, genre, artName, d1);
+
+		// new song 1 on album 1
+		String testSongName1 = "testName";
+		int songDuration1 = 213;
+		int songPosition1 = 0;
+
+		// add song to an album
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+		}
+
+		catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Song must have a position! ", error);
+
 	}
 
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)

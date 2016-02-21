@@ -8,6 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -68,6 +73,15 @@ public class MainActivity extends AppCompatActivity {
                 this.artists.put(i,ar);
             }
             artistSpinner.setAdapter(artistAdapter);
+
+            // Initialize album genre text field
+            TextView newAlbumGenre = (TextView) findViewById(R.id.newalbum_genre);
+            newAlbumGenre.setText("");
+
+            // Initialize album release date to today
+            Calendar c = Calendar.getInstance();
+            setDate(R.id.albumReleasedate, c.get(Calendar.DAY_OF_MONTH),
+                    c.get(Calendar.MONTH), c.get(Calendar.YEAR));
         }
     }
 
@@ -82,5 +96,73 @@ public class MainActivity extends AppCompatActivity {
         }
 
         refreshData();
+    }
+
+    public void addAlbum(View v) {
+
+        error = null;
+        HASController hc = new HASController();
+
+        TextView albumName = (TextView) findViewById(R.id.newalbum_name);
+
+        Spinner artistSpinner = (Spinner) findViewById(R.id.artistspinner);
+        int selectedArtist = artistSpinner.getSelectedItemPosition();
+
+        TextView albumGenre = (TextView) findViewById(R.id.newalbum_genre);
+
+        TextView releaseDate = (TextView) findViewById(R.id.albumReleasedate);
+        DateFormat dft = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = null;
+        try {
+            date = new Date(dft.parse(releaseDate.getText().toString()).getTime());
+        } catch (ParseException e) {
+            error = "Date not formatted correclty!";
+        }
+
+        try {
+            hc.createAlbum(albumName.getText().toString(),
+                    albumGenre.getText().toString(),
+                    date,
+                    artists.get(selectedArtist));
+        } catch (InvalidInputException e) {
+            error = e.getMessage();
+        }
+
+        refreshData();
+    }
+
+    public void showDatePickerDialog(View v) {
+        TextView tf = (TextView) v;
+        Bundle args = getDateFromLabel(tf.getText());
+        args.putInt("id", v.getId());
+
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setArguments(args);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    private Bundle getDateFromLabel(CharSequence text) {
+        Bundle rtn = new Bundle();
+        String comps[] = text.toString().split("-");
+        int day =1;
+        int month=1;
+        int year = 1;
+
+        if (comps.length == 3) {
+            day = Integer.parseInt(comps[0]);
+            month = Integer.parseInt(comps[1]);
+            year = Integer.parseInt(comps[2]);
+        }
+
+        rtn.putInt("day", day);
+        rtn.putInt("month", month - 1);
+        rtn.putInt("year", year);
+
+        return rtn;
+    }
+
+    public void setDate(int id, int day, int month, int year) {
+        TextView tv = (TextView) findViewById(id);
+        tv.setText(String.format("%02d-%02d-%04d", day, month + 1, year));
     }
 }

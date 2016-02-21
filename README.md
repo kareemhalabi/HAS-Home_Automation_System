@@ -1,7 +1,11 @@
 # Group05
 
 Aidan Piwowar
+
 Alex Orzechowski
-Aurélie Pluche
+
+AurÃ©lie Pluche
+
 Kareem Halabi
+
 Kristina Pearkes

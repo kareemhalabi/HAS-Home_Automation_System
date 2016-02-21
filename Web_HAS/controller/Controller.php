@@ -6,6 +6,7 @@ require_once (__DIR__.'/../model/HAS.php');
 require_once (__DIR__.'/../model/Playlist.php');
 require_once (__DIR__.'/../model/Room.php');
 require_once (__DIR__.'/../persistence/PersistenceHAS.php');
+require_once (__DIR__.'/../controller/InputValidator.php');
 
 class Controller{
 	
@@ -14,6 +15,9 @@ class Controller{
 	}
 	
 	public function createAlbum($albumName, $genre, $releaseDate, $aArtist) {
+		$albumName = InputValidator::validate_input($albumName);
+		$genre = InputValidator::validate_input($genre);
+		
 		$pm = new PersistenceHAS();
 		$hm = $pm->loadDataFromStore();
 		if ($aArtist == null) {
@@ -45,6 +49,7 @@ class Controller{
 	}
 	
 	public function createSong($songName, $duration, $position, $aAlbum){
+		$songName = InputValidator::validate_input($songName);
 		$pm = new PersistenceHAS();
 		$hm = $pm->loadDataFromStore();
 		if ($aAlbum == null) {
@@ -83,6 +88,7 @@ class Controller{
 	}
 	
 	public function createArtist($name){
+		$name = InputValidator::validate_input($name);
 		if ($name == null || strlen($name) == 0){
 			throw new Exception("Artist name cannot be empty!");
 		}else{

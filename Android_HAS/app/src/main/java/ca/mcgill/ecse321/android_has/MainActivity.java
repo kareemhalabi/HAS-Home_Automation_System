@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,6 +20,7 @@ import java.util.Iterator;
 
 import ca.mcgill.ecse321.HAS.controller.HASController;
 import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
+import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceHAS;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     // data elements
     private String error = null;
     private HashMap<Integer, Artist> artists;
+    private HashMap<Integer, Album> albums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(error == null || error.length() == 0) {
 
+            /** ------ Artist initializations ------ */
+
             // Initialize artist name text field
             TextView newArtist = (TextView) findViewById(R.id.newartist_name);
             newArtist.setText("");
+
+            /** ------ Album initializations ------ */
 
             // Initialize album name text field
             TextView newAlbumName = (TextView) findViewById(R.id.newalbum_name);
@@ -82,6 +90,37 @@ public class MainActivity extends AppCompatActivity {
             Calendar c = Calendar.getInstance();
             setDate(R.id.albumReleasedate, c.get(Calendar.DAY_OF_MONTH),
                     c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+
+            /** ------ Song initializations ------ */
+
+            // Initialize the data in the album spinner
+            Spinner albumSpinner = (Spinner) findViewById(R.id.albumspinner);
+            ArrayAdapter<CharSequence> albumAdapter = new
+                    ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
+            albumAdapter.setDropDownViewResource(
+                    android.R.layout.simple_spinner_dropdown_item);
+            this.albums = new HashMap<Integer, Album>();
+
+            i = 0;
+            for(Iterator<Album> albums = h.getAlbums().iterator();
+                albums.hasNext(); i++) {
+                Album al = albums.next();
+                albumAdapter.add(al.getName());
+                this.albums.put(i,al);
+            }
+            albumSpinner.setAdapter(albumAdapter);
+
+            // Initialize song name text field
+            TextView songName = (TextView) findViewById(R.id.newsong_name);
+            songName.setText("");
+
+            // Initialize song name text field
+            TextView songDuration = (TextView) findViewById(R.id.newsong_duration);
+            songDuration.setText("");
+
+            // Initialize song name text field
+            TextView songPosition = (TextView) findViewById(R.id.newsong_position);
+            songPosition.setText("");
         }
     }
 
@@ -164,5 +203,30 @@ public class MainActivity extends AppCompatActivity {
     public void setDate(int id, int day, int month, int year) {
         TextView tv = (TextView) findViewById(id);
         tv.setText(String.format("%02d-%02d-%04d", day, month + 1, year));
+    }
+
+    public void addSong(View v) {
+
+        error = null;
+        HASController hc = new HASController();
+
+        Spinner albumSpinner = (Spinner) findViewById(R.id.albumspinner);
+        int selectedAlbum = albumSpinner.getSelectedItemPosition();
+
+        TextView songName = (TextView) findViewById(R.id.newsong_name);
+
+        TextView songDuration = (TextView) findViewById(R.id.newsong_duration);
+
+        TextView songPosition = (TextView) findViewById(R.id.newsong_position);
+
+        try {
+            hc.addSongtoAlbum(albums.get(selectedAlbum), songName.getText().toString(),
+                    Integer.parseInt(songDuration.getText().toString()),
+                    Integer.parseInt(songPosition.getText().toString()));
+        } catch(InvalidInputException e) {
+            error = e.getMessage();
+        }
+
+        refreshData();
     }
 }

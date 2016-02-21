@@ -1,13 +1,12 @@
-package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-
+package ca.mcgill.ecse321.HAS.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 30 "HAS_Domain_Model.ump"
-// line 72 "HAS_Domain_Model.ump"
+// line 33 "../../../../../HAS_Domain_Model.ump"
+// line 75 "../../../../../HAS_Domain_Model.ump"
 public class Album
 {
 

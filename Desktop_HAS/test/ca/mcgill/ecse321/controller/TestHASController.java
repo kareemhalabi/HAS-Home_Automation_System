@@ -17,7 +17,7 @@ import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Song;
-import ca.mcgill.ecse321.HAS.persistence.persistenceXStream;
+import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 public class TestHASController
 {
@@ -25,11 +25,11 @@ public class TestHASController
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
-		persistenceXStream.setFilename("test" + File.separator + "ca" + File.separator + "mcgill" + File.separator
+		PersistenceXStream.setFilename("test" + File.separator + "ca" + File.separator + "mcgill" + File.separator
 				+ "ecse321" + File.separator + "controller" + File.separator + "data.xml");
-		persistenceXStream.setAlias("HAS", HAS.class);
-		persistenceXStream.setAlias("album", Album.class);
-		persistenceXStream.setAlias("artist", Artist.class);
+		PersistenceXStream.setAlias("HAS", HAS.class);
+		PersistenceXStream.setAlias("album", Album.class);
+		PersistenceXStream.setAlias("artist", Artist.class);
 	}
 
 	@After
@@ -65,7 +65,7 @@ public class TestHASController
 			fail();
 		}
 
-		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 
 		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
@@ -87,7 +87,7 @@ public class TestHASController
 			fail();
 		}
 
-		HAS h3 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+		HAS h3 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 		checkResultSong(h3, testSongName1, songDuration1, songPosition1);
 	}
 
@@ -270,7 +270,7 @@ public class TestHASController
 			fail();
 		}
 
-		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 
 		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
@@ -325,7 +325,7 @@ public class TestHASController
 			fail();
 		}
 
-		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 
 		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
@@ -380,7 +380,7 @@ public class TestHASController
 			fail();
 		}
 
-		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 
 		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
@@ -434,7 +434,7 @@ public class TestHASController
 			fail();
 		}
 
-		HAS h2 = (HAS) persistenceXStream.loadFromXMLwithXStream();
+		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 
 		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);

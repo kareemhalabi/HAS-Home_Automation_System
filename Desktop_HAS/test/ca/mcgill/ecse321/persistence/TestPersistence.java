@@ -12,7 +12,7 @@ import org.junit.Test;
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
-import ca.mcgill.ecse321.HAS.persistence.persistenceXStream;
+import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 public class TestPersistence {
 
@@ -53,12 +53,12 @@ public class TestPersistence {
 	@Test
 	public void test() {
 		HAS h = HAS.getInstance();
-		persistenceXStream.setFilename("test"+File.separator+"ca"+File.separator+"mcgill"+File.separator
+		PersistenceXStream.setFilename("test"+File.separator+"ca"+File.separator+"mcgill"+File.separator
 				+"ecse321"+File.separator+"persistence"+File.separator+"data.xml");
-		persistenceXStream.setAlias("HAS", HAS.class);
-		persistenceXStream.setAlias("album", Album.class);
-		persistenceXStream.setAlias("artist", Artist.class);
-		if(!persistenceXStream.saveToXMLwithXStream(h))
+		PersistenceXStream.setAlias("HAS", HAS.class);
+		PersistenceXStream.setAlias("album", Album.class);
+		PersistenceXStream.setAlias("artist", Artist.class);
+		if(!PersistenceXStream.saveToXMLwithXStream(h))
 		{
 			fail("Not yet implemented");
 		}
@@ -68,7 +68,7 @@ public class TestPersistence {
 		assertEquals(0, h.getAlbums().size());
 		
 		//load model
-		h = (HAS) persistenceXStream.loadFromXMLwithXStream();
+		h = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 		if(h == null)
 		{
 			fail("Could not load file.");

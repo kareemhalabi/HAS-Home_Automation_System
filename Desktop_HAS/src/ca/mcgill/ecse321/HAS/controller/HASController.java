@@ -6,7 +6,7 @@ import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Song;
-import ca.mcgill.ecse321.HAS.persistence.persistenceXStream;
+import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 public class HASController
 {
@@ -23,7 +23,7 @@ public class HASController
 		Artist art = new Artist(artName);
 		HAS h = HAS.getInstance();
 		h.addArtist(art);
-		persistenceXStream.saveToXMLwithXStream(h);
+		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 	
 	public void createAlbum(String name, String genre, Date releaseDate, Artist ar) throws InvalidInputException
@@ -45,7 +45,7 @@ public class HASController
 		Album a = new Album(name, genre, releaseDate, ar);
 		HAS h = HAS.getInstance();
 		h.addAlbum(a);
-		persistenceXStream.saveToXMLwithXStream(h);
+		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 	
 	public void addSongtoAlbum(Album a, String aName, int aDuration, int aPosition) throws InvalidInputException
@@ -75,7 +75,7 @@ public class HASController
 		
 		Song newSong = new Song(aName, aDuration, aPosition, a);
 		
-		persistenceXStream.saveToXMLwithXStream(h);
+		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
 }

@@ -6,29 +6,39 @@
       <name>Flume</name>
       <genre>Indie</genre>
       <releaseDate id="6">3907-02-25</releaseDate>
-      <songs id="7"/>
-      <artists id="8">
-        <artist id="9">
-          <name>Flume</name>
-          <albums id="10">
-            <album reference="5"/>
-          </albums>
-        </artist>
-      </artists>
+      <songs id="7">
+        <ca.mcgill.ecse321.HAS.model.Song id="8">
+          <name>Sintara</name>
+          <duration>2000</duration>
+          <position>1</position>
+          <album reference="5"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+      </songs>
+      <artist id="9">
+        <name>Flume</name>
+        <albums id="10">
+          <album reference="5"/>
+        </albums>
+      </artist>
     </album>
     <album id="11">
       <name>Sigh No More</name>
       <genre>Folk</genre>
       <releaseDate id="12">3909-11-09</releaseDate>
-      <songs id="13"/>
-      <artists id="14">
-        <artist id="15">
-          <name>Mumford and Sons</name>
-          <albums id="16">
-            <album reference="11"/>
-          </albums>
-        </artist>
-      </artists>
+      <songs id="13">
+        <ca.mcgill.ecse321.HAS.model.Song id="14">
+          <name>The Cave</name>
+          <duration>100</duration>
+          <position>2</position>
+          <album reference="11"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+      </songs>
+      <artist id="15">
+        <name>Mumford and Sons</name>
+        <albums id="16">
+          <album reference="11"/>
+        </albums>
+      </artist>
     </album>
   </albums>
   <playlists id="17"/>

@@ -1,11 +1,10 @@
-package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
+package ca.mcgill.ecse321.HAS.model;
 
-
-// line 1 "HAS_Domain_Model.ump"
-// line 46 "HAS_Domain_Model.ump"
+// line 3 "../../../../../HAS_Domain_Model.ump"
+// line 49 "../../../../../HAS_Domain_Model.ump"
 public class Song
 {
 

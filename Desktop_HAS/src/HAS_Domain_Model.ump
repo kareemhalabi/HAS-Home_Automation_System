@@ -1,6 +1,8 @@
+namespace ca.mcgill.ecse321.HAS.model;
+
 class Song
 {
-  title;
+  name;
   int duration;
   int position;
 }
@@ -12,6 +14,7 @@ class HAS
   1 -> * Artist;
   1 -> * Album;
   1 -> * Playlist;
+  1 -> * Song;
 }
 
 class Room

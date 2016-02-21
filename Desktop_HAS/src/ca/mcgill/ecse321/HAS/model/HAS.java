@@ -1,13 +1,12 @@
-package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-
+package ca.mcgill.ecse321.HAS.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 8 "HAS_Domain_Model.ump"
-// line 51 "HAS_Domain_Model.ump"
+// line 10 "../../../../../HAS_Domain_Model.ump"
+// line 54 "../../../../../HAS_Domain_Model.ump"
 public class HAS
 {
 
@@ -26,6 +25,7 @@ public class HAS
   private List<Artist> artists;
   private List<Album> albums;
   private List<Playlist> playlists;
+  private List<Song> songs;
 
   //------------------------
   // CONSTRUCTOR
@@ -37,6 +37,7 @@ public class HAS
     artists = new ArrayList<Artist>();
     albums = new ArrayList<Album>();
     playlists = new ArrayList<Playlist>();
+    songs = new ArrayList<Song>();
   }
 
   public static HAS getInstance()
@@ -169,6 +170,36 @@ public class HAS
   public int indexOfPlaylist(Playlist aPlaylist)
   {
     int index = playlists.indexOf(aPlaylist);
+    return index;
+  }
+
+  public Song getSong(int index)
+  {
+    Song aSong = songs.get(index);
+    return aSong;
+  }
+
+  public List<Song> getSongs()
+  {
+    List<Song> newSongs = Collections.unmodifiableList(songs);
+    return newSongs;
+  }
+
+  public int numberOfSongs()
+  {
+    int number = songs.size();
+    return number;
+  }
+
+  public boolean hasSongs()
+  {
+    boolean has = songs.size() > 0;
+    return has;
+  }
+
+  public int indexOfSong(Song aSong)
+  {
+    int index = songs.indexOf(aSong);
     return index;
   }
 
@@ -400,12 +431,70 @@ public class HAS
     return wasAdded;
   }
 
+  public static int minimumNumberOfSongs()
+  {
+    return 0;
+  }
+
+  public boolean addSong(Song aSong)
+  {
+    boolean wasAdded = false;
+    if (songs.contains(aSong)) { return false; }
+    songs.add(aSong);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeSong(Song aSong)
+  {
+    boolean wasRemoved = false;
+    if (songs.contains(aSong))
+    {
+      songs.remove(aSong);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addSongAt(Song aSong, int index)
+  {  
+    boolean wasAdded = false;
+    if(addSong(aSong))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfSongs()) { index = numberOfSongs() - 1; }
+      songs.remove(aSong);
+      songs.add(index, aSong);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveSongAt(Song aSong, int index)
+  {
+    boolean wasAdded = false;
+    if(songs.contains(aSong))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfSongs()) { index = numberOfSongs() - 1; }
+      songs.remove(aSong);
+      songs.add(index, aSong);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addSongAt(aSong, index);
+    }
+    return wasAdded;
+  }
+
   public void delete()
   {
     rooms.clear();
     artists.clear();
     albums.clear();
     playlists.clear();
+    songs.clear();
   }
 
 }

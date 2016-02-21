@@ -1,12 +1,11 @@
-package ca.mcgill.ecse321.HAS.model;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-
+package ca.mcgill.ecse321.HAS.model;
 import java.util.*;
 
-// line 38 "HAS_Domain_Model.ump"
-// line 79 "HAS_Domain_Model.ump"
+// line 41 "../../../../../HAS_Domain_Model.ump"
+// line 82 "../../../../../HAS_Domain_Model.ump"
 public class Playlist
 {
 

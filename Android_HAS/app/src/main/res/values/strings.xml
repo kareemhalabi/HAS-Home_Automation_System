@@ -13,4 +13,5 @@
     <string name="songduration_hint">Duration (seconds)?</string>
     <string name="songposition_hint">Position in Album?</string>
     <string name="addsong_button">Add Song</string>
+    <string name="error_message" />
 </resources>

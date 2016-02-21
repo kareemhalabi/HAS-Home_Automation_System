@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.HAS.controller;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
@@ -29,6 +30,15 @@ public class HASController
 	public void createAlbum(String name, String genre, Date releaseDate, Artist ar) throws InvalidInputException
 	{
 		//check that the input is valid for this
+		java.util.Calendar cal = Calendar.getInstance();
+		java.util.Date utilDate = new java.util.Date(); // your util date
+		cal.setTime(utilDate);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);    
+		java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
+		
 		String error = "";
 		if(name == null || name.trim().length() ==0)
 			error = error + "Album name cannot be empty! ";
@@ -36,6 +46,8 @@ public class HASController
 			error = error + "Genre name cannot be empty! ";
 		if(releaseDate == null)
 			error = error + "Release date cannot be empty! ";
+		if(releaseDate.compareTo(sqlDate) > 0)
+			error = error + "Release date cannot be in the future! ";
 		if(ar == null )
 			error = error + "Album must have an artist! ";
 		if(error.length() > 0)
@@ -74,6 +86,7 @@ public class HASController
 			throw new InvalidInputException(error);
 		
 		Song newSong = new Song(aName, aDuration, aPosition, a);
+		h.addSong(newSong);
 		
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}

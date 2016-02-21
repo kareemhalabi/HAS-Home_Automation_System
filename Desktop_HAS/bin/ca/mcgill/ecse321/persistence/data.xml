@@ -42,5 +42,8 @@
     </album>
   </albums>
   <playlists id="17"/>
-  <songs id="18"/>
+  <songs id="18">
+    <ca.mcgill.ecse321.HAS.model.Song reference="8"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="14"/>
+  </songs>
 </HAS>

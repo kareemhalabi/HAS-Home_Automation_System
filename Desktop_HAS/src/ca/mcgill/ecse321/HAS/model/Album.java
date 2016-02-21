@@ -5,8 +5,8 @@ package ca.mcgill.ecse321.HAS.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 32 "../../../../../HAS_domain_model.ump"
-// line 74 "../../../../../HAS_domain_model.ump"
+// line 33 "../../../../../HAS_Domain_Model.ump"
+// line 75 "../../../../../HAS_Domain_Model.ump"
 public class Album
 {
 
@@ -21,19 +21,23 @@ public class Album
 
   //Album Associations
   private List<Song> songs;
-  private List<Artist> artists;
+  private Artist artist;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Album(String aName, String aGenre, Date aReleaseDate)
+  public Album(String aName, String aGenre, Date aReleaseDate, Artist aArtist)
   {
     name = aName;
     genre = aGenre;
     releaseDate = aReleaseDate;
     songs = new ArrayList<Song>();
-    artists = new ArrayList<Artist>();
+    boolean didAddArtist = setArtist(aArtist);
+    if (!didAddArtist)
+    {
+      throw new RuntimeException("Unable to create album due to artist");
+    }
   }
 
   //------------------------
@@ -109,44 +113,26 @@ public class Album
     return index;
   }
 
-  public Artist getArtist(int index)
+  public Artist getArtist()
   {
-    Artist aArtist = artists.get(index);
-    return aArtist;
+    return artist;
   }
 
-  public List<Artist> getArtists()
+  public boolean isNumberOfSongsValid()
   {
-    List<Artist> newArtists = Collections.unmodifiableList(artists);
-    return newArtists;
-  }
-
-  public int numberOfArtists()
-  {
-    int number = artists.size();
-    return number;
-  }
-
-  public boolean hasArtists()
-  {
-    boolean has = artists.size() > 0;
-    return has;
-  }
-
-  public int indexOfArtist(Artist aArtist)
-  {
-    int index = artists.indexOf(aArtist);
-    return index;
+    boolean isValid = numberOfSongs() >= minimumNumberOfSongs();
+    return isValid;
   }
 
   public static int minimumNumberOfSongs()
   {
-    return 0;
+    return 1;
   }
 
-  public Song addSong(String aTitle, int aDuration, int aPosition)
+  public Song addSong(String aName, int aDuration, int aPosition)
   {
-    return new Song(aTitle, aDuration, aPosition, this);
+    Song aNewSong = new Song(aName, aDuration, aPosition, this);
+    return aNewSong;
   }
 
   public boolean addSong(Song aSong)
@@ -155,6 +141,11 @@ public class Album
     if (songs.contains(aSong)) { return false; }
     Album existingAlbum = aSong.getAlbum();
     boolean isNewAlbum = existingAlbum != null && !this.equals(existingAlbum);
+
+    if (isNewAlbum && existingAlbum.numberOfSongs() <= minimumNumberOfSongs())
+    {
+      return wasAdded;
+    }
     if (isNewAlbum)
     {
       aSong.setAlbum(this);
@@ -171,11 +162,19 @@ public class Album
   {
     boolean wasRemoved = false;
     //Unable to remove aSong, as it must always have a album
-    if (!this.equals(aSong.getAlbum()))
+    if (this.equals(aSong.getAlbum()))
     {
-      songs.remove(aSong);
-      wasRemoved = true;
+      return wasRemoved;
     }
+
+    //album already at minimum (1)
+    if (numberOfSongs() <= minimumNumberOfSongs())
+    {
+      return wasRemoved;
+    }
+
+    songs.remove(aSong);
+    wasRemoved = true;
     return wasRemoved;
   }
 
@@ -211,86 +210,23 @@ public class Album
     return wasAdded;
   }
 
-  public static int minimumNumberOfArtists()
+  public boolean setArtist(Artist aArtist)
   {
-    return 0;
-  }
-
-  public boolean addArtist(Artist aArtist)
-  {
-    boolean wasAdded = false;
-    if (artists.contains(aArtist)) { return false; }
-    artists.add(aArtist);
-    if (aArtist.indexOfAlbum(this) != -1)
+    boolean wasSet = false;
+    if (aArtist == null)
     {
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = aArtist.addAlbum(this);
-      if (!wasAdded)
-      {
-        artists.remove(aArtist);
-      }
-    }
-    return wasAdded;
-  }
-
-  public boolean removeArtist(Artist aArtist)
-  {
-    boolean wasRemoved = false;
-    if (!artists.contains(aArtist))
-    {
-      return wasRemoved;
+      return wasSet;
     }
 
-    int oldIndex = artists.indexOf(aArtist);
-    artists.remove(oldIndex);
-    if (aArtist.indexOfAlbum(this) == -1)
+    Artist existingArtist = artist;
+    artist = aArtist;
+    if (existingArtist != null && !existingArtist.equals(aArtist))
     {
-      wasRemoved = true;
+      existingArtist.removeAlbum(this);
     }
-    else
-    {
-      wasRemoved = aArtist.removeAlbum(this);
-      if (!wasRemoved)
-      {
-        artists.add(oldIndex,aArtist);
-      }
-    }
-    return wasRemoved;
-  }
-
-  public boolean addArtistAt(Artist aArtist, int index)
-  {  
-    boolean wasAdded = false;
-    if(addArtist(aArtist))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfArtists()) { index = numberOfArtists() - 1; }
-      artists.remove(aArtist);
-      artists.add(index, aArtist);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveArtistAt(Artist aArtist, int index)
-  {
-    boolean wasAdded = false;
-    if(artists.contains(aArtist))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfArtists()) { index = numberOfArtists() - 1; }
-      artists.remove(aArtist);
-      artists.add(index, aArtist);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addArtistAt(aArtist, index);
-    }
-    return wasAdded;
+    artist.addAlbum(this);
+    wasSet = true;
+    return wasSet;
   }
 
   public void delete()
@@ -300,12 +236,9 @@ public class Album
       Song aSong = songs.get(i - 1);
       aSong.delete();
     }
-    ArrayList<Artist> copyOfArtists = new ArrayList<Artist>(artists);
-    artists.clear();
-    for(Artist aArtist : copyOfArtists)
-    {
-      aArtist.removeAlbum(this);
-    }
+    Artist placeholderArtist = artist;
+    this.artist = null;
+    placeholderArtist.removeAlbum(this);
   }
 
 
@@ -315,7 +248,8 @@ public class Album
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
             "genre" + ":" + getGenre()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "releaseDate" + "=" + (getReleaseDate() != null ? !getReleaseDate().equals(this)  ? getReleaseDate().toString().replaceAll("  ","    ") : "this" : "null")
+            "  " + "releaseDate" + "=" + (getReleaseDate() != null ? !getReleaseDate().equals(this)  ? getReleaseDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "artist = "+(getArtist()!=null?Integer.toHexString(System.identityHashCode(getArtist())):"null")
      + outputString;
   }
 }

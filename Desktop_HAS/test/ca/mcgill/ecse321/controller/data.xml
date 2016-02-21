@@ -1,0 +1,20 @@
+<HAS id="1">
+  <rooms id="2"/>
+  <artists id="3"/>
+  <albums id="4">
+    <album id="5">
+      <name>Flume</name>
+      <genre>Indie</genre>
+      <releaseDate id="6">3907-02-25</releaseDate>
+      <songs id="7"/>
+      <artist id="8">
+        <name>Oscar</name>
+        <albums id="9">
+          <album reference="5"/>
+        </albums>
+      </artist>
+    </album>
+  </albums>
+  <playlists id="10"/>
+  <songs id="11"/>
+</HAS>

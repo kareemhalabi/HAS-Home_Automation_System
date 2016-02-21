@@ -3,8 +3,8 @@
 
 package ca.mcgill.ecse321.HAS.model;
 
-// line 19 "../../../../../HAS_domain_model.ump"
-// line 62 "../../../../../HAS_domain_model.ump"
+// line 20 "../../../../../HAS_Domain_Model.ump"
+// line 63 "../../../../../HAS_Domain_Model.ump"
 public class Room
 {
 

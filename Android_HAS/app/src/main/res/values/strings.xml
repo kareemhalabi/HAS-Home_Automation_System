@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Android_HAS</string>
+    <string name="artist_hint">Artist Name?</string>
+    <string name="addartist_button">Add Artist</string>
+    <string name="albumname_hint">Album Name?</string>
+    <string name="artistspinner_label">Artist?</string>
+    <string name="genre_hint">Genre?</string>
+    <string name="albumreleasedate_label">Release Date?</string>
+    <string name="albumreleasedate">01-01-2016</string>
+    <string name="addalbum_button">Add Album</string>
+    <string name="songname_hint">Song Name?</string>
+    <string name="albumspinner_label">Album?</string>
+    <string name="songduration_hint">Duration (seconds)?</string>
+    <string name="songposition_hint">Position in Album?</string>
+    <string name="addsong_button">Add Song</string>
+    <string name="error_message" />
+</resources>

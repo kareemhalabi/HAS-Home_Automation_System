@@ -461,10 +461,16 @@ public class TestHASController
 
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)
 	{
+		//association with album
 		assertEquals(testSongName1, h.getAlbum(0).getSong(0).getName());
 		assertEquals(songDuration1, h.getAlbum(0).getSong(0).getDuration());
-		assertEquals(songDuration1, h.getAlbum(0).getSong(0).getDuration());
 		assertEquals(songPosition1, h.getAlbum(0).getSong(0).getPosition());
+		
+		//association with HAS
+		assertEquals(testSongName1, h.getSong(0).getName());
+		assertEquals(songDuration1, h.getSong(0).getDuration());
+		assertEquals(songPosition1, h.getSong(0).getPosition());
+		
 	}
 
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)

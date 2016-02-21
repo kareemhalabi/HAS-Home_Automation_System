@@ -41,6 +41,9 @@ public class TestPersistence {
 		h.getAlbum(0).addSong("Sintara", 2000, 1);
 		h.getAlbum(1).addSong("The Cave", 100, 2);
 		
+		h.addSong(h.getAlbum(0).getSong(0));
+		h.addSong(h.getAlbum(1).getSong(0));
+		
 	}
 
 	@After
@@ -103,6 +106,15 @@ public class TestPersistence {
 		assertEquals(100, h.getAlbum(1).getSong(0).getDuration());
 		assertEquals(2, h.getAlbum(1).getSong(0).getPosition());
 		
+		//check song 1 independently
+		assertEquals("Sintara", h.getSong(0).getName());
+		assertEquals(2000, h.getSong(0).getDuration());
+		assertEquals(1, h.getSong(0).getPosition());
+		
+		//check song 2 independently
+		assertEquals("The Cave", h.getSong(1).getName());
+		assertEquals(100, h.getSong(1).getDuration());
+		assertEquals(2, h.getSong(1).getPosition());
 	}
 
 }

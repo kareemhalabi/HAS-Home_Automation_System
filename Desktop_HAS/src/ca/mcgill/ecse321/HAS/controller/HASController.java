@@ -46,7 +46,7 @@ public class HASController
 			error = error + "Genre name cannot be empty! ";
 		if(releaseDate == null)
 			error = error + "Release date cannot be empty! ";
-		if(releaseDate.compareTo(sqlDate) > 0)
+		else if(releaseDate.compareTo(sqlDate) > 0)
 			error = error + "Release date cannot be in the future! ";
 		if(ar == null )
 			error = error + "Album must have an artist! ";
@@ -77,9 +77,9 @@ public class HASController
 			error = error + "Song must have a name! ";
 		
 		//if integer field is left without a number in there, what will it give?
-		if(aDuration == 0) 
+		if(aDuration <= 0)
 			error = error + "Song must have a duration! ";
-		if(aPosition == 0)
+		if(aPosition <= 0)
 			error = error + "Song must have a position! ";
 		
 		if(error.length() > 0)

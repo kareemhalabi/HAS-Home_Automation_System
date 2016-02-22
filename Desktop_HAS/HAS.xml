@@ -1,0 +1,35 @@
+<HAS id="1">
+  <rooms id="2"/>
+  <artists id="3">
+    <artist id="4">
+      <name>Blah</name>
+      <albums id="5">
+        <album id="6">
+          <name>IsThisWorkingNow</name>
+          <genre>Indie</genre>
+          <releaseDate id="7">2016-02-02</releaseDate>
+          <songs id="8"/>
+          <artist reference="4"/>
+        </album>
+      </albums>
+    </artist>
+    <artist id="9">
+      <name>Albert</name>
+      <albums id="10">
+        <album id="11">
+          <name>asjdlf</name>
+          <genre>asdfs</genre>
+          <releaseDate id="12">2016-02-08</releaseDate>
+          <songs id="13"/>
+          <artist reference="9"/>
+        </album>
+      </albums>
+    </artist>
+  </artists>
+  <albums id="14">
+    <album reference="11"/>
+    <album reference="6"/>
+  </albums>
+  <playlists id="15"/>
+  <songs id="16"/>
+</HAS>

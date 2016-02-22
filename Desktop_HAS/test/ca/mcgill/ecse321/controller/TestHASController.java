@@ -49,7 +49,7 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		Date d1 = new Date(2007, 01, 25);
+		Date d1 = new Date(107, 01, 25);
 
 		// create the artist
 		Artist ar1 = new Artist(artName);
@@ -101,7 +101,7 @@ public class TestHASController
 		String name = null;
 		String genre = "Indie";
 		String artName = "Oscar";
-		Date d1 = new Date(2007, 01, 25);
+		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 
@@ -133,7 +133,7 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "";
 		String artName = "Oscar";
-		Date d1 = new Date(2007, 01, 25);
+		Date d1 = new Date(107, 01,25);
 
 		String error = "";
 
@@ -185,6 +185,37 @@ public class TestHASController
 		assertEquals("Release date cannot be empty! ", error);
 		assertEquals(0, h.getAlbums().size());
 	}
+	
+	@Test
+	public void testCreateAlbumFutureReleaseDate()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getAlbums().size());
+
+		// album attributes
+		String name = "Flume";
+		String genre = "Indie";
+		String artName = "Oscar";
+		Date d1 = new Date(2007, 1, 25);
+
+		String error = "";
+
+		// create the artist
+		Artist ar1 = new Artist(artName);
+
+		// create controller and create the album
+		HASController hc = new HASController();
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Release date cannot be in the future! ", error);
+		assertEquals(0, h.getAlbums().size());
+	}
 
 	@Test
 	public void testCreateAlbumNoArtist()
@@ -196,7 +227,9 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = null;
-		Date d1 = new Date(2007, 01, 25);
+		
+		//For some weird reason my computer adds 1900 years to the date below
+		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 
@@ -251,7 +284,8 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		Date d1 = new Date(2007, 01, 25);
+		//For some wierd reason, my calendar has decided to add 1900 years to my year... 
+		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 
@@ -264,7 +298,8 @@ public class TestHASController
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
-		} catch (InvalidInputException e)
+		} 
+		catch (InvalidInputException e)
 		{
 			// check that no error has occurred in the creation of the album
 			fail();
@@ -306,7 +341,8 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		Date d1 = new Date(2007, 01, 25);
+		//For some wierd reason my calendar has decided to add 1900 years to my year...
+		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 
@@ -361,7 +397,7 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		Date d1 = new Date(2007, 01, 25);
+		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 
@@ -415,7 +451,7 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		Date d1 = new Date(2007, 01, 25);
+		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 

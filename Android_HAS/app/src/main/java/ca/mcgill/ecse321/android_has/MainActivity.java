@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -220,28 +218,25 @@ public class MainActivity extends AppCompatActivity {
         TextView songPosition = (TextView) findViewById(R.id.newsong_position);
 
 
-        error = "";
+        // if no text is in songDuration, the duration defaults to 0 so
+        // that hc can print an error
         int duration = 0;
         try {
             duration = Integer.parseInt(songDuration.getText().toString());
-        } catch (NumberFormatException e) {
-            error += "Song must have a duration! ";
-        }
+        } catch (NumberFormatException e) {}
 
+        // if no text is in songPosition, the position defaults to 0 so
+        // that hc can print an error
         int position = 0;
         try {
             position = Integer.parseInt(songPosition.getText().toString());
-        } catch (NumberFormatException e) {
-            error += "Song must have a position!";
-        }
+        } catch (NumberFormatException e) {}
 
-        if (error.length() == 0) {
-            try {
-                hc.addSongtoAlbum(albums.get(selectedAlbum), songName.getText().toString(),
-                        duration, position);
-            } catch(InvalidInputException e) {
-                error = e.getMessage();
-            }
+        try {
+            hc.addSongtoAlbum(albums.get(selectedAlbum), songName.getText().toString(),
+                    duration, position);
+        } catch(InvalidInputException e) {
+            error = e.getMessage();
         }
 
         refreshData();

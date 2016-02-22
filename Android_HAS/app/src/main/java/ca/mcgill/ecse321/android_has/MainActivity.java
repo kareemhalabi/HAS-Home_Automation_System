@@ -219,12 +219,29 @@ public class MainActivity extends AppCompatActivity {
 
         TextView songPosition = (TextView) findViewById(R.id.newsong_position);
 
+
+        error = "";
+        int duration = 0;
         try {
-            hc.addSongtoAlbum(albums.get(selectedAlbum), songName.getText().toString(),
-                    Integer.parseInt(songDuration.getText().toString()),
-                    Integer.parseInt(songPosition.getText().toString()));
-        } catch(InvalidInputException e) {
-            error = e.getMessage();
+            duration = Integer.parseInt(songDuration.getText().toString());
+        } catch (NumberFormatException e) {
+            error += "Song must have a duration! ";
+        }
+
+        int position = 0;
+        try {
+            position = Integer.parseInt(songPosition.getText().toString());
+        } catch (NumberFormatException e) {
+            error += "Song must have a position!";
+        }
+
+        if (error.length() == 0) {
+            try {
+                hc.addSongtoAlbum(albums.get(selectedAlbum), songName.getText().toString(),
+                        duration, position);
+            } catch(InvalidInputException e) {
+                error = e.getMessage();
+            }
         }
 
         refreshData();

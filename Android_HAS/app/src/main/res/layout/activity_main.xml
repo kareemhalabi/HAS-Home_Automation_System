@@ -136,12 +136,14 @@
             android:id="@+id/newsong_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="@string/songduration_hint" />
 
         <EditText
             android:id="@+id/newsong_position"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="@string/songposition_hint" />
 
         <Button

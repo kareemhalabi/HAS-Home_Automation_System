@@ -49,7 +49,8 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		Date d1 = new Date(107, 01, 25);
+		Date d1 = new Date(116, 02, 8);
+		System.out.println(d1);
 
 		// create the artist
 		Artist ar1 = new Artist(artName);
@@ -215,6 +216,37 @@ public class TestHASController
 
 		assertEquals("Release date cannot be in the future! ", error);
 		assertEquals(0, h.getAlbums().size());
+	}
+	
+	@Test
+	public void testCreateAlbumPresentReleaseDate()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getAlbums().size());
+
+		// album attributes
+		String name = "Flume";
+		String genre = "Indie";
+		String artName = "Oscar";
+		Date d1 = new Date(116, 2, 8);
+
+		String error = "";
+
+		// create the artist
+		Artist ar1 = new Artist(artName);
+
+		// create controller and create the album
+		HASController hc = new HASController();
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} 
+		catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		assertEquals(1, h.getAlbums().size());
 	}
 
 	@Test

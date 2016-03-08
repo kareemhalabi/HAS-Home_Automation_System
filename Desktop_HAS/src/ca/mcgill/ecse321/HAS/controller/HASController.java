@@ -31,12 +31,8 @@ public class HASController
 	{
 		//check that the input is valid for this
 		java.util.Calendar cal = Calendar.getInstance();
-		java.util.Date utilDate = new java.util.Date(); // your util date
+		java.util.Date utilDate = new java.util.Date();
 		cal.setTime(utilDate);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);    
 		java.sql.Date sqlDate = new java.sql.Date(cal.getTime().getTime());
 		
 		String error = "";
@@ -46,7 +42,7 @@ public class HASController
 			error = error + "Genre name cannot be empty! ";
 		if(releaseDate == null)
 			error = error + "Release date cannot be empty! ";
-		else if(releaseDate.compareTo(sqlDate) > 0)
+		else if(releaseDate.after(sqlDate) == true)
 			error = error + "Release date cannot be in the future! ";
 		if(ar == null )
 			error = error + "Album must have an artist! ";
@@ -89,6 +85,11 @@ public class HASController
 		h.addSong(newSong);
 		
 		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+	
+	public void createPlaylist()
+	{
+		
 	}
 
 }

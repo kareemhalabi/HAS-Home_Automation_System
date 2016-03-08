@@ -3,12 +3,13 @@ package ca.mcgill.ecse321.HAS.view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+//import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -334,6 +335,8 @@ public class HASPage extends JFrame
 			
 			//Song stuff and song duration/position
 			songNameTextField.setText("");
+			songPositionIntegerPicker.setText("");
+			songDurationIntegerPicker.setText("");
 			albumReleaseDatePicker.getModel().setValue(null);
 			
 		}
@@ -372,10 +375,11 @@ public class HASPage extends JFrame
 		{
 			// call the method to create an album
 			HASController hc = new HASController();
+			Date selectedDate = (java.sql.Date) albumReleaseDatePicker.getModel().getValue();
 
 			try
 			{
-				hc.createAlbum(albumNameTextField.getText(), albumGenreTextField.getText(), (java.sql.Date) albumReleaseDatePicker.getModel().getValue(), artists.get(selectedArtist));
+				hc.createAlbum(albumNameTextField.getText(), albumGenreTextField.getText(), selectedDate, artists.get(selectedArtist));
 			} 
 			catch (InvalidInputException e)
 			{
@@ -391,7 +395,11 @@ public class HASPage extends JFrame
 	{
 		error = "";
 		if(selectedAlbum < 0)
-			error = error + "Album must have an artist!";
+			error = error + "Song must have an album!";
+		if(songDurationIntegerPicker == null || songDurationIntegerPicker.getText().trim().length() == 0)
+			error = error + "Song must have a duration! Please enter an integer! ";
+		if(songPositionIntegerPicker == null || songPositionIntegerPicker.getText().trim().length() == 0)
+			error = error + "Song must have a position! Please enter an integer! ";
 		error = error.trim();
 		if(error.length() == 0)
 		{
@@ -406,5 +414,7 @@ public class HASPage extends JFrame
 				error = e.getMessage();
 			}
 		}
+		
+		refreshData();
 	}
 }

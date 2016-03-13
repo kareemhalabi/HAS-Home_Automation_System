@@ -16,6 +16,7 @@ import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.HAS.model.Playlist;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
@@ -474,6 +475,7 @@ public class TestHASController
 
 	@Test
 	public void testAddSongNoPosition()
+
 	{
 		// make sure the has has been reset
 		HAS h = HAS.getInstance();
@@ -527,6 +529,7 @@ public class TestHASController
 
 	}
 
+	
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)
 	{
 		//association with album

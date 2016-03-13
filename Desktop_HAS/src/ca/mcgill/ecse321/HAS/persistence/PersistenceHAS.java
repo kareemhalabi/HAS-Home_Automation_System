@@ -51,6 +51,9 @@ public class PersistenceHAS {
 			Iterator<Song> sIt = h2.getSongs().iterator();
 			while(sIt.hasNext())
 				h.addSong(sIt.next());
+			
+			/*for(Song s : h2.getSongs())
+				h.addSong(s);*/
 		}
 	}
 	

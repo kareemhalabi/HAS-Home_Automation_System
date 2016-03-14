@@ -101,4 +101,19 @@ class Controller{
 			$pm->writeDataToStore($hm);
 		}
 	}
+	
+	public function createRoom($name, $volume, $mute){
+		$name = InputValidator::validate_input($name);
+		if ($name == null || strlen($name) == 0){
+			throw new Exception("Room name cannot be empty!");
+		}else{
+			$pm = new PersistenceHAS();
+			$hm = $pm->loadDataFromStore();
+	
+			$room = new Room($name, $volume, $mute);
+			$hm->addRoom($room);
+	
+			$pm->writeDataToStore($hm);
+		}
+	}
 }

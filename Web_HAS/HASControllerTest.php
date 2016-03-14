@@ -1,10 +1,10 @@
 <?php
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS_Alex\controller\Controller.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS_Alex\persistence\PersistenceHAS.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS_Alex\model\HAS.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS_Alex\model\Artist.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS_Alex\model\Song.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS_Alex\model\Album.php';
+require_once (__DIR__.'/../controller/Controller.php');
+require_once (__DIR__.'/../persistence/PersistenceHAS.php');
+require_once (__DIR__.'/../model/HAS.php');
+require_once (__DIR__.'/../model/Artist.php');
+require_once (__DIR__.'/../model/Song.php');
+require_once (__DIR__.'/../model/Album.php');
 
 
 class HASControllerTest extends PHPUnit_Framework_TestCase{

@@ -2,7 +2,7 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.23.0-599796a modeling language!*/
 
-class Album
+class Album implements Playable
 {
 
   //------------------------
@@ -16,22 +16,22 @@ class Album
 
   //Album Associations
   private $songs;
-  private $artist;
+  private $mainArtist;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aName, $aGenre, $aReleaseDate, $aArtist)
+  public function __construct($aName, $aGenre, $aReleaseDate, $aMainArtist)
   {
     $this->name = $aName;
     $this->genre = $aGenre;
     $this->releaseDate = $aReleaseDate;
     $this->songs = array();
-    $didAddArtist = $this->setArtist($aArtist);
-    if (!$didAddArtist)
+    $didAddMainArtist = $this->setMainArtist($aMainArtist);
+    if (!$didAddMainArtist)
     {
-      throw new Exception("Unable to create album due to artist");
+      throw new Exception("Unable to create album due to mainArtist");
     }
   }
 
@@ -119,20 +119,14 @@ class Album
     return $index;
   }
 
-  public function getArtist()
+  public function getMainArtist()
   {
-    return $this->artist;
-  }
-
-  public function isNumberOfSongsValid()
-  {
-    $isValid = $this->numberOfSongs() >= self::minimumNumberOfSongs();
-    return $isValid;
+    return $this->mainArtist;
   }
 
   public static function minimumNumberOfSongs()
   {
-    return 1;
+    return 0;
   }
 
   public function addSongVia($aName, $aDuration, $aPosition)
@@ -146,12 +140,6 @@ class Album
     if ($this->indexOfSong($aSong) !== -1) { return false; }
     $existingAlbum = $aSong->getAlbum();
     $isNewAlbum = $existingAlbum != null && $this !== $existingAlbum;
-
-    if ($isNewAlbum && $existingAlbum->numberOfSongs() <= self::minimumNumberOfSongs())
-    {
-      return $wasAdded;
-    }
-
     if ($isNewAlbum)
     {
       $aSong->setAlbum($this);
@@ -168,20 +156,12 @@ class Album
   {
     $wasRemoved = false;
     //Unable to remove aSong, as it must always have a album
-    if ($this === $aSong->getAlbum())
+    if ($this !== $aSong->getAlbum())
     {
-      return $wasRemoved;
+      unset($this->songs[$this->indexOfSong($aSong)]);
+      $this->songs = array_values($this->songs);
+      $wasRemoved = true;
     }
-
-    //album already at minimum (1)
-    if ($this->numberOfSongs() <= self::minimumNumberOfSongs())
-    {
-      return $wasRemoved;
-    }
-
-    unset($this->songs[$this->indexOfSong($aSong)]);
-    $this->songs = array_values($this->songs);
-    $wasRemoved = true;
     return $wasRemoved;
   }
 
@@ -217,21 +197,21 @@ class Album
     return $wasAdded;
   }
 
-  public function setArtist($aArtist)
+  public function setMainArtist($aMainArtist)
   {
     $wasSet = false;
-    if ($aArtist == null)
+    if ($aMainArtist == null)
     {
       return $wasSet;
     }
     
-    $existingArtist = $this->artist;
-    $this->artist = $aArtist;
-    if ($existingArtist != null && $existingArtist != $aArtist)
+    $existingMainArtist = $this->mainArtist;
+    $this->mainArtist = $aMainArtist;
+    if ($existingMainArtist != null && $existingMainArtist != $aMainArtist)
     {
-      $existingArtist->removeAlbum($this);
+      $existingMainArtist->removeAlbum($this);
     }
-    $this->artist->addAlbum($this);
+    $this->mainArtist->addAlbum($this);
     $wasSet = true;
     return $wasSet;
   }
@@ -247,9 +227,14 @@ class Album
     {
       $aSong->delete();
     }
-    $placeholderArtist = $this->artist;
-    $this->artist = null;
-    $placeholderArtist->removeAlbum($this);
+    $placeholderMainArtist = $this->mainArtist;
+    $this->mainArtist = null;
+    $placeholderMainArtist->removeAlbum($this);
+  }
+
+  public function play()
+  {
+          return "";
   }
 
 }

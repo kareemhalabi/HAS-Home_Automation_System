@@ -21,6 +21,7 @@ class HAS
   private $albums;
   private $playlists;
   private $songs;
+  private $roomGroups;
 
   //------------------------
   // CONSTRUCTOR
@@ -33,6 +34,7 @@ class HAS
     $this->albums = array();
     $this->playlists = array();
     $this->songs = array();
+    $this->roomGroups = array();
   }
 
   public static function getInstance()
@@ -243,6 +245,47 @@ class HAS
     foreach($this->songs as $song)
     {
       if ($song->equals($aSong))
+      {
+        $wasFound = true;
+        break;
+      }
+      $index += 1;
+    }
+    $index = $wasFound ? $index : -1;
+    return $index;
+  }
+
+  public function getRoomGroup_index($index)
+  {
+    $aRoomGroup = $this->roomGroups[$index];
+    return $aRoomGroup;
+  }
+
+  public function getRoomGroups()
+  {
+    $newRoomGroups = $this->roomGroups;
+    return $newRoomGroups;
+  }
+
+  public function numberOfRoomGroups()
+  {
+    $number = count($this->roomGroups);
+    return $number;
+  }
+
+  public function hasRoomGroups()
+  {
+    $has = $this->numberOfRoomGroups() > 0;
+    return $has;
+  }
+
+  public function indexOfRoomGroup($aRoomGroup)
+  {
+    $wasFound = false;
+    $index = 0;
+    foreach($this->roomGroups as $roomGroup)
+    {
+      if ($roomGroup->equals($aRoomGroup))
       {
         $wasFound = true;
         break;
@@ -543,6 +586,64 @@ class HAS
     return $wasAdded;
   }
 
+  public static function minimumNumberOfRoomGroups()
+  {
+    return 0;
+  }
+
+  public function addRoomGroup($aRoomGroup)
+  {
+    $wasAdded = false;
+    if ($this->indexOfRoomGroup($aRoomGroup) !== -1) { return false; }
+    $this->roomGroups[] = $aRoomGroup;
+    $wasAdded = true;
+    return $wasAdded;
+  }
+
+  public function removeRoomGroup($aRoomGroup)
+  {
+    $wasRemoved = false;
+    if ($this->indexOfRoomGroup($aRoomGroup) != -1)
+    {
+      unset($this->roomGroups[$this->indexOfRoomGroup($aRoomGroup)]);
+      $this->roomGroups = array_values($this->roomGroups);
+      $wasRemoved = true;
+    }
+    return $wasRemoved;
+  }
+
+  public function addRoomGroupAt($aRoomGroup, $index)
+  {  
+    $wasAdded = false;
+    if($this->addRoomGroup($aRoomGroup))
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfRoomGroups()) { $index = $this->numberOfRoomGroups() - 1; }
+      array_splice($this->roomGroups, $this->indexOfRoomGroup($aRoomGroup), 1);
+      array_splice($this->roomGroups, $index, 0, array($aRoomGroup));
+      $wasAdded = true;
+    }
+    return $wasAdded;
+  }
+
+  public function addOrMoveRoomGroupAt($aRoomGroup, $index)
+  {
+    $wasAdded = false;
+    if($this->indexOfRoomGroup($aRoomGroup) !== -1)
+    {
+      if($index < 0 ) { $index = 0; }
+      if($index > $this->numberOfRoomGroups()) { $index = $this->numberOfRoomGroups() - 1; }
+      array_splice($this->roomGroups, $this->indexOfRoomGroup($aRoomGroup), 1);
+      array_splice($this->roomGroups, $index, 0, array($aRoomGroup));
+      $wasAdded = true;
+    } 
+    else 
+    {
+      $wasAdded = $this->addRoomGroupAt($aRoomGroup, $index);
+    }
+    return $wasAdded;
+  }
+
   public function equals($compareTo)
   {
     return $this == $compareTo;
@@ -555,6 +656,7 @@ class HAS
     $this->albums = array();
     $this->playlists = array();
     $this->songs = array();
+    $this->roomGroups = array();
   }
 
 }

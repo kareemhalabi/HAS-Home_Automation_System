@@ -14,6 +14,9 @@ class Room
   private $volume;
   private $mute;
 
+  //Room Associations
+  private $playable;
+
   //------------------------
   // CONSTRUCTOR
   //------------------------
@@ -68,13 +71,34 @@ class Room
     return $this->mute;
   }
 
+  public function getPlayable()
+  {
+    return $this->playable;
+  }
+
+  public function hasPlayable()
+  {
+    $has = $this->playable != null;
+    return $has;
+  }
+
+  public function setPlayable($aNewPlayable)
+  {
+    $wasSet = false;
+    $this->playable = $aNewPlayable;
+    $wasSet = true;
+    return $wasSet;
+  }
+
   public function equals($compareTo)
   {
     return $this == $compareTo;
   }
 
   public function delete()
-  {}
+  {
+    $this->playable = null;
+  }
 
 }
 ?>

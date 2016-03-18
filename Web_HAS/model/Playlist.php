@@ -2,7 +2,7 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.23.0-599796a modeling language!*/
 
-class Playlist
+class Playlist implements Playable
 {
 
   //------------------------
@@ -184,6 +184,11 @@ class Playlist
   public function delete()
   {
     $this->songs = array();
+  }
+
+  public function play()
+  {
+          return "";
   }
 
 }

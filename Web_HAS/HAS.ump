@@ -1,8 +1,12 @@
+namespace ca.mcgill.ecse321.HAS.model;
+
 class Song
 {
+  isA Playable;
   name;
   int duration;
   int position;
+  * -- * Artist ftArtists;
 }
 
 class HAS
@@ -13,6 +17,7 @@ class HAS
   1 -> * Album;
   1 -> * Playlist;
   1 -> * Song;
+  1 -> * RoomGroup;
 }
 
 class Room
@@ -20,66 +25,150 @@ class Room
   name;
   int volume;
   boolean mute;
+  * -> 0..1 Playable;
+}
+
+class RoomGroup {
+  name;
+  * -> 1..* Room;
+  1 -> 0..1 Playable;
 }
 
 class Artist
 {
   name;
-  1 -- * Album;
 }
 
 class Album
 {
+  isA Playable;
   name;
   genre;
   Date releaseDate;
-  1 -- 1..* Song;
+  1 -- 0..* Song;
+  * -- 1 Artist mainArtist;
+  
+  //Java
+  /* 
+      public void play() {
+        for(Song s : songs)
+            s.play();
+      }
+  */
+  
+  //PHP
+  /*
+    public function play() {
+      foreach($this->songs as $song) {
+        $song->play();
+      }
+    }
+  */
 }
 
 class Playlist
 {
-  name;
+   isA Playable;
+   name;
   * -> 1..* Song;
+  //Java
+  /* 
+      public void play() {
+        for(Song s : songs)
+            s.play();
+      }
+  */
+  
+  //PHP
+  /*
+    public function play() {
+      foreach($this->songs as $song) {
+        $song->play();
+      }
+    }
+  */
 }
 
-//$?[End_of_model]$?
+interface Playable {
+  void play();
+}//$?[End_of_model]$?
 
 class Song
 {
-  position 109 293 109 92;
+  position 210 261 112 92;
+  position.association Artist__Song 112,2 16,58;
+  position.association Artist:ftArtists__Song 112,10 8,58;
 }
 
 class HAS
 {
-  position 268 32 109 41;
-  position.association HAS__Room 109,34 0,6;
-  position.association HAS__Playlist 0,10 112,10;
-  position.association Artist__HAS 25,41 51,0;
-  position.association Album__HAS 81,41 65,0;
-  position.association HAS__Song 0,34 74,0;
+  position 387 30 109 45;
+  position.association HAS__Playlist 0,22 112,30;
+  position.association HAS__Song 0,38 21,0;
+  position.association HAS__Room 109,24 30,0;
+  position.association Artist__HAS 57,45 49,0;
+  position.association Album__HAS 82,45 131,0;
+  position.association HAS__RoomGroup 102,38 29,0;
 }
 
 class Room
 {
-  position 543 101 121 92;
+  position 645 66 121 92;
+  position.association Playable__Room 99,92 102,0;
 }
 
 class Artist
 {
-  position 212 144 112 58;
-  position.association Artist__HAS 81,0 15,41;
-  position.association Album__Artist 112,27 0,18;
+  position 333 140 112 58;
+      position.association Artist__Song 27,58 101,0;
 }
 
 class Album
 {
-  position 347 209 146 92;
-  position.association Album__Artist 0,37 112,56;
-  position.association Album__Song 0,60 109,10;
+  position 438 282 146 92;
+  position.association Album__Song 0,15 112,66;
+  position.association Album__Artist:mainArtist 33,0 112,38;
 }
 
 class Playlist
 {
-  position 41 51 112 58;
-  position.association Playlist__Song 67,58 27,0;
+  position 83 33 112 58;
+  position.association Playlist__Song 112,58 0,0;
+}
+
+class Song
+{
+  position 210 261 112 92;
+}
+
+class Song
+{
+  position 210 261 112 92;
+}
+
+class HAS
+{
+  position 387 30 109 45;
+}
+
+class Room
+{
+  position 645 66 121 92;
+}
+
+class Artist
+{
+  position 333 140 112 58;
+}
+
+class Album
+{
+  position 438 282 146 92;
+}
+
+class RoomGroup
+{
+  position 602 201 112 58;
+  position.association Room__RoomGroup 58,0 49,92;
+  position.association Playable__RoomGroup 28,58 37,0;
 }

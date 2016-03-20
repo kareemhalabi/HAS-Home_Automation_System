@@ -1,12 +1,13 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.23.0-2950f84 modeling language!*/
 
 package ca.mcgill.ecse321.HAS.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 27 "../../../../../HAS_Domain_Model.ump"
-// line 68 "../../../../../HAS_Domain_Model.ump"
+// line 42 "../../../../../../../../ump/160303721337/model.ump"
+// line 124 "../../../../../../../../ump/160303721337/model.ump"
+// line 163 "../../../../../../../../ump/160303721337/model.ump"
 public class Artist
 {
 
@@ -18,6 +19,7 @@ public class Artist
   private String name;
 
   //Artist Associations
+  private List<Song> songs;
   private List<Album> albums;
 
   //------------------------
@@ -27,6 +29,7 @@ public class Artist
   public Artist(String aName)
   {
     name = aName;
+    songs = new ArrayList<Song>();
     albums = new ArrayList<Album>();
   }
 
@@ -45,6 +48,36 @@ public class Artist
   public String getName()
   {
     return name;
+  }
+
+  public Song getSong(int index)
+  {
+    Song aSong = songs.get(index);
+    return aSong;
+  }
+
+  public List<Song> getSongs()
+  {
+    List<Song> newSongs = Collections.unmodifiableList(songs);
+    return newSongs;
+  }
+
+  public int numberOfSongs()
+  {
+    int number = songs.size();
+    return number;
+  }
+
+  public boolean hasSongs()
+  {
+    boolean has = songs.size() > 0;
+    return has;
+  }
+
+  public int indexOfSong(Song aSong)
+  {
+    int index = songs.indexOf(aSong);
+    return index;
   }
 
   public Album getAlbum(int index)
@@ -77,6 +110,88 @@ public class Artist
     return index;
   }
 
+  public static int minimumNumberOfSongs()
+  {
+    return 0;
+  }
+
+  public boolean addSong(Song aSong)
+  {
+    boolean wasAdded = false;
+    if (songs.contains(aSong)) { return false; }
+    songs.add(aSong);
+    if (aSong.indexOfFtArtist(this) != -1)
+    {
+      wasAdded = true;
+    }
+    else
+    {
+      wasAdded = aSong.addFtArtist(this);
+      if (!wasAdded)
+      {
+        songs.remove(aSong);
+      }
+    }
+    return wasAdded;
+  }
+
+  public boolean removeSong(Song aSong)
+  {
+    boolean wasRemoved = false;
+    if (!songs.contains(aSong))
+    {
+      return wasRemoved;
+    }
+
+    int oldIndex = songs.indexOf(aSong);
+    songs.remove(oldIndex);
+    if (aSong.indexOfFtArtist(this) == -1)
+    {
+      wasRemoved = true;
+    }
+    else
+    {
+      wasRemoved = aSong.removeFtArtist(this);
+      if (!wasRemoved)
+      {
+        songs.add(oldIndex,aSong);
+      }
+    }
+    return wasRemoved;
+  }
+
+  public boolean addSongAt(Song aSong, int index)
+  {  
+    boolean wasAdded = false;
+    if(addSong(aSong))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfSongs()) { index = numberOfSongs() - 1; }
+      songs.remove(aSong);
+      songs.add(index, aSong);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveSongAt(Song aSong, int index)
+  {
+    boolean wasAdded = false;
+    if(songs.contains(aSong))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfSongs()) { index = numberOfSongs() - 1; }
+      songs.remove(aSong);
+      songs.add(index, aSong);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addSongAt(aSong, index);
+    }
+    return wasAdded;
+  }
+
   public static int minimumNumberOfAlbums()
   {
     return 0;
@@ -91,11 +206,11 @@ public class Artist
   {
     boolean wasAdded = false;
     if (albums.contains(aAlbum)) { return false; }
-    Artist existingArtist = aAlbum.getArtist();
-    boolean isNewArtist = existingArtist != null && !this.equals(existingArtist);
-    if (isNewArtist)
+    Artist existingMainArtist = aAlbum.getMainArtist();
+    boolean isNewMainArtist = existingMainArtist != null && !this.equals(existingMainArtist);
+    if (isNewMainArtist)
     {
-      aAlbum.setArtist(this);
+      aAlbum.setMainArtist(this);
     }
     else
     {
@@ -108,8 +223,8 @@ public class Artist
   public boolean removeAlbum(Album aAlbum)
   {
     boolean wasRemoved = false;
-    //Unable to remove aAlbum, as it must always have a artist
-    if (!this.equals(aAlbum.getArtist()))
+    //Unable to remove aAlbum, as it must always have a mainArtist
+    if (!this.equals(aAlbum.getMainArtist()))
     {
       albums.remove(aAlbum);
       wasRemoved = true;
@@ -151,6 +266,12 @@ public class Artist
 
   public void delete()
   {
+    ArrayList<Song> copyOfSongs = new ArrayList<Song>(songs);
+    songs.clear();
+    for(Song aSong : copyOfSongs)
+    {
+      aSong.removeFtArtist(this);
+    }
     for(int i=albums.size(); i > 0; i--)
     {
       Album aAlbum = albums.get(i - 1);
@@ -161,7 +282,7 @@ public class Artist
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "]"
      + outputString;

@@ -43,9 +43,9 @@ public class TestHASControllerPlaylistAndRoom
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getPlaylists().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
@@ -84,30 +84,29 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		String playlistName = "Playlist1";
-		
+
 		try
 		{
 			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
-		}
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
-		
+
 		assertEquals(1, h.getPlaylists().size());
 		assertEquals("Playlist1", h.getPlaylist(0).getName());
 	}
-	
+
 	@Test
 	public void testCreatePlaylistNoName()
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getPlaylists().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
@@ -146,53 +145,51 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		String playlistName = "";
-		
+
 		try
 		{
 			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
-		}
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Playlist must have a name!", error);
 	}
-	
+
 	@Test
 	public void testCreatePlaylistNoSong()
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getPlaylists().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String error = "";
-		
+
 		String playlistName = "Name";
-		
+
 		try
 		{
 			hc.createPlaylist(playlistName, null);
-		}
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Playlist must have at least one song!", error);
 	}
-	
+
 	@Test
 	public void testAddSongToPlaylist()
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getPlaylists().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
@@ -233,7 +230,7 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1, songPosition2);
@@ -243,42 +240,40 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		String playlistName = "Playlist1";
-		
+
 		try
 		{
 			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
-		}
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
-		
+
 		try
 		{
 			hc.addSongtoPlaylist(h.getPlaylist(0), h.getAlbum(0).getSong(1));
-		}
-		catch(InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
-		
+
 		assertEquals(2, h.getPlaylist(0).getSongs().size());
 		assertEquals("Test2", h.getPlaylist(0).getSong(1).getName());
 		assertEquals(213, h.getPlaylist(0).getSong(1).getDuration());
 		assertEquals(2, h.getPlaylist(0).getSong(1).getPosition());
 	}
-	
+
 	@Test
 	public void testAddSongToPlaylistNoPlaylist()
 
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getPlaylists().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
@@ -319,7 +314,7 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1, songPosition2);
@@ -329,29 +324,28 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		try
 		{
 			hc.addSongtoPlaylist(null, h.getAlbum(0).getSong(1));
-		}
-		catch(InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("A playlist must be selected!", error);
-		
+
 	}
 
 	@Test
 	public void testAddSongToPlaylistNoSong()
 
-	{	
+	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getPlaylists().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
@@ -392,7 +386,7 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1, songPosition2);
@@ -402,81 +396,281 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
+
 		String playlistName = "Playlist1";
-		
+
 		try
 		{
 			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
-		}
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
-		
+
 		try
 		{
 			hc.addSongtoPlaylist(h.getPlaylist(0), null);
-		}
-		catch(InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("A song must be selected!", error);
-		
 	}
-	
+
 	@Test
 	public void testCreateRoom()
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getRooms().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String name = "RoomName";
 		try
 		{
 			hc.createRoom(name);
-		}
-		catch(InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
-		
+
 		assertEquals(1, h.getRooms().size());
 		assertEquals("RoomName", h.getRoom(0).getName());
 	}
-	
+
 	@Test
 	public void testCreateRoomNoName()
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getRooms().size());
-		
+
 		HASController hc = new HASController();
-		
+
 		String name = "";
 		String error = "";
 		try
 		{
 			hc.createRoom(name);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
 		}
-		catch(InvalidInputException e)
+
+		assertEquals("Room must have a name!", error);
+		assertEquals(0, h.getRooms().size());
+	}
+
+	@Test
+	public void testCreateRoomGroup()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getRooms().size());
+
+		HASController hc = new HASController();
+
+		String name = "RoomName";
+		try
+		{
+			hc.createRoom(name);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		String groupRoomName = "Group 1";
+
+		try
+		{
+			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		assertEquals("Group 1", h.getRoomGroup(0).getName());
+		assertEquals("RoomName", h.getRoomGroup(0).getRoom(0).getName());
+	}
+
+	@Test
+	public void testCreateRoomGroupNoName()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getRooms().size());
+
+		HASController hc = new HASController();
+
+		String name = "RoomName";
+		String error = "";
+		String groupRoomName = "";
+
+		try
+		{
+			hc.createRoom(name);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Room Group must have a name!", error);
+		assertEquals(0, h.getRoomGroups().size());
+	}
+
+	@Test
+	public void testCreateRoomGroupNoInitialRoom()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getRooms().size());
+
+		HASController hc = new HASController();
+
+		String error = "";
+		String groupRoomName = "Group 1";
+
+		try
+		{
+			hc.createRoomGroup(groupRoomName, null);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Room Group must have at least one room!", error);
+		assertEquals(0, h.getRoomGroups().size());
+	}
+
+	@Test
+	public void testAddRoomToGroupRoom()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getRooms().size());
+
+		HASController hc = new HASController();
+
+		String name1 = "RoomName";
+		String name2 = "Room2";
+		try
+		{
+			hc.createRoom(name1);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.createRoom(name2);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		String groupRoomName = "Group 1";
+
+		try
+		{
+			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.addRoomToRoomGroup(h.getRoomGroup(0), h.getRoom(1));
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		assertEquals("Room2",h.getRoomGroup(0).getRoom(1).getName());
+	}
+	
+	@Test
+	public void testAddRoomToGroupRoomNoGroup()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getRooms().size());
+
+		HASController hc = new HASController();
+
+		String name1 = "RoomName";
+		String error = "";
+		try
+		{
+			hc.createRoom(name1);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.addRoomToRoomGroup(null, h.getRoom(0));
+		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
 		}
 		
-		assertEquals("Room must have a name!", error);
+		assertEquals("Must select a room group!", error);
 	}
 	
+	@Test
+	public void testAddRoomToGroupRoomNoRoom()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getRooms().size());
+
+		HASController hc = new HASController();
+
+		String name1 = "RoomName";
+		String error = "";
+		String groupRoomName = "Group 1";
+		
+		try
+		{
+			hc.createRoom(name1);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.addRoomToRoomGroup(h.getRoomGroup(0), null);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+		
+		assertEquals("Must select a room to add to room group!", error);
+		assertEquals(1, h.getRoomGroup(0).getRooms().size());
+	}
+	
+	
+
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)
 	{
 		assertEquals(1, h.getAlbums().size());
 		assertEquals(name, h.getAlbum(0).getName());
 		assertEquals(genre, h.getAlbum(0).getGenre());
-		assertEquals(artName, h.getAlbum(0).getArtist().getName());
+		assertEquals(artName, h.getAlbum(0).getMainArtist().getName());
 		assertEquals(date, h.getAlbum(0).getReleaseDate());
 	}
 }

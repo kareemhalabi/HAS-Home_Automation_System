@@ -135,7 +135,7 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "";
 		String artName = "Oscar";
-		Date d1 = new Date(107, 01,25);
+		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 
@@ -187,7 +187,7 @@ public class TestHASController
 		assertEquals("Release date cannot be empty! ", error);
 		assertEquals(0, h.getAlbums().size());
 	}
-	
+
 	@Test
 	public void testCreateAlbumFutureReleaseDate()
 	{
@@ -218,7 +218,7 @@ public class TestHASController
 		assertEquals("Release date cannot be in the future! ", error);
 		assertEquals(0, h.getAlbums().size());
 	}
-	
+
 	@Test
 	public void testCreateAlbumPresentReleaseDate()
 	{
@@ -241,8 +241,7 @@ public class TestHASController
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
-		} 
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
@@ -260,8 +259,8 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = null;
-		
-		//For some weird reason my computer adds 1900 years to the date below
+
+		// For some weird reason my computer adds 1900 years to the date below
 		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
@@ -317,7 +316,8 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		//For some wierd reason, my calendar has decided to add 1900 years to my year... 
+		// For some wierd reason, my calendar has decided to add 1900 years to
+		// my year...
 		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
@@ -331,8 +331,7 @@ public class TestHASController
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
-		} 
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			// check that no error has occurred in the creation of the album
 			fail();
@@ -374,7 +373,8 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		//For some wierd reason my calendar has decided to add 1900 years to my year...
+		// For some wierd reason my calendar has decided to add 1900 years to my
+		// year...
 		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
@@ -529,19 +529,18 @@ public class TestHASController
 
 	}
 
-	
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)
 	{
-		//association with album
+		// association with album
 		assertEquals(testSongName1, h.getAlbum(0).getSong(0).getName());
 		assertEquals(songDuration1, h.getAlbum(0).getSong(0).getDuration());
 		assertEquals(songPosition1, h.getAlbum(0).getSong(0).getPosition());
-		
-		//association with HAS
+
+		// association with HAS
 		assertEquals(testSongName1, h.getSong(0).getName());
 		assertEquals(songDuration1, h.getSong(0).getDuration());
 		assertEquals(songPosition1, h.getSong(0).getPosition());
-		
+
 	}
 
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)
@@ -549,7 +548,7 @@ public class TestHASController
 		assertEquals(1, h.getAlbums().size());
 		assertEquals(name, h.getAlbum(0).getName());
 		assertEquals(genre, h.getAlbum(0).getGenre());
-		assertEquals(artName, h.getAlbum(0).getArtist().getName());
+		assertEquals(artName, h.getAlbum(0).getMainArtist().getName());
 		assertEquals(date, h.getAlbum(0).getReleaseDate());
 	}
 

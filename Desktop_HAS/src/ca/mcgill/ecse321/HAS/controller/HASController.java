@@ -8,6 +8,7 @@ import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Playlist;
 import ca.mcgill.ecse321.HAS.model.Room;
+import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
@@ -138,7 +139,7 @@ public class HASController
 		boolean mute = true;
 		
 		if(name == null || name.trim().length() == 0)
-			error = "Room must have a name!";
+			error = error + "Room must have a name!";
 		if(error.length() > 0)
 			throw new InvalidInputException(error);
 		
@@ -146,6 +147,44 @@ public class HASController
 		h.addRoom(newRoom);
 		
 		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+	
+	public void createRoomGroup(String name, Room initialRoom) throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		
+		String error = "";
+		
+		if(name == null || name.trim().length() == 0)
+			error = error + "Room Group must have a name!";
+		if(initialRoom == null)
+			error = error + "Room Group must have at least one room!";
+		
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
+		RoomGroup newRG = new RoomGroup(name, initialRoom);
+		h.addRoomGroup(newRG);
+		
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+	
+	public void addRoomToRoomGroup(RoomGroup rG, Room room) throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		
+		String error = "";
+		
+		if(rG == null)
+			error = error + "Must select a room group!";
+		if(room == null)
+			error = error + "Must select a room to add to room group!";
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
+		rG.addRoom(room);
+		PersistenceXStream.saveToXMLwithXStream(h);
+		
 	}
 
 }

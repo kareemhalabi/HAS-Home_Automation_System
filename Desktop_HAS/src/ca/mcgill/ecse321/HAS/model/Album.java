@@ -1,13 +1,14 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.23.0-2950f84 modeling language!*/
 
 package ca.mcgill.ecse321.HAS.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 33 "../../../../../HAS_Domain_Model.ump"
-// line 75 "../../../../../HAS_Domain_Model.ump"
-public class Album
+// line 47 "../../../../../../../../ump/160303721337/model.ump"
+// line 130 "../../../../../../../../ump/160303721337/model.ump"
+// line 168 "../../../../../../../../ump/160303721337/model.ump"
+public class Album extends Playable
 {
 
   //------------------------
@@ -15,42 +16,33 @@ public class Album
   //------------------------
 
   //Album Attributes
-  private String name;
   private String genre;
   private Date releaseDate;
 
   //Album Associations
   private List<Song> songs;
-  private Artist artist;
+  private Artist mainArtist;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Album(String aName, String aGenre, Date aReleaseDate, Artist aArtist)
+  public Album(String aName, String aGenre, Date aReleaseDate, Artist aMainArtist)
   {
-    name = aName;
+    super(aName);
     genre = aGenre;
     releaseDate = aReleaseDate;
     songs = new ArrayList<Song>();
-    boolean didAddArtist = setArtist(aArtist);
-    if (!didAddArtist)
+    boolean didAddMainArtist = setMainArtist(aMainArtist);
+    if (!didAddMainArtist)
     {
-      throw new RuntimeException("Unable to create album due to artist");
+      throw new RuntimeException("Unable to create album due to mainArtist");
     }
   }
 
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setGenre(String aGenre)
   {
@@ -66,11 +58,6 @@ public class Album
     releaseDate = aReleaseDate;
     wasSet = true;
     return wasSet;
-  }
-
-  public String getName()
-  {
-    return name;
   }
 
   public String getGenre()
@@ -113,26 +100,19 @@ public class Album
     return index;
   }
 
-  public Artist getArtist()
+  public Artist getMainArtist()
   {
-    return artist;
-  }
-
-  public boolean isNumberOfSongsValid()
-  {
-    boolean isValid = numberOfSongs() >= minimumNumberOfSongs();
-    return isValid;
+    return mainArtist;
   }
 
   public static int minimumNumberOfSongs()
   {
-    return 1;
+    return 0;
   }
 
   public Song addSong(String aName, int aDuration, int aPosition)
   {
-    Song aNewSong = new Song(aName, aDuration, aPosition, this);
-    return aNewSong;
+    return new Song(aName, aDuration, aPosition, this);
   }
 
   public boolean addSong(Song aSong)
@@ -141,11 +121,6 @@ public class Album
     if (songs.contains(aSong)) { return false; }
     Album existingAlbum = aSong.getAlbum();
     boolean isNewAlbum = existingAlbum != null && !this.equals(existingAlbum);
-
-    if (isNewAlbum && existingAlbum.numberOfSongs() <= minimumNumberOfSongs())
-    {
-      return wasAdded;
-    }
     if (isNewAlbum)
     {
       aSong.setAlbum(this);
@@ -162,19 +137,11 @@ public class Album
   {
     boolean wasRemoved = false;
     //Unable to remove aSong, as it must always have a album
-    if (this.equals(aSong.getAlbum()))
+    if (!this.equals(aSong.getAlbum()))
     {
-      return wasRemoved;
+      songs.remove(aSong);
+      wasRemoved = true;
     }
-
-    //album already at minimum (1)
-    if (numberOfSongs() <= minimumNumberOfSongs())
-    {
-      return wasRemoved;
-    }
-
-    songs.remove(aSong);
-    wasRemoved = true;
     return wasRemoved;
   }
 
@@ -210,21 +177,21 @@ public class Album
     return wasAdded;
   }
 
-  public boolean setArtist(Artist aArtist)
+  public boolean setMainArtist(Artist aMainArtist)
   {
     boolean wasSet = false;
-    if (aArtist == null)
+    if (aMainArtist == null)
     {
       return wasSet;
     }
 
-    Artist existingArtist = artist;
-    artist = aArtist;
-    if (existingArtist != null && !existingArtist.equals(aArtist))
+    Artist existingMainArtist = mainArtist;
+    mainArtist = aMainArtist;
+    if (existingMainArtist != null && !existingMainArtist.equals(aMainArtist))
     {
-      existingArtist.removeAlbum(this);
+      existingMainArtist.removeAlbum(this);
     }
-    artist.addAlbum(this);
+    mainArtist.addAlbum(this);
     wasSet = true;
     return wasSet;
   }
@@ -236,20 +203,28 @@ public class Album
       Song aSong = songs.get(i - 1);
       aSong.delete();
     }
-    Artist placeholderArtist = artist;
-    this.artist = null;
-    placeholderArtist.removeAlbum(this);
+    Artist placeholderMainArtist = mainArtist;
+    this.mainArtist = null;
+    placeholderMainArtist.removeAlbum(this);
+    super.delete();
   }
+
+
+ 
+   public void play() {
+   for(Song s : songs)
+   s.play();
+    }
+ 
 
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
-            "name" + ":" + getName()+ "," +
             "genre" + ":" + getGenre()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "releaseDate" + "=" + (getReleaseDate() != null ? !getReleaseDate().equals(this)  ? getReleaseDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "artist = "+(getArtist()!=null?Integer.toHexString(System.identityHashCode(getArtist())):"null")
+            "  " + "mainArtist = "+(getMainArtist()!=null?Integer.toHexString(System.identityHashCode(getMainArtist())):"null")
      + outputString;
   }
 }

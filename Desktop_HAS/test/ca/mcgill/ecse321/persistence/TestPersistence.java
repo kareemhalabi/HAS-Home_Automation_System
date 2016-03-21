@@ -86,7 +86,7 @@ public class TestPersistence {
 		//check album number 1
 		assertEquals("Flume", h.getAlbum(0).getName().toString());
 		assertEquals("Indie", h.getAlbum(0).getGenre());
-		assertEquals("Flume", h.getAlbum(0).getArtist().getName());
+		assertEquals("Flume", h.getAlbum(0).getMainArtist().getName());
 		assertEquals(d1, h.getAlbum(0).getReleaseDate());
 		
 		//check songs in the album 1
@@ -98,7 +98,7 @@ public class TestPersistence {
 		//check album number 2
 		assertEquals("Sigh No More", h.getAlbum(1).getName());
 		assertEquals("Folk", h.getAlbum(1).getGenre());
-		assertEquals("Mumford and Sons", h.getAlbum(1).getArtist().getName());
+		assertEquals("Mumford and Sons", h.getAlbum(1).getMainArtist().getName());
 		assertEquals(d2, h.getAlbum(1).getReleaseDate());
 		
 		//check songs in album 2

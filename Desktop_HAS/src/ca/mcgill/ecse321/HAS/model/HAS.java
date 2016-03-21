@@ -1,12 +1,13 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
+/*This code was generated using the UMPLE 1.23.0-2950f84 modeling language!*/
 
 package ca.mcgill.ecse321.HAS.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 10 "../../../../../HAS_Domain_Model.ump"
-// line 54 "../../../../../HAS_Domain_Model.ump"
+// line 17 "../../../../../../../../ump/160303721337/model.ump"
+// line 107 "../../../../../../../../ump/160303721337/model.ump"
+// line 153 "../../../../../../../../ump/160303721337/model.ump"
 public class HAS
 {
 
@@ -26,6 +27,7 @@ public class HAS
   private List<Album> albums;
   private List<Playlist> playlists;
   private List<Song> songs;
+  private List<RoomGroup> roomGroups;
 
   //------------------------
   // CONSTRUCTOR
@@ -38,6 +40,7 @@ public class HAS
     albums = new ArrayList<Album>();
     playlists = new ArrayList<Playlist>();
     songs = new ArrayList<Song>();
+    roomGroups = new ArrayList<RoomGroup>();
   }
 
   public static HAS getInstance()
@@ -200,6 +203,36 @@ public class HAS
   public int indexOfSong(Song aSong)
   {
     int index = songs.indexOf(aSong);
+    return index;
+  }
+
+  public RoomGroup getRoomGroup(int index)
+  {
+    RoomGroup aRoomGroup = roomGroups.get(index);
+    return aRoomGroup;
+  }
+
+  public List<RoomGroup> getRoomGroups()
+  {
+    List<RoomGroup> newRoomGroups = Collections.unmodifiableList(roomGroups);
+    return newRoomGroups;
+  }
+
+  public int numberOfRoomGroups()
+  {
+    int number = roomGroups.size();
+    return number;
+  }
+
+  public boolean hasRoomGroups()
+  {
+    boolean has = roomGroups.size() > 0;
+    return has;
+  }
+
+  public int indexOfRoomGroup(RoomGroup aRoomGroup)
+  {
+    int index = roomGroups.indexOf(aRoomGroup);
     return index;
   }
 
@@ -488,6 +521,63 @@ public class HAS
     return wasAdded;
   }
 
+  public static int minimumNumberOfRoomGroups()
+  {
+    return 0;
+  }
+
+  public boolean addRoomGroup(RoomGroup aRoomGroup)
+  {
+    boolean wasAdded = false;
+    if (roomGroups.contains(aRoomGroup)) { return false; }
+    roomGroups.add(aRoomGroup);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeRoomGroup(RoomGroup aRoomGroup)
+  {
+    boolean wasRemoved = false;
+    if (roomGroups.contains(aRoomGroup))
+    {
+      roomGroups.remove(aRoomGroup);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addRoomGroupAt(RoomGroup aRoomGroup, int index)
+  {  
+    boolean wasAdded = false;
+    if(addRoomGroup(aRoomGroup))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfRoomGroups()) { index = numberOfRoomGroups() - 1; }
+      roomGroups.remove(aRoomGroup);
+      roomGroups.add(index, aRoomGroup);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveRoomGroupAt(RoomGroup aRoomGroup, int index)
+  {
+    boolean wasAdded = false;
+    if(roomGroups.contains(aRoomGroup))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfRoomGroups()) { index = numberOfRoomGroups() - 1; }
+      roomGroups.remove(aRoomGroup);
+      roomGroups.add(index, aRoomGroup);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addRoomGroupAt(aRoomGroup, index);
+    }
+    return wasAdded;
+  }
+
   public void delete()
   {
     rooms.clear();
@@ -495,6 +585,7 @@ public class HAS
     albums.clear();
     playlists.clear();
     songs.clear();
+    roomGroups.clear();
   }
 
 }

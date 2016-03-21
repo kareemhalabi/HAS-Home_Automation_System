@@ -29,6 +29,9 @@
 		?>
 	<form action="addMusic.php" method="post">
 		<input type="submit" value="Add Music" />
+		<p>
+		
+		</p>
 	</form>
 
 	<form action="selectRoom.php" method="post">

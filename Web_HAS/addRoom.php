@@ -16,6 +16,6 @@ try{
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="refresh" content="0; url=/HAS/" />
+		<meta http-equiv="refresh" content="0; url=/HAS/selectRoom.php" />
 		</head>
 </html>

@@ -27,12 +27,25 @@
 		$hm = $pm->loadDataFromStore ();
 		
 		?>
-	<form action="addMusic.php" method="post">
-		<input type="submit" value="Add Music" />
-	</form>
+	<form action="addRoom.php" method="post">
+		<p>
+			Name of Room: <input type="text" name="roomName" /> <span
+				class="error"> </span>
+		</p>
 
-	<form action="selectRoom.php" method="post">
-		<input type="submit" value="Select Room(s)" />
+		<p>
+			<input type='submit' value='Add Room' /> <span class="error">
+			<?php
+			if (isset ( $_SESSION ['errorRoomName'] ) && ! empty ( $_SESSION ['errorRoomName'] )) {
+				echo " * " . $_SESSION ["errorRoomName"];
+			}
+			?>
+			</span>
+		</p>
+	</form>
+	
+		<form action="index.php" method="post">
+		<input type="submit" value="Home" />
 	</form>
 </body>
 </html>

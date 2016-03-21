@@ -2,7 +2,9 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.23.0-599796a modeling language!*/
 
-class Album implements Playable
+require_once 'model/Playable.php';
+
+class Album extends Playable
 {
 
   //------------------------
@@ -10,7 +12,6 @@ class Album implements Playable
   //------------------------
 
   //Album Attributes
-  private $name;
   private $genre;
   private $releaseDate;
 
@@ -24,7 +25,7 @@ class Album implements Playable
 
   public function __construct($aName, $aGenre, $aReleaseDate, $aMainArtist)
   {
-    $this->name = $aName;
+    parent::__construct($aName);
     $this->genre = $aGenre;
     $this->releaseDate = $aReleaseDate;
     $this->songs = array();
@@ -38,14 +39,6 @@ class Album implements Playable
   //------------------------
   // INTERFACE
   //------------------------
-
-  public function setName($aName)
-  {
-    $wasSet = false;
-    $this->name = $aName;
-    $wasSet = true;
-    return $wasSet;
-  }
 
   public function setGenre($aGenre)
   {
@@ -61,11 +54,6 @@ class Album implements Playable
     $this->releaseDate = $aReleaseDate;
     $wasSet = true;
     return $wasSet;
-  }
-
-  public function getName()
-  {
-    return $this->name;
   }
 
   public function getGenre()
@@ -230,11 +218,23 @@ class Album implements Playable
     $placeholderMainArtist = $this->mainArtist;
     $this->mainArtist = null;
     $placeholderMainArtist->removeAlbum($this);
+    parent::delete();
   }
 
-  public function play()
+
+  /**
+   * Java
+   * public void play() {
+   * for(Song s : songs)
+   * s.play();
+   * }
+   * PHP
+   */
+   public function play()
   {
-          return "";
+    foreach($this->songs as $song) {
+        $song->play();
+      }
   }
 
 }

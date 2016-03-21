@@ -2,7 +2,7 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.23.0-599796a modeling language!*/
 
-class Song implements Playable
+class Song extends Playable
 {
 
   //------------------------
@@ -10,7 +10,6 @@ class Song implements Playable
   //------------------------
 
   //Song Attributes
-  private $name;
   private $duration;
   private $position;
 
@@ -24,7 +23,7 @@ class Song implements Playable
 
   public function __construct($aName, $aDuration, $aPosition, $aAlbum)
   {
-    $this->name = $aName;
+    parent::__construct($aName);
     $this->duration = $aDuration;
     $this->position = $aPosition;
     $this->ftArtists = array();
@@ -38,14 +37,6 @@ class Song implements Playable
   //------------------------
   // INTERFACE
   //------------------------
-
-  public function setName($aName)
-  {
-    $wasSet = false;
-    $this->name = $aName;
-    $wasSet = true;
-    return $wasSet;
-  }
 
   public function setDuration($aDuration)
   {
@@ -61,11 +52,6 @@ class Song implements Playable
     $this->position = $aPosition;
     $wasSet = true;
     return $wasSet;
-  }
-
-  public function getName()
-  {
-    return $this->name;
   }
 
   public function getDuration()
@@ -243,11 +229,18 @@ class Song implements Playable
     $placeholderAlbum = $this->album;
     $this->album = null;
     $placeholderAlbum->removeSong($this);
+    parent::delete();
   }
 
-  public function play()
+
+  /**
+   * Java
+   * public void play() {}
+   * PHP
+   */
+   public function play()
   {
-          return "";
+    
   }
 
 }

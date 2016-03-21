@@ -2,15 +2,12 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.23.0-599796a modeling language!*/
 
-class Playlist implements Playable
+class Playlist extends Playable
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-
-  //Playlist Attributes
-  private $name;
 
   //Playlist Associations
   private $songs;
@@ -21,7 +18,7 @@ class Playlist implements Playable
 
   public function __construct($aName, $allSongs)
   {
-    $this->name = $aName;
+    parent::__construct($aName);
     $this->songs = array();
     $didAddSongs = $this->setSongs($allSongs);
     if (!$didAddSongs)
@@ -33,19 +30,6 @@ class Playlist implements Playable
   //------------------------
   // INTERFACE
   //------------------------
-
-  public function setName($aName)
-  {
-    $wasSet = false;
-    $this->name = $aName;
-    $wasSet = true;
-    return $wasSet;
-  }
-
-  public function getName()
-  {
-    return $this->name;
-  }
 
   public function getSong_index($index)
   {
@@ -184,11 +168,23 @@ class Playlist implements Playable
   public function delete()
   {
     $this->songs = array();
+    parent::delete();
   }
 
-  public function play()
+
+  /**
+   * Java
+   * public void play() {
+   * for(Song s : songs)
+   * s.play();
+   * }
+   * PHP
+   */
+   public function play()
   {
-          return "";
+    foreach($this->songs as $song) {
+        $song->play();
+      }
   }
 
 }

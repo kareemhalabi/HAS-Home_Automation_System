@@ -95,96 +95,130 @@ public class HASController
 		HAS h = HAS.getInstance();
 
 		String error = "";
-		
-		if(name == null || name.trim().length() == 0)
+
+		if (name == null || name.trim().length() == 0)
 			error = error + "Playlist must have a name!";
-		if(song1 == null)
+		if (song1 == null)
 			error = error + "Playlist must have at least one song!";
-		
-		if(error.length() > 0)
+
+		if (error.length() > 0)
 			throw new InvalidInputException(error);
-		
+
 		Playlist newPlaylist = new Playlist(name, song1);
 		h.addPlaylist(newPlaylist);
-		
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-	
+
 	public void addSongtoPlaylist(Playlist p, Song song) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
-		
+
 		String error = "";
-		
-		if(p == null)
+
+		if (p == null)
 			error = error + "A playlist must be selected!";
-		if(song == null)
+		if (song == null)
 			error = error + "A song must be selected!";
-		
-		if(error.length() > 0)
+
+		if (error.length() > 0)
 			throw new InvalidInputException(error);
-		
+
 		p.addSong(song);
-		
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-	
+
 	public void createRoom(String name) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 
 		String error = "";
-		
+
 		int volume = 5;
 		boolean mute = true;
-		
-		if(name == null || name.trim().length() == 0)
+
+		if (name == null || name.trim().length() == 0)
 			error = error + "Room must have a name!";
-		if(error.length() > 0)
+		if (error.length() > 0)
 			throw new InvalidInputException(error);
-		
+
 		Room newRoom = new Room(name, volume, mute);
 		h.addRoom(newRoom);
-		
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-	
+
 	public void createRoomGroup(String name, Room initialRoom) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
-		
+
 		String error = "";
-		
-		if(name == null || name.trim().length() == 0)
+
+		if (name == null || name.trim().length() == 0)
 			error = error + "Room Group must have a name!";
-		if(initialRoom == null)
+		if (initialRoom == null)
 			error = error + "Room Group must have at least one room!";
-		
-		if(error.length() > 0)
+
+		if (error.length() > 0)
 			throw new InvalidInputException(error);
-		
+
 		RoomGroup newRG = new RoomGroup(name, initialRoom);
 		h.addRoomGroup(newRG);
+
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	public void addRoomToRoomGroup(RoomGroup rG, Room room) throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+
+		String error = "";
+
+		if (rG == null)
+			error = error + "Must select a room group!";
+		if (room == null)
+			error = error + "Must select a room to add to room group!";
+		if (error.length() > 0)
+			throw new InvalidInputException(error);
+
+		rG.addRoom(room);
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	// TODO test this method
+	public void setRoomVolumeLevel(Room room, int volumeLevel) throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		String error = "";
+
+		if (room == null)
+			error = error + "Must select a room to set the volume in!";
+		if (error.length() > 0)
+			throw new InvalidInputException(error);
+
+		if (volumeLevel == 0)
+			room.setMute(true);
+
+		else
+		{
+			room.setMute(false);
+			room.setVolume(volumeLevel);
+		}
 		
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 	
-	public void addRoomToRoomGroup(RoomGroup rG, Room room) throws InvalidInputException
+	public void setMute(Room room, boolean mute)
 	{
 		HAS h = HAS.getInstance();
 		
-		String error = "";
+		if(mute == true)
+			room.setMute(true);
+		else
+			room.setMute(false);
 		
-		if(rG == null)
-			error = error + "Must select a room group!";
-		if(room == null)
-			error = error + "Must select a room to add to room group!";
-		if(error.length() > 0)
-			throw new InvalidInputException(error);
-		
-		rG.addRoom(room);
 		PersistenceXStream.saveToXMLwithXStream(h);
-		
 	}
 
 }

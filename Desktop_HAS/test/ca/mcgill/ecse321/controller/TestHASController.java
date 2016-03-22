@@ -20,6 +20,10 @@ import ca.mcgill.ecse321.HAS.model.Playlist;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
+
+
+//TODO make a method that creates an album so that later tests will not repeat same lines of code.
+// TODO reorganize the tests
 public class TestHASController
 {
 

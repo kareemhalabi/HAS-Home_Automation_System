@@ -18,6 +18,9 @@ import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
+
+//TODO create a method that creates an album so that songs and playlists are easier to make
+
 public class TestHASControllerPlaylistAndRoom
 {
 

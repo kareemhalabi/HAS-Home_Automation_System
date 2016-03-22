@@ -5,4 +5,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="nav_song_title">Songs</string>
+    <string name="nav_album_title">Albums</string>
+    <string name="naw_artist_title">Artists</string>
+    <string name="nav_playlist_title">Playlists</string>
+    <string name="nav_room_title">Rooms</string>
+    <string name="nav_room_group_title">Room Groups</string>
 </resources>

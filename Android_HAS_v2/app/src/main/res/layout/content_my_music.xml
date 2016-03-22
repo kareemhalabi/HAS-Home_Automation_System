@@ -12,8 +12,4 @@
     tools:context="ca.mcgill.ecse321.android_has_v2.MyMusic"
     tools:showIn="@layout/app_bar_my_music">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 </RelativeLayout>

@@ -106,12 +106,42 @@ class Controller{
 		$name = InputValidator::validate_input($name);
 		if ($name == null || strlen($name) == 0){
 			throw new Exception("Room name cannot be empty!");
+		}else if ($volume > 100 || $volume < 0){
+			throw new Exception("Volume must be between 0 and 100.");
 		}else{
 			$pm = new PersistenceHAS();
 			$hm = $pm->loadDataFromStore();
 	
 			$room = new Room($name, $volume, $mute);
 			$hm->addRoom($room);
+	
+			$pm->writeDataToStore($hm);
+		}
+	}
+	
+	public function changeVolume($aname, $volume, $mute){
+		$pm = new PersistenceHAS();
+		$hm = $pm->loadDataFromStore();
+		if ($aname == null) {
+			throw new Exception ( "Room does not exist! " );
+		} else {
+			$name = NULL;
+			foreach ( $hm->getRooms() as $room ) {
+				if (strcmp ( $room->getName (), $aname ) == 0) {
+					$name = $room;
+					break;
+				}
+			}
+		}
+		
+		if ($volume > 100 || $volume < 0){
+			throw new Exception("Volume must be between 0 and 100.");
+		}else{
+			$pm = new PersistenceHAS();
+			$hm = $pm->loadDataFromStore();
+			
+			$name -> setVolume($volume);
+			//$hm->changeVolume($volume);
 	
 			$pm->writeDataToStore($hm);
 		}

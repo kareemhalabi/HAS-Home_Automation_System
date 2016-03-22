@@ -3,18 +3,23 @@ require_once (__DIR__ . '\controller\Controller.php');
 
 session_start ();
 
-$_SESSION ["errorRoomName"] = "";
+$_SESSION ["errorVolume"] = "";
+
 $c = new Controller ();
 try {
-	$room = $_POST ['roomName'];
+	$room = NULL;
+	if (isset ( $_POST ['roomspinner'] )) {
+		$room = $_POST ['roomspinner'];
+	}
 	$volume = $_POST ['volume'];
 	if ($volume == 0) {
-		$c->createRoom ( $room, $volume, true );
+		$c->changeVolume($room, $volume, true);
 	} else {
-		$c->createRoom ( $room, $volume, false );
+		$c->changeVolume($room, $volume, false );
 	}
+	
 } catch ( Exception $e ) {
-	$_SESSION ["errorRoomName"] = $e->getMessage ();
+	$_SESSION ["errorVolume"] = $e->getMessage ();
 }
 ?>
 

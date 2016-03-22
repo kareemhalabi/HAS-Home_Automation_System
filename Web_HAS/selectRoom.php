@@ -32,7 +32,10 @@
 			Name of Room: <input type="text" name="roomName" /> <span
 				class="error"> </span>
 		</p>
-
+		<p>
+			Volume (0-100): <input type="number" name="volume" /> <span class="error">
+			</span>
+		</p>
 		<p>
 			<input type='submit' value='Add Room' /> <span class="error">
 			<?php
@@ -43,8 +46,33 @@
 			</span>
 		</p>
 	</form>
-	
-		<form action="index.php" method="post">
+	<form action="changeVolume.php" method="post">
+		<p>For muting a room, set volume to 0.</p>
+		<?php
+		echo "<p>Room: <select name='roomspinner'>";
+		foreach ( $hm->getRooms () as $room ) {
+			echo "<option>" . $room->getName () . "</option>";
+		}
+		echo "</select><span class='error'>";
+		echo "</span></p>";
+		?>
+		<p>
+			Volume (0-100): <input type="number" name="volume" /> <span class="error">
+
+			</span>
+		</p>
+		<p>
+			<input type="submit" value="Change Volume" /> <span class="error"> 
+						<?php
+			if (isset ( $_SESSION ['errorVolume'] ) && ! empty ( $_SESSION ['errorVolume'] )) {
+				echo " * " . $_SESSION ["errorVolume"];
+			}
+			?>
+			</span>
+		</p>
+	</form>
+
+	<form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
 </body>

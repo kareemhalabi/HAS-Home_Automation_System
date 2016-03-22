@@ -94,9 +94,9 @@
 		</p>
 	</form>
 	<form action="addRoomToGroup.php" method="post">
-		<?php
-		echo "<p>Room Group: <select name='groupspinner'>";
-		foreach ( $hm->getRoomGroups() as $group ) {
+		<?php 
+		echo "<p>Group: <select name='groupspinner'>";
+		foreach ( $hm->getRoomGroups() as $group) {
 			echo "<option>" . $group->getName () . "</option>";
 		}
 		echo "</select><span class='error'>";

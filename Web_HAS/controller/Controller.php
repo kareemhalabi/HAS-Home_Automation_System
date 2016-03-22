@@ -9,6 +9,7 @@ require_once (__DIR__ . '/../model/RoomGroup.php');
 require_once (__DIR__ . '/../model/Playlist.php');
 require_once (__DIR__ . '/../persistence/PersistenceHAS.php');
 require_once (__DIR__ . '/../controller/InputValidator.php');
+
 class Controller {
 	public function __construct() {
 	}
@@ -139,6 +140,41 @@ class Controller {
 		}
 	}
 	
+	public function addRoomToGroup($aGroup, $aRoom){
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		if ($aRoom == null) {
+			throw new Exception ( "Room does not exist! " );
+		} else {
+			$room = NULL;
+			foreach ( $hm->getRooms () as $roomTemp ) {
+				if (strcmp ( $roomTemp->getName (), $aRoom ) == 0) {
+					$room = $roomTemp;
+					break;
+				}
+			}
+		}
+		
+		if ($aGroup == null){
+			throw new Exception ("Group does not exist! ");
+		}else{
+			$group = NULL;
+			foreach ($hm->getRoomGroups()as$groupTemp){
+				if(strcmp($groupTemp->getName(),$aGroup)==0){
+					$group = $groupTemp;
+					break;
+				}
+			}
+		}
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		
+		$group->addRoom($room);
+		//$hm->addRoomToGroup ( $group );
+		
+		$pm->writeDataToStore ( $hm );
+	}
+	
 	public function changeVolume($aname, $volume, $mute) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -166,4 +202,5 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	
 }

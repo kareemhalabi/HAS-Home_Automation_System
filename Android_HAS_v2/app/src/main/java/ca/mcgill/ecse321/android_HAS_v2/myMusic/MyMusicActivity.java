@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.android_has_v2;
+package ca.mcgill.ecse321.android_HAS_v2.myMusic;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -7,10 +7,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
-public class MyMusic extends AppCompatActivity
+import ca.mcgill.ecse321.android_HAS_v2.R;
+
+public class MyMusicActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override

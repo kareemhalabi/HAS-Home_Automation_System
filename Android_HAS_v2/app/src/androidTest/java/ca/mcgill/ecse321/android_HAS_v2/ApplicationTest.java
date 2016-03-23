@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.android_has_v2;
+package ca.mcgill.ecse321.android_HAS_v2;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

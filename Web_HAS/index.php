@@ -33,14 +33,26 @@
 		
 		</p>
 	</form>
-
 	<form action="selectRoom.php" method="post">
 		<input type="submit" value="Select Room(s)" />
 	</form>
-	<form>
-	<select name="songs" multiple="multiple" size="10">
-	<option value>
-	</select>
+	
+	
+	
+	<form action="play.php" method="post">
+	<?php
+	echo"<select name ='songs[]' multiple='multiple' size ='10'>";	
+	foreach ($hm->getSongs()as$song){
+		echo"<input id='<?=$song?>' type='checkbox' name ='song[]' value='<?= $song->getName()?>'/>";
+		echo"<label for='<?= $song ?>'><?= $song?></label>";
+		echo"<br />";
+	}	
+	echo"</select>";
+	?>
+	<input type="submit" value="Play">
 	</form>
+	
+	
+	
 </body>
 </html>

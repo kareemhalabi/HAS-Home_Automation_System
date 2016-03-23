@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Android_HAS_v3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_artists_label">Artists</string>
+    <string name="nav_albums_label">Albums</string>
+    <string name="nav_songs_label">Songs</string>
+    <string name="nav_playlists_label">Playlists</string>
+    <string name="nav_rooms_label">Rooms</string>
+    <string name="nav_room_groups_label">Room Groups</string>
+
+</resources>

@@ -18,6 +18,7 @@
 		require_once "model/Song.php";
 		require_once "model/Playlist.php";
 		require_once "model/Room.php";
+		require_once "model/RoomGroup.php";
 		require_once "persistence/PersistenceHAS.php";
 		
 		session_start ();

@@ -12,7 +12,7 @@ try {
 	}
 	$group = NULL;
 	if (isset ( $_POST ['groupspinner'] )) {
-		$room = $_POST ['groupspinner'];
+		$group = $_POST ['groupspinner'];
 	}
 	$c->addRoomToGroup($group, $room);
 } catch ( Exception $e ) {

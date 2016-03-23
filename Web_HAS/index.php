@@ -37,5 +37,10 @@
 	<form action="selectRoom.php" method="post">
 		<input type="submit" value="Select Room(s)" />
 	</form>
+	<form>
+	<select name="songs" multiple="multiple" size="10">
+	<option value>
+	</select>
+	</form>
 </body>
 </html>

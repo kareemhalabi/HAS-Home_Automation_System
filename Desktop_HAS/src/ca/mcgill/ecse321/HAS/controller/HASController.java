@@ -2,6 +2,9 @@ package ca.mcgill.ecse321.HAS.controller;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
@@ -14,7 +17,6 @@ import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 /*
  * TODO: 
- * Sorting Algorithm for Artists and Albums
  * Play function
  * 
  * Testing for the sorting algorithm goes hand in hand with that.
@@ -135,7 +137,7 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	//When room is created, the volume is automatically set to 5.
+	// When room is created, the volume is automatically set to 5.
 	public void createRoom(String name) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -192,7 +194,7 @@ public class HASController
 		rG.addRoom(room);
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-	
+
 	public void setRoomVolumeLevel(Room room, int volumeLevel) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -214,28 +216,58 @@ public class HASController
 			room.setMute(false);
 			room.setVolume(volumeLevel);
 		}
-		
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-	
-	// TODO setMute view will need to check for the mute - not able to check if the boolean is null
+
+	// TODO setMute view will need to check for the mute - CHECK BOX IN THE VIEW
 	public void setMute(Room room, boolean mute) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 		String error = "";
-		
-		if(room == null)
+
+		if (room == null)
 			error = error + "Must select a room to mute!";
-		
-		if(error.length() > 0)
+
+		if (error.length() > 0)
 			throw new InvalidInputException(error);
-		
-		if(mute == true)
+
+		if (mute == true)
 			room.setMute(true);
 		else
 			room.setMute(false);
-		
+
 		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	public void sortArtist()
+	{
+		HAS h = HAS.getInstance();
+		List<Artist> artists = h.getArtists();
+		Collections.sort(artists);
+		for (Artist a : artists)
+		{
+			h.removeArtist(a);
+		}
+		for (Artist a : artists)
+		{
+			h.addArtist(a);
+		}
+	}
+
+	public void sortAlbum()
+	{
+		HAS h = HAS.getInstance();
+		List<Album> albums = h.getAlbums();
+		Collections.sort(albums);
+		for (Album a : albums)
+		{
+			h.removeAlbum(a);
+		}
+		for (Album a : albums)
+		{
+			h.addAlbum(a);
+		}
 	}
 
 }

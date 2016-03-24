@@ -1,22 +1,14 @@
 <HAS id="1">
   <rooms id="2"/>
-  <artists id="3"/>
-  <albums id="4">
-    <album id="5">
-      <name>Flume</name>
-      <genre>Indie</genre>
-      <releaseDate id="6">2007-02-25</releaseDate>
-      <songs id="7"/>
-      <mainArtist id="8">
-        <name>Oscar</name>
-        <songs id="9"/>
-        <albums id="10">
-          <album reference="5"/>
-        </albums>
-      </mainArtist>
-    </album>
-  </albums>
-  <playlists id="11"/>
-  <songs id="12"/>
-  <roomGroups id="13"/>
+  <artists id="3">
+    <artist id="4">
+      <name>Bob</name>
+      <songs id="5"/>
+      <albums id="6"/>
+    </artist>
+  </artists>
+  <albums id="7"/>
+  <playlists id="8"/>
+  <songs id="9"/>
+  <roomGroups id="10"/>
 </HAS>

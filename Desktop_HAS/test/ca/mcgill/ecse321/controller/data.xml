@@ -1,21 +1,14 @@
 <HAS id="1">
-  <rooms id="2">
-    <ca.mcgill.ecse321.HAS.model.Room id="3">
-      <name>RoomName</name>
-      <volume>5</volume>
-      <mute>true</mute>
-    </ca.mcgill.ecse321.HAS.model.Room>
-  </rooms>
-  <artists id="4"/>
-  <albums id="5"/>
-  <playlists id="6"/>
-  <songs id="7"/>
-  <roomGroups id="8">
-    <ca.mcgill.ecse321.HAS.model.RoomGroup id="9">
-      <name>Group 1</name>
-      <rooms id="10">
-        <ca.mcgill.ecse321.HAS.model.Room reference="3"/>
-      </rooms>
-    </ca.mcgill.ecse321.HAS.model.RoomGroup>
-  </roomGroups>
+  <rooms id="2"/>
+  <artists id="3">
+    <artist id="4">
+      <name>Bob</name>
+      <songs id="5"/>
+      <albums id="6"/>
+    </artist>
+  </artists>
+  <albums id="7"/>
+  <playlists id="8"/>
+  <songs id="9"/>
+  <roomGroups id="10"/>
 </HAS>

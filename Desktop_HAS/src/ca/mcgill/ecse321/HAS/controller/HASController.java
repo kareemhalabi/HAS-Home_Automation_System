@@ -12,11 +12,17 @@ import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
+/*
+ * TODO: 
+ * Sorting Algorithm for Artists and Albums
+ * Play function
+ * 
+ * Testing for the sorting algorithm goes hand in hand with that.
+ */
 public class HASController
 {
 	public HASController()
 	{
-
 	}
 
 	public void createArtist(String artName) throws InvalidInputException
@@ -129,6 +135,7 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	//When room is created, the volume is automatically set to 5.
 	public void createRoom(String name) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -185,8 +192,7 @@ public class HASController
 		rG.addRoom(room);
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-
-	// TODO test this method
+	
 	public void setRoomVolumeLevel(Room room, int volumeLevel) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -198,7 +204,10 @@ public class HASController
 			throw new InvalidInputException(error);
 
 		if (volumeLevel == 0)
+		{
 			room.setMute(true);
+			room.setVolume(volumeLevel);
+		}
 
 		else
 		{
@@ -209,9 +218,17 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 	
-	public void setMute(Room room, boolean mute)
+	// TODO setMute view will need to check for the mute - not able to check if the boolean is null
+	public void setMute(Room room, boolean mute) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
+		String error = "";
+		
+		if(room == null)
+			error = error + "Must select a room to mute!";
+		
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
 		
 		if(mute == true)
 			room.setMute(true);

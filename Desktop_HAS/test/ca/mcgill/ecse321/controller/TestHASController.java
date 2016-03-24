@@ -20,10 +20,7 @@ import ca.mcgill.ecse321.HAS.model.Playlist;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
-
-
-//TODO make a method that creates an album so that later tests will not repeat same lines of code.
-// TODO reorganize the tests
+//TODO: check if it is needed to create a @Before
 public class TestHASController
 {
 
@@ -48,46 +45,39 @@ public class TestHASController
 	public void testCreateAlbumAndAddSong()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
 		assertEquals(0, h.getAlbums().size());
 
 		// album attributes
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
+		
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(116, 02, 8);
-		System.out.println(d1);
 
-		// create the artist
 		Artist ar1 = new Artist(artName);
-
-		// create controller and create the album
-		HASController hc = new HASController();
+		
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
 		} catch (InvalidInputException e)
 		{
-			// check that no error has occurred in the creation of the album
 			fail();
 		}
 
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
-
-		// new song 1 on album 1
+		
 		String testSongName1 = "testName";
 		int songDuration1 = 213;
 		int songPosition1 = 1;
+		assertEquals(1, h.getAlbums().size());
 
-		// add song to an album
 		try
 		{
-			assertEquals(1, h.getAlbums().size());
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
 		}
-
 		catch (InvalidInputException e)
 		{
 			fail();
@@ -101,21 +91,18 @@ public class TestHASController
 	public void testCreateAlbumNoName()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes
 		String name = null;
 		String genre = "Indie";
 		String artName = "Oscar";
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = new Artist(artName);
 
-		// create controller and create the album
-		HASController hc = new HASController();
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
@@ -126,28 +113,24 @@ public class TestHASController
 
 		assertEquals("Album name cannot be empty! ", error);
 		assertEquals(0, h.getAlbums().size());
-
 	}
 
 	@Test
 	public void testCreatAlbumNoGenre()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes
 		String name = "Flume";
 		String genre = "";
 		String artName = "Oscar";
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = new Artist(artName);
 
-		// create controller and create the album
-		HASController hc = new HASController();
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
@@ -158,28 +141,23 @@ public class TestHASController
 
 		assertEquals("Genre name cannot be empty! ", error);
 		assertEquals(0, h.getAlbums().size());
-
 	}
 
 	@Test
 	public void testCreateAlbumNoReleaseDate()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
 		Date d1 = null;
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = new Artist(artName);
 
-		// create controller and create the album
-		HASController hc = new HASController();
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
@@ -196,21 +174,18 @@ public class TestHASController
 	public void testCreateAlbumFutureReleaseDate()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(2007, 1, 25);
-
-		String error = "";
-
-		// create the artist
+		
 		Artist ar1 = new Artist(artName);
 
-		// create controller and create the album
-		HASController hc = new HASController();
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
@@ -227,21 +202,17 @@ public class TestHASController
 	public void testCreateAlbumPresentReleaseDate()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(116, 2, 8);
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = new Artist(artName);
 
-		// create controller and create the album
-		HASController hc = new HASController();
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
@@ -257,23 +228,18 @@ public class TestHASController
 	public void testCreateAlbumNoArtist()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
-
-		// album attributes
+		
 		String name = "Flume";
 		String genre = "Indie";
-		String artName = null;
 
-		// For some weird reason my computer adds 1900 years to the date below
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = null;
 
-		// create controller and create the album
-		HASController hc = new HASController();
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
@@ -287,16 +253,36 @@ public class TestHASController
 	}
 
 	@Test
+	public void testCreateArtist()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		assertEquals(0, h.getArtists().size());
+		
+		try
+		{
+		hc.createArtist("Bob");
+		}
+		catch(InvalidInputException e)
+		{
+			fail();
+		}
+		
+		assertEquals(1, h.getArtists().size());
+		assertEquals("Bob", h.getArtist(0).getName());
+	}
+	
+	@Test
 	public void testCreateArtistNull()
 	{
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
 		assertEquals(0, h.getArtists().size());
 
 		String artName = "";
-		String error = "";
 
-		HASController hc = new HASController();
 		try
 		{
 			hc.createArtist(artName);
@@ -304,7 +290,7 @@ public class TestHASController
 		{
 			error = e.getMessage();
 		}
-
+		
 		assertEquals("Artist name cannot be empty! ", error);
 		assertEquals(0, h.getArtists().size());
 	}
@@ -312,46 +298,36 @@ public class TestHASController
 	@Test
 	public void testAddSongNoName()
 	{
-		// make sure the has has been reset
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes of the album
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		// For some wierd reason, my calendar has decided to add 1900 years to
-		// my year...
+		String error = "";
+		
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = new Artist(artName);
-
-		// create controller and create the album
-		HASController hc = new HASController();
 
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
 		} catch (InvalidInputException e)
 		{
-			// check that no error has occurred in the creation of the album
 			fail();
 		}
 
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
 
-		// new song 1 on album 1
 		String testSongName1 = "   ";
 		int songDuration1 = 213;
 		int songPosition1 = 1;
 
-		// add song to an album
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
@@ -361,54 +337,43 @@ public class TestHASController
 		{
 			error = e.getMessage();
 		}
-
 		assertEquals("Song must have a name! ", error);
-
 	}
 
 	@Test
 	public void testAddSongNoAlbum()
 	{
-		// make sure the has has been reset
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes of the album
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		// For some wierd reason my calendar has decided to add 1900 years to my
-		// year...
+	
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
 		String error = "";
 
-		// create the artist
 		Artist ar1 = new Artist(artName);
-
-		// create controller and create the album
-		HASController hc = new HASController();
 
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
 		} catch (InvalidInputException e)
 		{
-			// check that no error has occurred in the creation of the album
 			fail();
 		}
 
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
 
-		// new song 1 on album 1
+		
 		String testSongName1 = "testName";
 		int songDuration1 = 213;
 		int songPosition1 = 1;
 
-		// add song to an album
 		try
 		{
 			hc.addSongtoAlbum(null, testSongName1, songDuration1, songPosition1);
@@ -418,52 +383,40 @@ public class TestHASController
 		{
 			error = e.getMessage();
 		}
-
 		assertEquals("Song must belong to an album! ", error);
-
 	}
 
 	@Test
 	public void testAddSongNoDuration()
 	{
-		// make sure the has has been reset
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes of the album
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = new Artist(artName);
-
-		// create controller and create the album
-		HASController hc = new HASController();
 
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
 		} catch (InvalidInputException e)
 		{
-			// check that no error has occurred in the creation of the album
 			fail();
 		}
 
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
 
-		// new song 1 on album 1
 		String testSongName1 = "testName";
 		int songDuration1 = 0;
 		int songPosition1 = 1;
-
-		// add song to an album
+		
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
@@ -473,7 +426,6 @@ public class TestHASController
 		{
 			error = e.getMessage();
 		}
-
 		assertEquals("Song must have a duration! ", error);
 	}
 
@@ -481,44 +433,34 @@ public class TestHASController
 	public void testAddSongNoPosition()
 
 	{
-		// make sure the has has been reset
 		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
-		// album attributes of the album
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
-		String error = "";
-
-		// create the artist
 		Artist ar1 = new Artist(artName);
-
-		// create controller and create the album
-		HASController hc = new HASController();
 
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
 		} catch (InvalidInputException e)
 		{
-			// check that no error has occurred in the creation of the album
 			fail();
 		}
 
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
 		checkResultAlbum(h2, name, genre, artName, d1);
 
-		// new song 1 on album 1
 		String testSongName1 = "testName";
 		int songDuration1 = 213;
 		int songPosition1 = 0;
 
-		// add song to an album
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
@@ -528,19 +470,15 @@ public class TestHASController
 		{
 			error = e.getMessage();
 		}
-
 		assertEquals("Song must have a position! ", error);
-
 	}
 
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)
 	{
-		// association with album
 		assertEquals(testSongName1, h.getAlbum(0).getSong(0).getName());
 		assertEquals(songDuration1, h.getAlbum(0).getSong(0).getDuration());
 		assertEquals(songPosition1, h.getAlbum(0).getSong(0).getPosition());
 
-		// association with HAS
 		assertEquals(testSongName1, h.getSong(0).getName());
 		assertEquals(songDuration1, h.getSong(0).getDuration());
 		assertEquals(songPosition1, h.getSong(0).getPosition());

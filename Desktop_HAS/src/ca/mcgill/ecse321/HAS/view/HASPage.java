@@ -37,6 +37,22 @@ import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 
+/*
+//TODO Update view for and implement checks: 
+ * Add playlist
+ * Add song to playlist
+ * Add room
+ * Create RoomGroup
+ * add Room to RoomGroup
+ * setVolume
+ * setMute - need a check for the boolean, cannot put in the Controller
+ * 
+ * Also need to do the actual view of the sorted Artists and Albums
+ * And the view for seeing the songs within the album
+ * Controller handles the sorting algorithm to return an array with the names
+ * 
+ * And "Song is playing" message should be incorporated
+*/
 public class HASPage extends JFrame
 {
 	private static final long serialVersionUID = -8062635784771606869L;
@@ -93,6 +109,7 @@ public class HASPage extends JFrame
 
 	private void initComponents()
 	{
+
 		// elements for error message
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
@@ -114,7 +131,7 @@ public class HASPage extends JFrame
 		albumReleaseDateLabel = new JLabel();
 
 		albumArtistLabel = new JLabel();
-		artistList = new JComboBox<String>(new String[0]);
+		artistList = new JComboBox<String>();
 		artistList.addActionListener(new java.awt.event.ActionListener()
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -130,7 +147,7 @@ public class HASPage extends JFrame
 		// for adding a song
 		songLabel = new JLabel();
 		songAlbumLabel = new JLabel();
-		albumList = new JComboBox<String>(new String[0]);
+		albumList = new JComboBox<String>();
 		albumList.addActionListener(new java.awt.event.ActionListener()
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -395,7 +412,8 @@ public class HASPage extends JFrame
 	{
 		error = "";
 		if(selectedAlbum < 0)
-			error = error + "Song must have an album!";
+			error = error + "Song must have an album! ";
+		//TODO check to see if the input is an integer
 		if(songDurationIntegerPicker == null || songDurationIntegerPicker.getText().trim().length() == 0)
 			error = error + "Song must have a duration! Please enter an integer! ";
 		if(songPositionIntegerPicker == null || songPositionIntegerPicker.getText().trim().length() == 0)
@@ -406,7 +424,7 @@ public class HASPage extends JFrame
 			HASController hc = new HASController();
 			try
 			{
-				//need to fix this
+				//TODO:need to fix this
 				hc.addSongtoAlbum(albums.get(selectedAlbum), songNameTextField.getText(), Integer.parseInt(songDurationIntegerPicker.getText()), (Integer.parseInt(songPositionIntegerPicker.getText())));
 			}
 			catch(InvalidInputException e)

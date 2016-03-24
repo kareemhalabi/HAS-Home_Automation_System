@@ -6,7 +6,6 @@ import java.io.File;
 import java.sql.Date;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,9 +16,6 @@ import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
-
-
-//TODO create a method that creates an album so that songs and playlists are easier to make
 
 public class TestHASControllerPlaylistAndRoom
 {
@@ -34,15 +30,8 @@ public class TestHASControllerPlaylistAndRoom
 		PersistenceXStream.setAlias("artist", Artist.class);
 	}
 
-	@After
-	public void tearDown() throws Exception
-	{
-		HAS h = HAS.getInstance();
-		h.delete();
-	}
-
-	@Test
-	public void testCreatePlaylist()
+	@Before
+	public void setUp() throws Exception
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getPlaylists().size());
@@ -52,9 +41,8 @@ public class TestHASControllerPlaylistAndRoom
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
+		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
-
-		String error = "";
 
 		Artist ar1 = new Artist(artName);
 
@@ -74,8 +62,11 @@ public class TestHASControllerPlaylistAndRoom
 
 		// new song 1 on album 1
 		String testSongName1 = "testName";
+		String testSongName2 = "testName2";
 		int songDuration1 = 213;
+		int songDuration2 = 123;
 		int songPosition1 = 1;
+		int songPosition2 = 2;
 
 		// add song to an album
 		try
@@ -87,6 +78,32 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
+
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration2, songPosition2);
+		}
+
+		catch (InvalidInputException e)
+		{
+			fail();
+		}
+	}
+
+	@After
+	public void tearDown() throws Exception
+	{
+		HAS h = HAS.getInstance();
+		h.delete();
+	}
+
+	@Test
+	public void testCreatePlaylist()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+
+		assertEquals(0, h.getPlaylists().size());
 
 		String playlistName = "Playlist1";
 
@@ -110,45 +127,7 @@ public class TestHASControllerPlaylistAndRoom
 
 		HASController hc = new HASController();
 
-		String name = "Flume";
-		String genre = "Indie";
-		String artName = "Oscar";
-		Date d1 = new Date(107, 01, 25);
-
 		String error = "";
-
-		Artist ar1 = new Artist(artName);
-
-		try
-		{
-			hc.createAlbum(name, genre, d1, ar1);
-		} catch (InvalidInputException e)
-		{
-			// check that no error has occurred in the creation of the album
-			fail();
-		}
-
-		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
-		checkResultAlbum(h2, name, genre, artName, d1);
-
-		// new song 1 on album 1
-		String testSongName1 = "testName";
-		int songDuration1 = 213;
-		int songPosition1 = 1;
-
-		// add song to an album
-		try
-		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
-		}
-
-		catch (InvalidInputException e)
-		{
-			fail();
-		}
-
 		String playlistName = "";
 
 		try
@@ -189,60 +168,7 @@ public class TestHASControllerPlaylistAndRoom
 	public void testAddSongToPlaylist()
 	{
 		HAS h = HAS.getInstance();
-		assertEquals(0, h.getPlaylists().size());
-
 		HASController hc = new HASController();
-
-		String name = "Flume";
-		String genre = "Indie";
-		String artName = "Oscar";
-		Date d1 = new Date(107, 01, 25);
-
-		String error = "";
-
-		Artist ar1 = new Artist(artName);
-
-		try
-		{
-			hc.createAlbum(name, genre, d1, ar1);
-		} catch (InvalidInputException e)
-		{
-			// check that no error has occurred in the creation of the album
-			fail();
-		}
-
-		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
-		checkResultAlbum(h2, name, genre, artName, d1);
-
-		// new song 1 on album 1
-		String testSongName1 = "testName";
-		String testSongName2 = "Test2";
-		int songDuration1 = 213;
-		int songPosition1 = 1;
-		int songPosition2 = 2;
-
-		// add song to an album
-		try
-		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
-		}
-
-		catch (InvalidInputException e)
-		{
-			fail();
-		}
-
-		try
-		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1, songPosition2);
-		}
-
-		catch (InvalidInputException e)
-		{
-			fail();
-		}
 
 		String playlistName = "Playlist1";
 
@@ -263,8 +189,8 @@ public class TestHASControllerPlaylistAndRoom
 		}
 
 		assertEquals(2, h.getPlaylist(0).getSongs().size());
-		assertEquals("Test2", h.getPlaylist(0).getSong(1).getName());
-		assertEquals(213, h.getPlaylist(0).getSong(1).getDuration());
+		assertEquals("testName2", h.getPlaylist(0).getSong(1).getName());
+		assertEquals(123, h.getPlaylist(0).getSong(1).getDuration());
 		assertEquals(2, h.getPlaylist(0).getSong(1).getPosition());
 	}
 
@@ -276,57 +202,7 @@ public class TestHASControllerPlaylistAndRoom
 		assertEquals(0, h.getPlaylists().size());
 
 		HASController hc = new HASController();
-
-		String name = "Flume";
-		String genre = "Indie";
-		String artName = "Oscar";
-		Date d1 = new Date(107, 01, 25);
-
 		String error = "";
-
-		Artist ar1 = new Artist(artName);
-
-		try
-		{
-			hc.createAlbum(name, genre, d1, ar1);
-		} catch (InvalidInputException e)
-		{
-			// check that no error has occurred in the creation of the album
-			fail();
-		}
-
-		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
-		checkResultAlbum(h2, name, genre, artName, d1);
-
-		// new song 1 on album 1
-		String testSongName1 = "testName";
-		String testSongName2 = "Test2";
-		int songDuration1 = 213;
-		int songPosition1 = 1;
-		int songPosition2 = 2;
-
-		// add song to an album
-		try
-		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
-		}
-
-		catch (InvalidInputException e)
-		{
-			fail();
-		}
-
-		try
-		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1, songPosition2);
-		}
-
-		catch (InvalidInputException e)
-		{
-			fail();
-		}
 
 		try
 		{
@@ -349,56 +225,7 @@ public class TestHASControllerPlaylistAndRoom
 
 		HASController hc = new HASController();
 
-		String name = "Flume";
-		String genre = "Indie";
-		String artName = "Oscar";
-		Date d1 = new Date(107, 01, 25);
-
 		String error = "";
-
-		Artist ar1 = new Artist(artName);
-
-		try
-		{
-			hc.createAlbum(name, genre, d1, ar1);
-		} catch (InvalidInputException e)
-		{
-			// check that no error has occurred in the creation of the album
-			fail();
-		}
-
-		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
-		checkResultAlbum(h2, name, genre, artName, d1);
-
-		// new song 1 on album 1
-		String testSongName1 = "testName";
-		String testSongName2 = "Test2";
-		int songDuration1 = 213;
-		int songPosition1 = 1;
-		int songPosition2 = 2;
-
-		// add song to an album
-		try
-		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
-		}
-
-		catch (InvalidInputException e)
-		{
-			fail();
-		}
-
-		try
-		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1, songPosition2);
-		}
-
-		catch (InvalidInputException e)
-		{
-			fail();
-		}
 
 		String playlistName = "Playlist1";
 
@@ -593,10 +420,10 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
-		
-		assertEquals("Room2",h.getRoomGroup(0).getRoom(1).getName());
+
+		assertEquals("Room2", h.getRoomGroup(0).getRoom(1).getName());
 	}
-	
+
 	@Test
 	public void testAddRoomToGroupRoomNoGroup()
 	{
@@ -622,10 +449,10 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Must select a room group!", error);
 	}
-	
+
 	@Test
 	public void testAddRoomToGroupRoomNoRoom()
 	{
@@ -637,7 +464,7 @@ public class TestHASControllerPlaylistAndRoom
 		String name1 = "RoomName";
 		String error = "";
 		String groupRoomName = "Group 1";
-		
+
 		try
 		{
 			hc.createRoom(name1);
@@ -661,12 +488,123 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Must select a room to add to room group!", error);
 		assertEquals(1, h.getRoomGroup(0).getRooms().size());
 	}
+
+	@Test
+	public void testSetVolume()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		int volume = 5;
+
+		try
+		{
+			hc.createRoom("kitchen");
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.setRoomVolumeLevel(h.getRoom(0), volume);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		assertEquals("kitchen", h.getRoom(0).getName());
+		assertEquals(5, h.getRoom(0).getVolume());
+	}
 	
+	@Test
+	public void testSetVolumeZeroVolume()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+
+		try
+		{
+			hc.createRoom("kitchen");
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.setRoomVolumeLevel(h.getRoom(0), 0);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		assertEquals(0, h.getRoom(0).getVolume());
+		assertTrue(h.getRoom(0).getMute());
+	}
 	
+	@Test
+	public void testSetVolumeNoRoom()
+	{
+		HASController hc = new HASController();
+		String error = "";
+
+		try
+		{
+			hc.setRoomVolumeLevel(null, 0);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+		
+		assertEquals("Must select a room to set the volume in!", error);
+	}
+	
+	@Test
+	public void testSetMute()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		
+		try
+		{
+			hc.createRoom("kitchen");
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		try
+		{
+			hc.setMute(h.getRoom(0), true);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		assertEquals("kitchen", h.getRoom(0).getName());
+		assertTrue(h.getRoom(0).getMute());
+	}
+	
+	@Test
+	public void testSetMuteNoRoom()
+	{
+		HASController hc = new HASController();
+		String error = "";
+
+		try
+		{
+			hc.setMute(null, true);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Must select a room to mute!", error);
+	}
 
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)
 	{

@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.android_has_v3;
 
+import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +30,8 @@ public class MyMusic extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -44,13 +49,14 @@ public class MyMusic extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = null;
 
         if (id == R.id.nav_artists) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_albums) {
-
+            fragment = new AlbumNavFragment();
         } else if (id == R.id.nav_songs) {
-
+            fragment = new SongNavFragment();
         } else if (id == R.id.nav_playlists) {
 
         } else if (id == R.id.nav_rooms) {
@@ -58,6 +64,9 @@ public class MyMusic extends AppCompatActivity
         } else if (id == R.id.nav_room_groups) {
 
         }
+
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -10,4 +10,10 @@
     <string name="nav_rooms_label">Rooms</string>
     <string name="nav_room_groups_label">Room Groups</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addsong_button">Add Song</string>
+    <string name="sortByAlbum_button">Sort By Album</string>
+    <string name="sortByArtist_button">Sort By Artist</string>
+
 </resources>

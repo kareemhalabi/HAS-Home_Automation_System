@@ -3,7 +3,6 @@
 
 package ca.mcgill.ecse321.HAS.model;
 import java.util.*;
-import java.sql.Date;
 
 // line 17 "../../../../../../../../ump/160303721337/model.ump"
 // line 107 "../../../../../../../../ump/160303721337/model.ump"

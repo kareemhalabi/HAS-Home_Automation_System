@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -52,12 +53,12 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-		
+
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(116, 02, 8);
 
 		Artist ar1 = new Artist(artName);
-		
+
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
@@ -68,7 +69,7 @@ public class TestHASController
 
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 		checkResultAlbum(h2, name, genre, artName, d1);
-		
+
 		String testSongName1 = "testName";
 		int songDuration1 = 213;
 		int songPosition1 = 1;
@@ -77,8 +78,7 @@ public class TestHASController
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
-		}
-		catch (InvalidInputException e)
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
@@ -183,7 +183,7 @@ public class TestHASController
 		String artName = "Oscar";
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(2007, 1, 25);
-		
+
 		Artist ar1 = new Artist(artName);
 
 		try
@@ -231,7 +231,7 @@ public class TestHASController
 		HASController hc = new HASController();
 		String error = "";
 		assertEquals(0, h.getAlbums().size());
-		
+
 		String name = "Flume";
 		String genre = "Indie";
 
@@ -258,20 +258,19 @@ public class TestHASController
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 		assertEquals(0, h.getArtists().size());
-		
+
 		try
 		{
-		hc.createArtist("Bob");
-		}
-		catch(InvalidInputException e)
+			hc.createArtist("Bob");
+		} catch (InvalidInputException e)
 		{
 			fail();
 		}
-		
+
 		assertEquals(1, h.getArtists().size());
 		assertEquals("Bob", h.getArtist(0).getName());
 	}
-	
+
 	@Test
 	public void testCreateArtistNull()
 	{
@@ -290,7 +289,7 @@ public class TestHASController
 		{
 			error = e.getMessage();
 		}
-		
+
 		assertEquals("Artist name cannot be empty! ", error);
 		assertEquals(0, h.getArtists().size());
 	}
@@ -307,7 +306,7 @@ public class TestHASController
 		String genre = "Indie";
 		String artName = "Oscar";
 		String error = "";
-		
+
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
@@ -350,7 +349,7 @@ public class TestHASController
 		String name = "Flume";
 		String genre = "Indie";
 		String artName = "Oscar";
-	
+
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
@@ -369,7 +368,6 @@ public class TestHASController
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 		checkResultAlbum(h2, name, genre, artName, d1);
 
-		
 		String testSongName1 = "testName";
 		int songDuration1 = 213;
 		int songPosition1 = 1;
@@ -416,7 +414,7 @@ public class TestHASController
 		String testSongName1 = "testName";
 		int songDuration1 = 0;
 		int songPosition1 = 1;
-		
+
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
@@ -471,6 +469,48 @@ public class TestHASController
 			error = e.getMessage();
 		}
 		assertEquals("Song must have a position! ", error);
+	}
+
+	@Test
+	public void testSortArtists()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		
+		String[] names =
+		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
+		for (String name : names)
+			h.addArtist(new Artist(name));
+		hc.sortArtists();
+		
+		Arrays.sort(names);
+		for(int i = 0; i<names.length; i++)
+		{
+			assertTrue(names[i].equals(h.getArtist(i).getName()));
+		}
+	}
+	
+	@Test
+	public void testSortAlbums()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		
+		String[] names =
+		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
+		
+		@SuppressWarnings("deprecation")
+		Date d1 = new Date(116, 02, 8);
+		
+		for (String name : names)
+			h.addAlbum(new Album(name, "Sort Yourself", d1, new Artist("Bob the Artist")));
+		hc.sortAlbums();
+		
+		Arrays.sort(names);
+		for(int i = 0; i<names.length; i++)
+		{
+			assertTrue(names[i].equals(h.getAlbum(i).getName()));
+		}
 	}
 
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)

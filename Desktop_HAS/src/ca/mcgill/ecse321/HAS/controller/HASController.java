@@ -1,8 +1,8 @@
 package ca.mcgill.ecse321.HAS.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,10 +16,7 @@ import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 /*
- * TODO: 
- * Play function
- * 
- * Testing for the sorting algorithm goes hand in hand with that.
+ * TODO: Play function
  */
 public class HASController
 {
@@ -240,31 +237,39 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	public void sortArtist()
+	public void sortArtists()
 	{
 		HAS h = HAS.getInstance();
 		List<Artist> artists = h.getArtists();
-		Collections.sort(artists);
-		for (Artist a : artists)
+		List<Artist> sortedArtists = new ArrayList<Artist>();
+		for(Artist a: artists)
+			sortedArtists.add(a);
+		
+		Collections.sort(sortedArtists);
+		for (Artist a :sortedArtists)
 		{
 			h.removeArtist(a);
 		}
-		for (Artist a : artists)
+		for (Artist a : sortedArtists)
 		{
 			h.addArtist(a);
 		}
 	}
 
-	public void sortAlbum()
+	public void sortAlbums()
 	{
 		HAS h = HAS.getInstance();
 		List<Album> albums = h.getAlbums();
-		Collections.sort(albums);
-		for (Album a : albums)
+		List<Album> sortedAlbums = new ArrayList<Album>();
+		for(Album a: albums)
+			sortedAlbums.add(a);
+		
+		Collections.sort(sortedAlbums);
+		for (Album a : sortedAlbums)
 		{
 			h.removeAlbum(a);
 		}
-		for (Album a : albums)
+		for (Album a : sortedAlbums)
 		{
 			h.addAlbum(a);
 		}

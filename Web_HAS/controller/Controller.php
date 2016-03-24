@@ -110,6 +110,76 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	public function createPlaylist($name, $allSongs){
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		if(allSongs ==null){
+			throw new Exception ("This song does not exist!"); 
+		}
+		else{
+			$mySong = NULL;	
+			foreach ( $hm->getsongs () as $song) {
+				if (strcmp ( $song->getName (), $allSongs ) == 0) {	//Find the song.
+					$mySong = $song;
+					break;
+				}
+			}
+		}
+		$songs = array(); 
+		$songs[] = $mySong; 
+		$name = InputValidator::validate_input($name);
+		if ($name == null || strlen ( $name ) == 0) {	
+			throw new Exception ( "Group name cannot be empty!" );
+		}
+		else{
+			$pm = new PersistenceHAS ();
+			$hm = $pm->loadDataFromStore ();
+			$playlist = new Playlist($name, $songs); //Create a Playlist with the 
+			$hm->addPlaylist($playlist);
+			
+			$pm->writeDataToStore ($hm);
+		}
+	}
+	public function addSongToPlaylist($aPlaylist, $aSong){
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		if ($aRoom == null) {
+			throw new Exception ( "Room does not exist! " );
+		}
+		else {
+			$song = null;
+			foreach ( $hm->getSongs() as $tempSong ) {
+				if (strcmp ( $roomTemp->getName (), $aRoom ) == 0) {
+					$room = $roomTemp;
+					break;
+				}
+			}
+			
+		}
+		if($aPlaylist==null){
+			throw new Exception("Playlist does not exist!");
+		}
+		else{
+			$playlist = null;		
+			foreach ($hm->getPlaylists() as $tempPlaylist){
+					if(strcmp($playlist->getName(),$aPlaylist)==0){
+						$playlist = $tempPlaylist;
+						break;
+					}
+				}
+			}
+			$pm = new PersistenceHAS ();
+			$hm = $pm->loadDataFromStore ();
+			
+			$playlist->addSong($song);
+			
+			
+			$pm->writeDataToStore ( $hm );
+		
+		
+		
+		
+	}
 	public function createRoomGroup($name, $aRoom) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -134,10 +204,16 @@ class Controller {
 			$hm = $pm->loadDataFromStore ();
 				
 			$group = new RoomGroup ( $name, $rooms );
-			$hm->addRoomGroup ( $group );
-				
+			$hm->addRoomGroup ( $group );				
 			$pm->writeDataToStore ( $hm );
 		}
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		
+		$Playlist->add($room);
+		//$hm->addRoomToGroup ( $group );
+		
+		$pm->writeDataToStore ( $hm );
 	}
 	
 	public function addRoomToGroup($aGroup, $aRoom){

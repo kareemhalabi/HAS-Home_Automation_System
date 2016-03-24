@@ -19,6 +19,9 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     	$this->hm = $this->pm->loadDataFromStore();
     	$this->hm->delete();
     	$this->pm->writeDataToStore($this->hm);
+    	
+    	
+    	
     }
     protected function tearDown()
     {
@@ -41,18 +44,23 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     	$this->assertEquals(0, count($this->hm->getSongs()));
     	$pm=new PersistenceHas();
     	$hm = $pm->loadDataFromStore();
-    
     	$name = "Rolling in the Deep";
     	$duration = 150;
     	$position = 2;
-    	$artist = new Artist("Adele");
+    	$artistName = "Adele";
+    	$this->c->createArtist($artistName);
     	$hm->addArtist($artist);
+    	
+    	$testArtist = $hm->getAlbum_index(0);
+    	
     	$pm->writeDataToStore($hm);
-    	$album = new Album("21", "Pop", 2011-05-24, $artist);
-    	$hm->addAlbum($album);
+    	
+    	$this->c->createAlbum("21", "Pop", 2011-05-24, $testArtist);
+    	$testAlbum = $hm->getAlbum_index(0);
+    	
     	$pm->writeDataToStore($hm);
     	try {
-    		$this->c->createSong("TestAlbum", 60, 7, $album);
+    		$this->c->createSong("TestAlbum", 60, 7, $testAlbum);
     	} catch (Exception $e) {
     		// check that no error occurred
     		$this->fail();

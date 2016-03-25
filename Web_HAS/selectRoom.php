@@ -62,7 +62,7 @@
 				class="error"> </span>
 		</p>
 		<p>
-			<input type="submit" value="Change Volume" /> <span class="error"> 
+			<input type="submit" value="Change Room Volume" /> <span class="error"> 
 						<?php
 						if (isset ( $_SESSION ['errorVolume'] ) && ! empty ( $_SESSION ['errorVolume'] )) {
 							echo " * " . $_SESSION ["errorVolume"];
@@ -118,6 +118,31 @@
 				echo " * " . $_SESSION ["errorRoomToGroup"];
 			}
 			?>
+			</span>
+		</p>
+	</form>
+	
+	<form action="changeGroupVolume.php" method="post">
+	<p>For muting a group, set volume to 0.</p>
+		<?php
+		echo "<p>Group: <select name='groupspinner'>";
+		foreach ( $hm->getRoomGroups() as $group ) {
+			echo "<option>" . $group->getName() . "</option>";
+		}
+		echo "</select><span class='error'>";
+		echo "</span></p>";
+		?>
+		<p>
+			Volume (0-100): <input type="number" name="volume" /> <span
+				class="error"> </span>
+		</p>
+		<p>
+			<input type="submit" value="Change Group Volume" /> <span class="error"> 
+						<?php
+						if (isset ( $_SESSION ['errorGroupVolume'] ) && ! empty ( $_SESSION ['errorGroupVolume'] )) {
+							echo " * " . $_SESSION ["errorGroupVolume"];
+						}
+						?>
 			</span>
 		</p>
 	</form>

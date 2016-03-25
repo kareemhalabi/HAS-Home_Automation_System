@@ -13,7 +13,7 @@
 <body>
 	<form action="index.php" method="post">
 		<b><input type="submit" value="Go Home" /></b>
-		</form>
+	</form>
 		
 <?php
 // pull data from model folder
@@ -34,16 +34,15 @@ $hm = $pm->loadDataFromStore ();
 ?>
 				
 	<form action="addPlaylist.php" method="post">
-		<h1>Add a New Playlist</h1> <
+		<h1>Add a New Playlist</h1>
 		<p>
-		
-		Name of your playlist: <input type="text" name="artistName" /> <span class="error">		
-		
-		
+
+			Name of your playlist: <input type="text" name="playlistName" /> <span
+				class="error">		
 		
 			<?php
 			echo "<p>Song: <select name='songSpinner'>";
-			foreach ( $hm->getSongs() as $song) {
+			foreach ( $hm->getSongs () as $song ) {
 				echo "<option>" . $song->getName () . "</option>";
 			}
 			echo "</select><span class='error'>";
@@ -62,37 +61,43 @@ $hm = $pm->loadDataFromStore ();
 			?>
 			</span>
 		</p>
-		
-		
+
+
 	</form>
-	<form action="addSongToPlaylist.php">
-		<h1>
-		<b>Manage Your Playlists</b>
-		</h1>
+	
+	<form action="addSongToPlaylist.php" method="post">
+		<h1>Manage Your Playlists</h1>
 		<p> Choose a Song to Add
 		<?php
-		echo "<p>Song: <select name='SongSpinner'>";
-		foreach ( $hm->getSongs() as $song ) {
+		echo "<p>Song: <select name='songSpinner'>";
+		foreach ( $hm->getSongs () as $song ) {
 			echo "<option>" . $song->getName () . "</option>";
 		}
 		echo "</select><span class='error'>";
 		echo "</span></p>";
 		?>
 	
-	</form>
-	<form>
-	<p> Choose a Playlist to add this song to: </p>
+		<p>Choose a Playlist to add this song to:</p>
 	<?php
-		echo "<p>Playlist: <select name='PlaylistSpinner'>";
-		foreach ( $hm->getPlaylists() as $playlist ) {
-			echo "<option>" . $playlist->getName () . "</option>";
-		}
-		echo "</select><span class='error'>";
-		echo "</span></p>";
-		?>
+	echo "<p>Playlist: <select name='playlistSpinner'>";
+	foreach ( $hm->getPlaylists () as $playlist ) {
+		echo "<option>" . $playlist->getName () . "</option>";
+	}
+	echo "</select><span class='error'>";
+	echo "</span></p>";
 	
-		
-		
+	?>
+	<p>
+			<input type="submit" value="Add Song to Playlist" /> <span class="error">			
+			<?php
+			if (isset ( $_SESSION ['errorSongToPlaylist'] ) && ! empty ( $_SESSION ['errorSongToPlaylist'] )) {
+				echo " * " . $_SESSION ["errorSongToPlaylist"];
+			}
+			?>
+			</span>
+		</p>
+
+
 	</form>
-	</body>
+</body>
 </html>

@@ -11,8 +11,8 @@ try{
 	if (isset ( $_POST ['songSpinner'] )) {
 		$song = $_POST ['songSpinner'];
 	}
-	$playlist = null;
 	
+	$playlist = null;
 	if (isset ( $_POST ['playlistSpinner'] )) {
 		$playlist = $_POST ['playlistSpinner'];
 	}
@@ -25,6 +25,6 @@ catch (Exception $e){
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="refresh" content="0; url=/HAS/selectRoom.php" />
+<meta http-equiv="refresh" content="0; url=/HAS/playlistView.php" />
 </head>
 </html>

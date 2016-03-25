@@ -34,15 +34,15 @@
 		</p>
 	</form>
 	<form action="selectRoom.php" method="post">
-		<input type="submit" value="Select Room(s)" />
+		<input type="submit" value="Rooms" />
 		<p>
 		
 		</p>
 	</form>
 	
 		
-	<form action="addPlaylistView.php" method="post">
-		<input type="submit" value="Add Playlist" />
+	<form action="playlistView.php" method="post">
+		<input type="submit" value="Playlists" />
 	</form>
 	
 	

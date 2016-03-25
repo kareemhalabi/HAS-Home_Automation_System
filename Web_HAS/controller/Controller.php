@@ -9,7 +9,6 @@ require_once (__DIR__ . '/../model/RoomGroup.php');
 require_once (__DIR__ . '/../model/Playlist.php');
 require_once (__DIR__ . '/../persistence/PersistenceHAS.php');
 require_once (__DIR__ . '/../controller/InputValidator.php');
-
 class Controller {
 	public function __construct() {
 	}
@@ -110,75 +109,67 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	public function createPlaylist($name, $allSongs){
+	public function createPlaylist($name, $allSongs) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
-		if(allSongs ==null){
-			throw new Exception ("This song does not exist!"); 
-		}
-		else{
-			$mySong = NULL;	
-			foreach ( $hm->getsongs () as $song) {
-				if (strcmp ( $song->getName (), $allSongs ) == 0) {	//Find the song.
+		if ($allSongs == null) {
+			throw new Exception ( "This song does not exist!" );
+		} else {
+			$mySong = NULL;
+			foreach ( $hm->getsongs () as $song ) {
+				if (strcmp ( $song->getName (), $allSongs ) == 0) { // Find the song.
 					$mySong = $song;
 					break;
 				}
 			}
 		}
-		$songs = array(); 
-		$songs[] = $mySong; 
-		$name = InputValidator::validate_input($name);
-		if ($name == null || strlen ( $name ) == 0) {	
-			throw new Exception ( "Group name cannot be empty!" );
-		}
-		else{
+		$songs = array ();
+		$songs [] = $mySong;
+		$name = InputValidator::validate_input ( $name );
+		if ($name == null || strlen ( $name ) == 0) {
+			throw new Exception ( "Playlist name cannot be empty!" );
+		} else {
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
-			$playlist = new Playlist($name, $songs); //Create a Playlist with the 
-			$hm->addPlaylist($playlist);
 			
-			$pm->writeDataToStore ($hm);
+			$playlist = new Playlist ( $name, $songs ); // Create a Playlist with the
+			$hm->addPlaylist ( $playlist );
+			
+			$pm->writeDataToStore ( $hm );
 		}
 	}
-	public function addSongToPlaylist($aPlaylist, $aSong){
+	public function addSongToPlaylist($aPlaylist, $aSong) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
-		if ($aRoom == null) {
-			throw new Exception ( "Room does not exist! " );
-		}
-		else {
+		if ($aSong == null) {
+			throw new Exception ( "Song does not exist! " );
+		} else {
 			$song = null;
-			foreach ( $hm->getSongs() as $tempSong ) {
-				if (strcmp ( $roomTemp->getName (), $aRoom ) == 0) {
-					$room = $roomTemp;
+			foreach ( $hm->getSongs () as $tempSong ) {
+				if (strcmp ( $tempSong->getName (), $aSong ) == 0) {
+					$song = $tempSong;
 					break;
 				}
 			}
-			
 		}
-		if($aPlaylist==null){
-			throw new Exception("Playlist does not exist!");
-		}
-		else{
-			$playlist = null;		
-			foreach ($hm->getPlaylists() as $tempPlaylist){
-					if(strcmp($playlist->getName(),$aPlaylist)==0){
-						$playlist = $tempPlaylist;
-						break;
-					}
+		
+		if ($aPlaylist == null) {
+			throw new Exception ( "Playlist does not exist!" );
+		} else {
+			$playlist = null;
+			foreach ( $hm->getPlaylists () as $tempPlaylist ) {
+				if (strcmp ( $tempPlaylist->getName (), $aPlaylist ) == 0) {
+					$playlist = $tempPlaylist;
+					break;
 				}
 			}
-			$pm = new PersistenceHAS ();
-			$hm = $pm->loadDataFromStore ();
-			
-			$playlist->addSong($song);
-			
-			
-			$pm->writeDataToStore ( $hm );
+		}
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
 		
+		$playlist->addSong ( $song );
 		
-		
-		
+		$pm->writeDataToStore ( $hm );
 	}
 	public function createRoomGroup($name, $aRoom) {
 		$pm = new PersistenceHAS ();
@@ -194,29 +185,27 @@ class Controller {
 				}
 			}
 		}
-		$rooms = array();
-		$rooms[]=$room;
-		$name = InputValidator::validate_input($name);
+		$rooms = array ();
+		$rooms [] = $room;
+		$name = InputValidator::validate_input ( $name );
 		if ($name == null || strlen ( $name ) == 0) {
 			throw new Exception ( "Group name cannot be empty!" );
-		}else{
+		} else {
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
-				
+			
 			$group = new RoomGroup ( $name, $rooms );
-			$hm->addRoomGroup ( $group );				
+			$hm->addRoomGroup ( $group );
 			$pm->writeDataToStore ( $hm );
 		}
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		$Playlist->add($room);
-		//$hm->addRoomToGroup ( $group );
+		$Playlist->add ( $room );
 		
 		$pm->writeDataToStore ( $hm );
 	}
-	
-	public function addRoomToGroup($aGroup, $aRoom){
+	public function addRoomToGroup($aGroup, $aRoom) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aRoom == null) {
@@ -231,12 +220,12 @@ class Controller {
 			}
 		}
 		
-		if ($aGroup == null){
-			throw new Exception ("Group does not exist! ");
-		}else{
+		if ($aGroup == null) {
+			throw new Exception ( "Group does not exist! " );
+		} else {
 			$group = NULL;
-			foreach ($hm->getRoomGroups()as$groupTemp){
-				if(strcmp($groupTemp->getName(),$aGroup)==0){
+			foreach ( $hm->getRoomGroups () as $groupTemp ) {
+				if (strcmp ( $groupTemp->getName (), $aGroup ) == 0) {
 					$group = $groupTemp;
 					break;
 				}
@@ -245,12 +234,10 @@ class Controller {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		$group->addRoom($room);
-		//$hm->addRoomToGroup ( $group );
+		$group->addRoom ( $room );
 		
 		$pm->writeDataToStore ( $hm );
 	}
-	
 	public function changeVolume($aname, $volume, $mute) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -273,10 +260,36 @@ class Controller {
 			$hm = $pm->loadDataFromStore ();
 			
 			$name->setVolume ( $volume );
-			// $hm->changeVolume($volume);
+			$name->setMute ( $mute );
 			
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	
+	public function chnageGroupVolume($aGroup, $volume, $mute) {
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		if ($aGroup == null) {
+			throw new Exception ( "Group does not exist!" );
+		} else {
+			$group = null;
+			foreach ( $hm->getRoomGroups () as $name ) {
+				if (strcmp ( $name->getName (), $aGroup ) == 0) {
+					$group = $name;
+					break;
+				}
+			}
+		}
+		
+		if ($volume > 100 || $volume < 0) {
+			throw new Exception ( "Volume must be between 0 and 100." );
+		} else {
+			$pm = new PersistenceHAS ();
+			$hm = $pm->loadDataFromStore ();
+			
+			$group->setVolume ( $volume );
+			$group->setMute ( $mute );
+			
+			$pm->writeDataToStore ( $hm );
+		}
+	}
 }

@@ -1,43 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>HAS</title>
-<style>
-.error {
-	color: #FF0000;
-}
-</style>
-</head>
-<body>
-		<?php
-		// pull data from model folder
-		require_once "model/Artist.php";
-		require_once "model/Album.php";
-		require_once "model/HAS.php";
-		require_once "model/Song.php";
-		require_once "model/Playlist.php";
-		require_once "model/Room.php";
-		require_once "persistence/PersistenceHAS.php";
-		
-		session_start ();
-		
-		// Retrieve the data from the model
-		$pm = new PersistenceHAS ();
-		$hm = $pm->loadDataFromStore ();
-		
-		?>
-		//Select name for playlist
-		
-			<form action ="addSongToPlaylist.php" method ="post">
-		<p>
-			Artist: <input type ="text" name="artistName" /> <span class="error">	
-			
-			</form>
-
-
-
 <?php
+//KNOWN BUG: CANNOT CREATE A PLAYLIST WITH A SONG THAT IS ALREADY IN A PLAYLIST!!WTF!!
+
 require_once (__DIR__ . '\controller\Controller.php');
 
 session_start ();
@@ -58,6 +21,6 @@ catch (Exception $e){
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="refresh" content="0; url=/HAS/selectRoom.php" />
+<meta http-equiv="refresh" content="0; url=/HAS/playlistView.php" />
 </head>
 </html>

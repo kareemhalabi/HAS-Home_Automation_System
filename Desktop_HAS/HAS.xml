@@ -2,45 +2,41 @@
   <rooms id="2"/>
   <artists id="3">
     <artist id="4">
-      <name>Mumford and Sons</name>
-      <albums id="5">
-        <album id="6">
-          <name>The Wilder</name>
-          <genre>Indie Rock</genre>
-          <releaseDate id="7">2015-05-04</releaseDate>
-          <songs id="8">
-            <song id="9">
-              <name>The Wolf</name>
-              <duration>221</duration>
-              <position>3</position>
-              <album reference="6"/>
-            </song>
+      <name>Louise Attaque</name>
+      <songs id="5"/>
+      <albums id="6">
+        <album id="7">
+          <name>Louise Attaque</name>
+          <genre>Folk</genre>
+          <releaseDate id="8">1997-03-20</releaseDate>
+          <songs id="9">
             <song id="10">
-              <name>Please work</name>
-              <duration>12</duration>
-              <position>10</position>
-              <album reference="6"/>
+              <name>Amours</name>
+              <duration>117</duration>
+              <position>1</position>
+              <ftArtists id="11"/>
+              <album reference="7"/>
+            </song>
+            <song id="12">
+              <name>J&apos;T&apos;emmene Au Vent</name>
+              <duration>184</duration>
+              <position>2</position>
+              <ftArtists id="13"/>
+              <album reference="7"/>
             </song>
           </songs>
-          <artist reference="4"/>
-        </album>
-        <album id="11">
-          <name>Babel</name>
-          <genre>Folk</genre>
-          <releaseDate id="12">2016-03-08</releaseDate>
-          <songs id="13"/>
-          <artist reference="4"/>
+          <mainArtist reference="4"/>
         </album>
       </albums>
     </artist>
   </artists>
   <albums id="14">
-    <album reference="6"/>
-    <album reference="11"/>
+    <album reference="7"/>
   </albums>
   <playlists id="15"/>
   <songs id="16">
-    <song reference="9"/>
     <song reference="10"/>
+    <song reference="12"/>
   </songs>
+  <roomGroups id="17"/>
 </HAS>

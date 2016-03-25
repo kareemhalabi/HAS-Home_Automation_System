@@ -1,14 +1,40 @@
 <HAS id="1">
   <rooms id="2"/>
-  <artists id="3">
-    <artist id="4">
-      <name>Bob</name>
-      <songs id="5"/>
-      <albums id="6"/>
-    </artist>
-  </artists>
-  <albums id="7"/>
-  <playlists id="8"/>
-  <songs id="9"/>
-  <roomGroups id="10"/>
+  <artists id="3"/>
+  <albums id="4">
+    <album id="5">
+      <name>Flume</name>
+      <genre>Indie</genre>
+      <releaseDate id="6">2007-02-25</releaseDate>
+      <songs id="7">
+        <ca.mcgill.ecse321.HAS.model.Song id="8">
+          <name>testName</name>
+          <duration>213</duration>
+          <position>1</position>
+          <ftArtists id="9"/>
+          <album reference="5"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="10">
+          <name>testName2</name>
+          <duration>123</duration>
+          <position>2</position>
+          <ftArtists id="11"/>
+          <album reference="5"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+      </songs>
+      <mainArtist id="12">
+        <name>Oscar</name>
+        <songs id="13"/>
+        <albums id="14">
+          <album reference="5"/>
+        </albums>
+      </mainArtist>
+    </album>
+  </albums>
+  <playlists id="15"/>
+  <songs id="16">
+    <ca.mcgill.ecse321.HAS.model.Song reference="8"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="10"/>
+  </songs>
+  <roomGroups id="17"/>
 </HAS>

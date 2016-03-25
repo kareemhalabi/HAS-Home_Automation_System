@@ -15,6 +15,7 @@ import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 public class TestHASControllerPlaylistAndRoom
@@ -604,6 +605,72 @@ public class TestHASControllerPlaylistAndRoom
 		}
 
 		assertEquals("Must select a room to mute!", error);
+	}
+	
+	@Test
+	public void testAddFeaturedArtist()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		
+		Song song = h.getSong(0);
+		Artist ftArt = new Artist("Alex");
+		
+		try
+		{
+			hc.addFeaturedArtist(song, ftArt);
+		} 
+		catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		assertTrue(song.hasFtArtists());
+		assertEquals("Alex", song.getFtArtist(0).getName());
+	}
+	
+	@Test
+	public void testAddFeaturedArtistNoSong()
+	{
+		HASController hc = new HASController();
+		String error = "";
+		
+		Song song = null;
+		Artist ftArt = new Artist("Alex");
+		
+		try
+		{
+			hc.addFeaturedArtist(song, ftArt);
+		} 
+		catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+	
+		assertEquals("Must select a song to add a featured artist!", error);
+	}
+	
+	@Test
+	public void testAddFeaturedArtistNoArtist()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
+		
+		Song song = h.getSong(0);
+		Artist ftArt = null;
+		
+		try
+		{
+			hc.addFeaturedArtist(song, ftArt);
+		} 
+		catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+	
+		assertEquals("Must select a featured artist!", error);
+		assertFalse(song.hasFtArtists());
 	}
 
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)

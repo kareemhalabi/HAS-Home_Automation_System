@@ -254,6 +254,8 @@ public class HASController
 		{
 			h.addArtist(a);
 		}
+		
+		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
 	public void sortAlbums()
@@ -273,6 +275,24 @@ public class HASController
 		{
 			h.addAlbum(a);
 		}
+		
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+	
+	public void addFeaturedArtist(Song song, Artist ar) throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		String error = "";
+		if(song == null)
+			error = error + "Must select a song to add a featured artist!";
+		if(ar == null)
+			error = error + "Must select a featured artist!";
+		
+		if(error.length()>0)
+			throw new InvalidInputException(error);
+		
+		song.addFtArtist(ar);
+		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
 }

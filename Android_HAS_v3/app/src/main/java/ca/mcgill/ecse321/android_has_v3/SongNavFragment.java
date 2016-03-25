@@ -43,9 +43,10 @@ public class SongNavFragment extends Fragment {
         HAS h = HAS.getInstance();
 
         SongAdapter adapter = new SongAdapter(getActivity().getApplicationContext(), h.getSongs());
-
         listView.setAdapter(adapter);
 
         return v;
     }
+
+
 }

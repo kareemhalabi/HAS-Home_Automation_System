@@ -15,5 +15,11 @@
     <string name="addsong_button">Add Song</string>
     <string name="sortByAlbum_button">Sort By Album</string>
     <string name="sortByArtist_button">Sort By Artist</string>
+    <string name="albumspinner_label">Album?</string>
+    <string name="songname_hint">Song Name?</string>
+    <string name="songduration_hint">Duration (seconds)?</string>
+    <string name="songposition_hint">Position in Album?</string>
+    <string name="ftartistspinner_label">Ft Artist? (Optional)</string>
+    <string name="addftArtist_button">Add Ft Artist</string>
 
 </resources>

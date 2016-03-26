@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.android_has_v3.R;
 
@@ -52,14 +53,29 @@ public class SongAdapter extends BaseAdapter{
         TextView songName = (TextView) vi.findViewById(R.id.song_nameTextView);
         songName.setText(song.getName());
 
+        // duration appears as "m...mm:ss"
         TextView songDuration = (TextView) vi.findViewById(R.id.song_duratonTextView);
-        songDuration.setText(Integer.toString(song.getDuration()));
+        int duration = song.getDuration();
+        String formattedDuration = "" + (duration / 60) + ":" + (duration % 60);
+        songDuration.setText(formattedDuration);
 
+        // artist appears as "By: MainArtist ft FtArtist1, FtArtist2, ... , FtArtistN"
         TextView songArtist = (TextView) vi.findViewById(R.id.song_artistsTextView);
-        songArtist.setText(song.getAlbum().getMainArtist().getName());
+        String formattedArtist = "By: " + song.getAlbum().getMainArtist().getName();
+        if(song.hasFtArtists()) {
+            formattedArtist += " ft ";
+            List<Artist> ftArtistNames = song.getFtArtists();
+            for (int i = 0; i < ftArtistNames.size() - 1; i++){
+                formattedArtist += ftArtistNames.get(i).getName() + ", ";
+            }
+            formattedArtist += ftArtistNames.get(ftArtistNames.size()-1).getName();
+        }
+        songArtist.setText(formattedArtist);
 
+        // album appears as "Album:position"
         TextView songAlbum = (TextView) vi.findViewById(R.id.song_albumTextView);
-        songAlbum.setText(song.getAlbum().getName());
+        String formattedAlbum = song.getAlbum().getName() + ":" + song.getPosition();
+        songAlbum.setText(formattedAlbum);
 
         return vi;
     }

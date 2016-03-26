@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import ca.mcgill.ecse321.android_has_v3.albums.AddAlbumActivity;
 import ca.mcgill.ecse321.android_has_v3.albums.AlbumNavFragment;
 import ca.mcgill.ecse321.android_has_v3.artists.AddArtistActivity;
 import ca.mcgill.ecse321.android_has_v3.artists.ArtistNavFragment;
@@ -97,6 +98,11 @@ public class MyMusicActivity extends AppCompatActivity
 
     public void addArtist(View v) {
         Intent intent = new Intent(this, AddArtistActivity.class);
+        startActivity(intent);
+    }
+
+    public void addAlbum(View v) {
+        Intent intent = new Intent(this, AddAlbumActivity.class);
         startActivity(intent);
     }
 

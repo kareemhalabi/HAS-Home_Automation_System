@@ -56,7 +56,8 @@ public class SongAdapter extends BaseAdapter{
         // duration appears as "m...mm:ss"
         TextView songDuration = (TextView) vi.findViewById(R.id.song_duratonTextView);
         int duration = song.getDuration();
-        String formattedDuration = "" + (duration / 60) + ":" + (duration % 60);
+//        String formattedDuration = "" + (duration / 60) + ":" + (duration % 60);
+        String formattedDuration = String.format("%d:%02d", (duration/60), (duration%60));
         songDuration.setText(formattedDuration);
 
         // artist appears as "By: MainArtist ft FtArtist1, FtArtist2, ... , FtArtistN"
@@ -74,7 +75,7 @@ public class SongAdapter extends BaseAdapter{
 
         // album appears as "Album:position"
         TextView songAlbum = (TextView) vi.findViewById(R.id.song_albumTextView);
-        String formattedAlbum = song.getAlbum().getName() + ":" + song.getPosition();
+        String formattedAlbum = song.getAlbum().getName() + ": " + song.getPosition();
         songAlbum.setText(formattedAlbum);
 
         return vi;

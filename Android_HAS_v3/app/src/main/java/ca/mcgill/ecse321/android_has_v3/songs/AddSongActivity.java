@@ -122,7 +122,7 @@ public class AddSongActivity extends AppCompatActivity {
 
         try {
             hc.addSongtoAlbum(albums.get(selectedAlbum), songName.getText().toString(),
-                    duration, position);
+                    duration, position, ftArtists);
         } catch(InvalidInputException e) {
             error = e.getMessage();
         }

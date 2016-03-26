@@ -21,5 +21,8 @@
     <string name="songposition_hint">Position in Album?</string>
     <string name="ftartistspinner_label">Ft Artist? (Optional)</string>
     <string name="addftArtist_button">Add Ft Artist</string>
+    <string name="addArtist_button">Add Artist</string>
+    <string name="artist_hint">Artist Name?</string>
+    <string name="addartist_button">Add Artist</string>
 
 </resources>

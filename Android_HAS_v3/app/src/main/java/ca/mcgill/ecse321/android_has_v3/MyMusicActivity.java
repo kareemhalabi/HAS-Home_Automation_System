@@ -1,9 +1,8 @@
 package ca.mcgill.ecse321.android_has_v3;
 
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,8 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import ca.mcgill.ecse321.android_has_v3.albums.AlbumNavFragment;
+import ca.mcgill.ecse321.android_has_v3.artists.AddArtistActivity;
+import ca.mcgill.ecse321.android_has_v3.artists.ArtistNavFragment;
+import ca.mcgill.ecse321.android_has_v3.songs.AddSongActivity;
+import ca.mcgill.ecse321.android_has_v3.songs.SongNavFragment;
+
 public class MyMusicActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +41,14 @@ public class MyMusicActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         //Sets the song view as the default on startup
-        MenuItem songItem = navigationView.getMenu().getItem(2);
-        songItem.setChecked(true);
-        onNavigationItemSelected(songItem);
+        if(HASAndroidApplication.getCurrentMenu() == null)
+            HASAndroidApplication.setCurrentMenu(navigationView.getMenu().getItem(2));
+        HASAndroidApplication.getCurrentMenu().setChecked(true);
+        onNavigationItemSelected(HASAndroidApplication.getCurrentMenu());
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -55,12 +63,15 @@ public class MyMusicActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
+        HASAndroidApplication.setCurrentMenu(item);
+
         int id = item.getItemId();
         Fragment fragment = null;
 
         if (id == R.id.nav_artists) {
-
+            fragment = new ArtistNavFragment();
+            setTitle("Artists");
         } else if (id == R.id.nav_albums) {
             fragment = new AlbumNavFragment();
             setTitle("Albums");
@@ -76,12 +87,17 @@ public class MyMusicActivity extends AppCompatActivity
         }
 
         //sets the new fragment
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void addArtist(View v) {
+        Intent intent = new Intent(this, AddArtistActivity.class);
+        startActivity(intent);
     }
 
     public void addSong(View v) {

@@ -1,10 +1,12 @@
-package ca.mcgill.ecse321.android_has_v3;
+package ca.mcgill.ecse321.android_has_v3.albums;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import ca.mcgill.ecse321.android_has_v3.R;
 
 public class AlbumNavFragment extends Fragment {
 

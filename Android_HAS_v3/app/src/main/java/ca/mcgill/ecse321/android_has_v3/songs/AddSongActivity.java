@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.android_has_v3;
+package ca.mcgill.ecse321.android_has_v3.songs;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +11,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import ca.mcgill.ecse321.HAS.controller.HASController;
 import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.android_has_v3.R;
 
 public class AddSongActivity extends AppCompatActivity {
 
@@ -87,7 +87,7 @@ public class AddSongActivity extends AppCompatActivity {
     }
 
     public void refreshError() {
-        TextView errorMessage = (TextView) findViewById(R.id.errorMessage);
+        TextView errorMessage = (TextView) findViewById(R.id.add_song_errorMessage);
         errorMessage.setText(error);
     }
 

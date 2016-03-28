@@ -198,12 +198,13 @@ class Controller {
 			$hm->addRoomGroup ( $group );
 			$pm->writeDataToStore ( $hm );
 		}
+		/*
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		$Playlist->add ( $room );
+		$->add ( $room );
 		
-		$pm->writeDataToStore ( $hm );
+		$pm->writeDataToStore ( $hm );*/
 	}
 	public function addRoomToGroup($aGroup, $aRoom) {
 		$pm = new PersistenceHAS ();

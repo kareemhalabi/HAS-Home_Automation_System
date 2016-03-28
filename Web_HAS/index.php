@@ -63,7 +63,7 @@
 
 	<form action="playPlaylist.php" method="post">
 	<?php
-	echo "<p>Playlists: <select name='playlsitspinner'>";
+	echo "<p>Playlists: <select name='playlistspinner'>";
 	foreach ( $hm->getPlaylists () as $playlist ) {
 		echo "<option>" . $playlist->getName () . "</option>";
 	}

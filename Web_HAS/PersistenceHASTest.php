@@ -1,8 +1,8 @@
 <?php 
-require_once (__DIR__.'/../persistence/PersistenceHAS.php');
-require_once (__DIR__.'/../model/HAS.php');
-require_once (__DIR__.'/../model/Album.php');
-require_once (__DIR__.'/../model/Artist.php');
+require_once (__DIR__.'\..\persistence\PersistenceHAS.php');
+require_once (__DIR__.'\..\model\HAS.php');
+require_once (__DIR__.'\..\model\Album.php');
+require_once (__DIR__.'\..\model\Artist.php');
 
 
 

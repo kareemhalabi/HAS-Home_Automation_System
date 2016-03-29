@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>HAS</title>
 <style>
+p { text-align:center; }
 .error {
 	color: #FF0000;
 }

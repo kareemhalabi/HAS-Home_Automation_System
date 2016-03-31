@@ -30,5 +30,9 @@
     <string name="genre_hint">Genre?</string>
     <string name="albumreleasedate_label">Release Date?</string>
     <string name="addalbum_button">Add Album</string>
+    <string name="addPlaylist_button">Add Playlist</string>
+    <string name="playlistname_hint">Playlist Name?</string>
+    <string name="playlist_song_spinner_label">Add Song</string>
+    <string name="addSongToPlaylist_button">Add Song to Playlist</string>
 
 </resources>

@@ -17,6 +17,8 @@ import ca.mcgill.ecse321.android_has_v3.albums.AddAlbumActivity;
 import ca.mcgill.ecse321.android_has_v3.albums.AlbumNavFragment;
 import ca.mcgill.ecse321.android_has_v3.artists.AddArtistActivity;
 import ca.mcgill.ecse321.android_has_v3.artists.ArtistNavFragment;
+import ca.mcgill.ecse321.android_has_v3.playlists.AddPlaylistActivity;
+import ca.mcgill.ecse321.android_has_v3.playlists.PlaylistNavFragment;
 import ca.mcgill.ecse321.android_has_v3.songs.AddSongActivity;
 import ca.mcgill.ecse321.android_has_v3.songs.SongNavFragment;
 
@@ -70,21 +72,36 @@ public class MyMusicActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment = null;
 
-        if (id == R.id.nav_artists) {
-            fragment = new ArtistNavFragment();
-            setTitle("Artists");
-        } else if (id == R.id.nav_albums) {
-            fragment = new AlbumNavFragment();
-            setTitle("Albums");
-        } else if (id == R.id.nav_songs) {
-            fragment = new SongNavFragment();
-            setTitle("Songs");
-        } else if (id == R.id.nav_playlists) {
+        switch (id){
+            case R.id.nav_artists:
+                fragment = new ArtistNavFragment();
+                setTitle("Artists");
+                break;
 
-        } else if (id == R.id.nav_rooms) {
+            case R.id.nav_albums:
+                fragment = new AlbumNavFragment();
+                setTitle("Albums");
+                break;
 
-        } else if (id == R.id.nav_room_groups) {
+            case R.id.nav_songs:
+                fragment = new SongNavFragment();
+                setTitle("Songs");
+                break;
 
+            case R.id.nav_playlists:
+                fragment = new PlaylistNavFragment();
+                setTitle("Playlists");
+                break;
+
+            case R.id.nav_rooms:
+
+                setTitle("Rooms");
+                break;
+
+            case R.id.nav_room_groups:
+
+                setTitle("Room Groups ");
+                break;
         }
 
         //sets the new fragment
@@ -108,6 +125,11 @@ public class MyMusicActivity extends AppCompatActivity
 
     public void addSong(View v) {
         Intent intent = new Intent(this, AddSongActivity.class);
+        startActivity(intent);
+    }
+
+    public void addPlaylist(View v) {
+        Intent intent = new Intent(this, AddPlaylistActivity.class);
         startActivity(intent);
     }
 

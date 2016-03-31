@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_artists"
+            android:title="@string/nav_artists_label" />
+        <item
+            android:id="@+id/nav_albums"
+            android:title="@string/nav_albums_label" />
+        <item
+            android:id="@+id/nav_songs"
+            android:title="@string/nav_songs_label" />
+        <item
+            android:id="@+id/nav_playlists"
+            android:title="@string/nav_playlists_label" />
+        <item
+            android:id="@+id/nav_rooms"
+            android:title="@string/nav_rooms_label" />
+        <item
+            android:id="@+id/nav_room_groups"
+            android:title="@string/nav_room_groups_label" />
+    </group>
+
+</menu>

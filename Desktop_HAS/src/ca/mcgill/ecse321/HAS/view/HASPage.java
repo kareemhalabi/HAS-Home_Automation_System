@@ -516,10 +516,10 @@ public class HASPage extends JFrame
 			HASController hc = new HASController();
 			try
 			{
-				// TODO:need to fix this
+				// TODO:need to fix this for featured artist
 				hc.addSongtoAlbum(albums.get(selectedAlbum), songNameTextField.getText(),
 						(Integer) (songDurationSpinner.getModel().getValue()),
-						(Integer) (songPositionSpinner.getModel().getValue()));
+						(Integer) (songPositionSpinner.getModel().getValue()), null);
 			} catch (InvalidInputException e)
 			{
 				error = e.getMessage();

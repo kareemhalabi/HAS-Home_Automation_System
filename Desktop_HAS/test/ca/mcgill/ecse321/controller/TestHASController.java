@@ -476,40 +476,79 @@ public class TestHASController
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
-		
+
 		String[] names =
 		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
 		for (String name : names)
 			h.addArtist(new Artist(name));
 		hc.sortArtists();
-		
+
 		Arrays.sort(names);
-		for(int i = 0; i<names.length; i++)
+		for (int i = 0; i < names.length; i++)
 		{
 			assertTrue(names[i].equals(h.getArtist(i).getName()));
 		}
 	}
-	
+
 	@Test
 	public void testSortAlbums()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
-		
+
 		String[] names =
 		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
-		
+
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(116, 02, 8);
-		
+
 		for (String name : names)
 			h.addAlbum(new Album(name, "Sort Yourself", d1, new Artist("Bob the Artist")));
 		hc.sortAlbums();
-		
+
 		Arrays.sort(names);
-		for(int i = 0; i<names.length; i++)
+		for (int i = 0; i < names.length; i++)
 		{
 			assertTrue(names[i].equals(h.getAlbum(i).getName()));
+		}
+	}
+	@Test
+	public void testSortSongs()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		@SuppressWarnings("deprecation")
+		Date d1 = new Date(116, 02, 8);
+
+		Album a = new Album("Jack", "Bring me food", d1, new Artist("Jack the Reaper"));
+		h.addAlbum(a);
+
+		String[] names =
+		{ "Wind Rises", "Dark Horses", "Leo's Oscar", "Life", "KIA", "IKEA", "Food", "Cake", "Porto", "Angel" };
+		int[] position =
+		{2, 3, 7, 8, 1, 4, 9, 10, 6, 5};
+		int i = 0;
+
+		for (String name : names)
+		{
+			try
+			{
+				hc.addSongtoAlbum(a, name, 123, position[i]);
+			} catch (InvalidInputException e)
+			{
+				fail();
+			}
+			
+			i++;
+		}
+		
+		hc.sortSongs(a);
+		
+		System.out.println(a.getSongs().toString());
+
+		for (int j = 0; j < names.length-1; j++)
+		{
+			assertEquals(a.getSong(j).getPosition(), j+1);
 		}
 	}
 

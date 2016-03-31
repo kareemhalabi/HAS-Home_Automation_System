@@ -9,6 +9,7 @@ import java.util.List;
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.HAS.model.Playable;
 import ca.mcgill.ecse321.HAS.model.Playlist;
 import ca.mcgill.ecse321.HAS.model.Room;
 import ca.mcgill.ecse321.HAS.model.RoomGroup;
@@ -63,7 +64,7 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	public void addSongtoAlbum(Album a, String aName, int aDuration, int aPosition) throws InvalidInputException
+	public void addSongtoAlbum(Album a, String aName, int aDuration, int aPosition, List<Artist> ftArtists) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 
@@ -91,6 +92,15 @@ public class HASController
 
 		Song newSong = new Song(aName, aDuration, aPosition, a);
 		h.addSong(newSong);
+		
+		//TODO TEST THIS
+		if(ftArtists != null)
+		{
+			for(Artist ftar: ftArtists)
+				addFeaturedArtist(newSong, ftar);
+		}
+		
+		sortSongs(a);
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -242,11 +252,11 @@ public class HASController
 		HAS h = HAS.getInstance();
 		List<Artist> artists = h.getArtists();
 		List<Artist> sortedArtists = new ArrayList<Artist>();
-		for(Artist a: artists)
+		for (Artist a : artists)
 			sortedArtists.add(a);
-		
+
 		Collections.sort(sortedArtists);
-		for (Artist a :sortedArtists)
+		for (Artist a : sortedArtists)
 		{
 			h.removeArtist(a);
 		}
@@ -254,7 +264,7 @@ public class HASController
 		{
 			h.addArtist(a);
 		}
-		
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
@@ -263,9 +273,9 @@ public class HASController
 		HAS h = HAS.getInstance();
 		List<Album> albums = h.getAlbums();
 		List<Album> sortedAlbums = new ArrayList<Album>();
-		for(Album a: albums)
+		for (Album a : albums)
 			sortedAlbums.add(a);
-		
+
 		Collections.sort(sortedAlbums);
 		for (Album a : sortedAlbums)
 		{
@@ -275,24 +285,56 @@ public class HASController
 		{
 			h.addAlbum(a);
 		}
-		
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-	
+
 	public void addFeaturedArtist(Song song, Artist ar) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 		String error = "";
-		if(song == null)
+		if (song == null)
 			error = error + "Must select a song to add a featured artist!";
-		if(ar == null)
+		if (ar == null)
 			error = error + "Must select a featured artist!";
-		
-		if(error.length()>0)
+
+		if (error.length() > 0)
 			throw new InvalidInputException(error);
-		
+
 		song.addFtArtist(ar);
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	public void sortSongs(Album a)
+	{
+		HAS h = HAS.getInstance();
+		
+		if (h.getAlbums().contains(a) == true)
+		{
+			List<Song> songs = a.getSongs();
+			List<Song> sortedSongs = new ArrayList<Song>();
+			for (Song s : songs)
+				sortedSongs.add(s);
+
+			Collections.sort(sortedSongs);
+			
+			for (Song s : sortedSongs)
+			{
+				s.delete();//Songs are not being removed
+				a.removeSong(s);
+			}
+			
+			for (Song s : sortedSongs)
+			{
+				a.addSong(s);
+			}
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+	
+	public void play(Playable play)
+	{
+		play.play();
+	}
 }

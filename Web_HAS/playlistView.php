@@ -35,12 +35,16 @@ $hm = $pm->loadDataFromStore ();
 ?>
 				
 	<form action="addPlaylist.php" method="post">
-		<h1>Add a New Playlist</h1>
-		<p>
-
-			Name of your playlist: <input type="text" name="playlistName" /> <span
-				class="error">		
 		
+		<p>
+			<h1 align="center">Add a New Playlist</h1>
+		
+		
+		<p>
+			Name of your playlist: <input type="text" name="playlistName" /> <span
+				class="error">		</span>
+				
+		</p>
 			<?php
 			echo "<p>Song: <select name='songSpinner'>";
 			foreach ( $hm->getSongs () as $song ) {
@@ -51,8 +55,8 @@ $hm = $pm->loadDataFromStore ();
 			?>
 			
 			
-			</span>
-		</p>
+			
+		
 		<p>
 			<input type="submit" value="Add Playlist" /> <span class="error">			
 			<?php
@@ -67,7 +71,7 @@ $hm = $pm->loadDataFromStore ();
 	</form>
 	
 	<form action="addSongToPlaylist.php" method="post">
-		<h1>Manage Your Playlists</h1>
+		<h1 align="center">Manage Your Playlists</h1>
 		<p> Choose a Song to Add
 		<?php
 		echo "<p>Song: <select name='songSpinner'>";

@@ -5,6 +5,7 @@ require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\HAS.php';
 require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Album.php';
 require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Artist.php';
 require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Song.php';
+require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Playable.php';
 
 /*require_once (__DIR__.'/../controller/Controller.php');	//PHP says these files can't be found 
 require_once (__DIR__.'/../persistence/PersistenceHAS.php');

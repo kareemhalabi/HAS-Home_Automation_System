@@ -41,14 +41,28 @@
 		$name = $myPlaylist->getName();
 		?>
 		
-		<form action="play.php" method="post">
+		<form action="playPlaylistRoom.php" method="post">
 		<?php
 		echo "Which room or group of rooms would you like to play the playlist: {$name}";
 		?>
-		
-		
-		
+		<?php 
+		echo "<p>Room: <select name='roomspinner'>";
+		foreach($hm->getRooms()as$room){
+			echo "<option>" . $room->getName() . "</option>";
+		}
+		echo "</select><span class='error'>";
+		echo "</span></p>";
+		?>
+		<input type="submit" value="Play in Room"/><span class="error">
+		<?php 
+		if(isset($_SESSION['errorRoom'])&&! empty ( $_SESSION ['errorRoom'] )) {
+				echo " * " . $_SESSION ["errorRoom"];                            
+			}
+		?>
+		</span>
 		</form>
+		
+		
 	<form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>

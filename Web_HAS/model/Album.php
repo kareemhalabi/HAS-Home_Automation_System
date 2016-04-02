@@ -3,7 +3,7 @@
 /*This code was generated using the UMPLE 1.23.0-599796a modeling language!*/
 
 
-require_once 'model/Playable.php';
+//require_once 'model/Playable.php';
 class Album extends Playable
 {
 

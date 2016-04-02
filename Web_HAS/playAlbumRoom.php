@@ -44,7 +44,7 @@ $name = $myRoom->getName();
 
 ?>
 
-<h3>The playlist is now playing in the room: <?php echo $name?>.</h3>
+<h3>The album is now playing in the room: <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>

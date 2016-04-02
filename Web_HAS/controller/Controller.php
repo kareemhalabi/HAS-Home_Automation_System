@@ -1,4 +1,5 @@
 <?php
+require_once (__DIR__ . '/../model/Playable.php');
 require_once (__DIR__ . '/../model/Album.php');
 require_once (__DIR__ . '/../model/Artist.php');
 require_once (__DIR__ . '/../model/Song.php');
@@ -6,7 +7,6 @@ require_once (__DIR__ . '/../model/HAS.php');
 require_once (__DIR__ . '/../model/Playlist.php');
 require_once (__DIR__ . '/../model/Room.php');
 require_once (__DIR__ . '/../model/RoomGroup.php');
-require_once (__DIR__ . '/../model/Playlist.php');
 require_once (__DIR__ . '/../persistence/PersistenceHAS.php');
 require_once (__DIR__ . '/../controller/InputValidator.php');
 class Controller {

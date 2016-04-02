@@ -33,6 +33,8 @@ public class HASController
 		Artist art = new Artist(artName);
 		HAS h = HAS.getInstance();
 		h.addArtist(art);
+
+		sortArtists();
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
@@ -61,27 +63,27 @@ public class HASController
 		Album a = new Album(name, genre, releaseDate, ar);
 		HAS h = HAS.getInstance();
 		h.addAlbum(a);
+
+		sortAlbums();
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	public void addSongtoAlbum(Album a, String aName, int aDuration, int aPosition, List<Artist> ftArtists) throws InvalidInputException
+	public void addSongtoAlbum(Album a, String aName, int aDuration, int aPosition, List<Artist> ftArtists)
+			throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 
 		String error = "";
 
-		// checks if the album exists
 		if (a == null)
 			error = error + "Song must belong to an album! ";
 		else if (!h.getAlbums().contains(a))
 			error = error + "Album does not exist! ";
 
-		// checks the name
 		if (aName == null || aName.trim().length() == 0)
 			error = error + "Song must have a name! ";
 
-		// if integer field is left without a number in there, what will it
-		// give?
 		if (aDuration <= 0)
 			error = error + "Song must have a duration! ";
 		if (aPosition <= 0)
@@ -92,19 +94,20 @@ public class HASController
 
 		Song newSong = new Song(aName, aDuration, aPosition, a);
 		h.addSong(newSong);
-		
-		//TODO TEST THIS
-		if(ftArtists != null)
+
+		// TODO TEST THIS
+		if (ftArtists != null)
 		{
-			for(Artist ftar: ftArtists)
+			for (Artist ftar : ftArtists)
 				addFeaturedArtist(newSong, ftar);
 		}
-		
+
 		sortSongs(a);
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	//TODO input list of songs
 	public void createPlaylist(String name, Song song1) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -165,6 +168,7 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	//TODO input list of rooms
 	public void createRoomGroup(String name, Room initialRoom) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -209,8 +213,13 @@ public class HASController
 
 		if (room == null)
 			error = error + "Must select a room to set the volume in!";
+		if (volumeLevel < 0)
+			error = error + "Must select a positive volume level!";
 		if (error.length() > 0)
 			throw new InvalidInputException(error);
+
+		if (volumeLevel > 100)
+			volumeLevel = 100;
 
 		if (volumeLevel == 0)
 		{
@@ -308,31 +317,33 @@ public class HASController
 	public void sortSongs(Album a)
 	{
 		HAS h = HAS.getInstance();
-		
+
 		if (h.getAlbums().contains(a) == true)
 		{
 			List<Song> songs = a.getSongs();
-			List<Song> sortedSongs = new ArrayList<Song>();
-			for (Song s : songs)
-				sortedSongs.add(s);
+			if (songs.size() > 1)
+			{
+				List<Song> sortedSongs = new ArrayList<Song>();
+				for (Song s : songs)
+					sortedSongs.add(s);
 
-			Collections.sort(sortedSongs);
-			
-			for (Song s : sortedSongs)
-			{
-				s.delete();//Songs are not being removed
-				a.removeSong(s);
-			}
-			
-			for (Song s : sortedSongs)
-			{
-				a.addSong(s);
+				Collections.sort(sortedSongs);
+
+				for (Song s : sortedSongs)
+				{
+					s.delete();// Songs are not being removed
+				}
+
+				for (Song s : sortedSongs)
+				{
+					a.addSong(s);
+				}
 			}
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
-	
+
 	public void play(Playable play)
 	{
 		play.play();

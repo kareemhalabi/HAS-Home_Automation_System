@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -75,9 +77,14 @@ public class TestHASController
 		int songPosition1 = 1;
 		assertEquals(1, h.getAlbums().size());
 
+		List<Artist> featured = new ArrayList<Artist>();
+
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -327,9 +334,14 @@ public class TestHASController
 		int songDuration1 = 213;
 		int songPosition1 = 1;
 
+		List<Artist> featured = new ArrayList<Artist>();
+
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -372,9 +384,14 @@ public class TestHASController
 		int songDuration1 = 213;
 		int songPosition1 = 1;
 
+		List<Artist> featured = new ArrayList<Artist>();
+
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
 		try
 		{
-			hc.addSongtoAlbum(null, testSongName1, songDuration1, songPosition1);
+			hc.addSongtoAlbum(null, testSongName1, songDuration1, songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -415,9 +432,14 @@ public class TestHASController
 		int songDuration1 = 0;
 		int songPosition1 = 1;
 
+		List<Artist> featured = new ArrayList<Artist>();
+
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -459,9 +481,14 @@ public class TestHASController
 		int songDuration1 = 213;
 		int songPosition1 = 0;
 
+		List<Artist> featured = new ArrayList<Artist>();
+
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -512,45 +539,7 @@ public class TestHASController
 			assertTrue(names[i].equals(h.getAlbum(i).getName()));
 		}
 	}
-	@Test
-	public void testSortSongs()
-	{
-		HAS h = HAS.getInstance();
-		HASController hc = new HASController();
-		@SuppressWarnings("deprecation")
-		Date d1 = new Date(116, 02, 8);
 
-		Album a = new Album("Jack", "Bring me food", d1, new Artist("Jack the Reaper"));
-		h.addAlbum(a);
-
-		String[] names =
-		{ "Wind Rises", "Dark Horses", "Leo's Oscar", "Life", "KIA", "IKEA", "Food", "Cake", "Porto", "Angel" };
-		int[] position =
-		{2, 3, 7, 8, 1, 4, 9, 10, 6, 5};
-		int i = 0;
-
-		for (String name : names)
-		{
-			try
-			{
-				hc.addSongtoAlbum(a, name, 123, position[i]);
-			} catch (InvalidInputException e)
-			{
-				fail();
-			}
-			
-			i++;
-		}
-		
-		hc.sortSongs(a);
-		
-		System.out.println(a.getSongs().toString());
-
-		for (int j = 0; j < names.length-1; j++)
-		{
-			assertEquals(a.getSong(j).getPosition(), j+1);
-		}
-	}
 
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)
 	{
@@ -561,7 +550,6 @@ public class TestHASController
 		assertEquals(testSongName1, h.getSong(0).getName());
 		assertEquals(songDuration1, h.getSong(0).getDuration());
 		assertEquals(songPosition1, h.getSong(0).getPosition());
-
 	}
 
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)

@@ -72,7 +72,7 @@ public class TestHASControllerPlaylistAndRoom
 		// add song to an album
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, null);
 		}
 
 		catch (InvalidInputException e)
@@ -82,7 +82,7 @@ public class TestHASControllerPlaylistAndRoom
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration2, songPosition2);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration2, songPosition2, null);
 		}
 
 		catch (InvalidInputException e)
@@ -671,6 +671,38 @@ public class TestHASControllerPlaylistAndRoom
 	
 		assertEquals("Must select a featured artist!", error);
 		assertFalse(song.hasFtArtists());
+	}
+	
+	@Test
+	public void testSortSongs()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		@SuppressWarnings("deprecation")
+		Date d1 = new Date(116, 02, 8);
+
+		Album a = new Album("Jack", "Bring me food", d1, new Artist("Jack the Reaper"));
+		h.addAlbum(a);
+
+		String[] names =
+		{ "Wind Rises", "Dark Horses", "Leo's Oscar", "Life", "KIA", "IKEA", "Food", "Cake", "Porto", "Angel" };
+		int[] position =
+		{ 2, 3, 7, 8, 1, 4, 9, 10, 6, 5 };
+		int i = 0;
+
+		for (String name : names)
+		{
+			Song song =new Song(name, 123, position[i], a);
+			h.addSong(song);
+			i++;
+		}
+
+		hc.sortSongs(a);
+
+		for (int j = 0; j < names.length - 1; j++)
+		{
+			assertEquals(a.getSong(j).getPosition(), j + 1);
+		}
 	}
 
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)

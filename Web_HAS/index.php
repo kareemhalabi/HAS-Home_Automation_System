@@ -33,11 +33,16 @@
 		<input type="submit" value="Add Music" />
 		<p></p>
 	</form>
+	
 	<form action="selectRoom.php" method="post">
-		<input type="submit" value="Rooms" />
+		<input type="submit" value="Create Rooms" />
 		<p></p>
 	</form>
-
+	
+	<form action="changeVolume.php" method="post">
+		<input type="submit" value="Change Volume"/>
+		<p></p>
+	</form>
 
 	<form action="playlistView.php" method="post">
 		<input type="submit" value="Playlists" />

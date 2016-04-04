@@ -28,6 +28,7 @@ session_start();
 $pm = new PersistenceHAS();
 $hm = $pm->loadDataFromStore();
 
+//pull data from playPlaylist.php
 $group = NULL;
 if(isset($_POST['groupspinner'])){
 	$group = $_POST['groupspinner'];

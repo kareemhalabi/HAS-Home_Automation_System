@@ -12,6 +12,8 @@ require_once (__DIR__ . '/../controller/InputValidator.php');
 class Controller {
 	public function __construct() {
 	}
+	
+	// creates an album with user delcared parameters
 	public function createAlbum($albumName, $genre, $releaseDate, $aArtist) {
 		$albumName = InputValidator::validate_input ( $albumName );
 		$genre = InputValidator::validate_input ( $genre );
@@ -199,12 +201,13 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 		/*
-		$pm = new PersistenceHAS ();
-		$hm = $pm->loadDataFromStore ();
-		
-		$->add ( $room );
-		
-		$pm->writeDataToStore ( $hm );*/
+		 * $pm = new PersistenceHAS ();
+		 * $hm = $pm->loadDataFromStore ();
+		 *
+		 * $->add ( $room );
+		 *
+		 * $pm->writeDataToStore ( $hm );
+		 */
 	}
 	public function addRoomToGroup($aGroup, $aRoom) {
 		$pm = new PersistenceHAS ();
@@ -232,12 +235,17 @@ class Controller {
 				}
 			}
 		}
+		
+		if(in_array($room, $group->getRooms())){
+			throw new Exception("Room already exists in this group!");
+		}else{
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
 		$group->addRoom ( $room );
 		
 		$pm->writeDataToStore ( $hm );
+		}
 	}
 	public function changeVolume($aname, $volume, $mute) {
 		$pm = new PersistenceHAS ();
@@ -260,13 +268,17 @@ class Controller {
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
 			
-			$name->setVolume ( $volume );
-			$name->setMute ( $mute );
+			if ($volume == 0) {
+				$name->setMute ( true );
+			} else {
+				$name->setMute ( false );
+			}
+			$name->setVolume($volume);
 			
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	public function chnageGroupVolume($aGroup, $volume, $mute) {
+	public function changeGroupVolume($aGroup, $volume, $mute) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aGroup == null) {
@@ -287,8 +299,12 @@ class Controller {
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
 			
-			$group->setVolume ( $volume );
-			$group->setMute ( $mute );
+			if ($volume == 0) {
+				$group->setMute ( true );
+			} else {
+				$group->setMute ( false );
+			}
+			$group->setVolume($volume);
 			
 			$pm->writeDataToStore ( $hm );
 		}

@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+$("#table tr").click(function(){
+	   $(this).addClass('selected').siblings().removeClass('selected');    
+	   var value=$(this).find('td:first').html();    
+	});
+
+	$('.ok').on('click', function(e){
+	    alert($("#table tr.selected td:first").html());
+	});
+});
+</script>
+<style>
+td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
+
+.selected {
+    background-color: blue;
+    color: #FFF;
+}
+}
+</style>
 <meta charset="UTF-8">
 <title>HAS</title>
 <style>
@@ -97,29 +119,20 @@
 
 </p>
 	
-<form action="playSong.php" method="post">
-<table id="tableID" border="1">
-<?php
-foreach($songName as $value){
-	echo "<tr><td>" . $value . "</td></tr>";
-}
-?>
-</table>
 
+<form action="playSong.php" method="post">
 <?php if (count($songName) > 0): ?>
-<table>
+<table id="table">
 
   <tbody>
-<?php foreach ($songName as $row): array_map('htmlentities', $songName); ?>
-    <tr>
-      <td><?php echo implode('</td><td>', $songName); ?></td>
-    </tr>
+<?php foreach ($songName as $row): ?>
+      <?php echo "<tr><td>" . $row . "</td></tr>"; ?>
 <?php endforeach; ?>
   </tbody>
 </table>
 <?php endif; ?>
+<input type="submit" name="OK" class="ok" value="Play Song"/>
 </form>
-
 
 </body>
 </html>

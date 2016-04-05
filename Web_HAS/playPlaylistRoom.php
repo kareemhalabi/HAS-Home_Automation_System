@@ -40,55 +40,19 @@ foreach($hm->getRooms() as $tempRoom){
 		break;
 	}
 }
+$playlist = $_SESSION['playlist'];
+
+$playlistName = $playlist->getName();
+
 $name = $myRoom->getName();
+
+
 
 ?>
 
-<h3>The playlist is now playing in the room: <?php echo $name?>.</h3>
+<h3><?php echo $playlistName?> is now playing in the room: <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
-
-<style>
-    #div{
-      border:1px solid #000;
-      font-family:arial;
-      height:100px;
-      width:200px;
-    }
-    ul{
-      list-style:none;
-      max-height:100px;
-      margin:0;
-      overflow:auto;
-      padding:0;
-      text-indent:10px;
-    }
-    li{
-      line-height:25px;
-    }
-    li:nth-child(even){
-      background:#eee;
-    }
-    </style>
-
-	<p>Songs: <select name='songlist'>
-    <div id="div"> 
-    <ul>
-
-        <?php
-        
-        foreach ($hm->getSongs() as $song) {
-        ?>
-            <li><?php echo $song->getName(); ?></li>
-
-        <?php
-        echo "</select></p>";
-        }
-        ?>
-
-    </ul>
-</div>
-</select>
 </body>
 </html>

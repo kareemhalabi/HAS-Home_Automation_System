@@ -28,19 +28,28 @@
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
+		
+	//	$songs = array();
+		//$songs = $hm->getSongs();
+		
+		$songName = array();
+		foreach ($hm->getSongs() as $songs){
+			array_push($songName, $songs->getName());
+		}
+		
 		?>
 	<form action="addMusic.php" method="post">
 		<input type="submit" value="Add Music" />
 		<p></p>
 	</form>
-	
+
 	<form action="selectRoom.php" method="post">
 		<input type="submit" value="Create Rooms" />
 		<p></p>
 	</form>
-	
+
 	<form action="changeVolume.php" method="post">
-		<input type="submit" value="Change Volume"/>
+		<input type="submit" value="Change Volume" />
 		<p></p>
 	</form>
 
@@ -84,19 +93,28 @@
 			</span>
 	</form>
 
-	<form action="playSong.php" method="post">
-	<?php
-	echo "<select name ='songs[]' multiple='multiple' size ='10'>";
-	foreach ( $hm->getSongs () as $song ) {
-		echo "<input id='<?=$song?>' type='checkbox' name ='song[]' value='<?= $song->getName()?>'/>";
-		echo "<label for='<?= $song ?>'><?= $song?></label>";
-		echo "<br />";
-	}
-	echo "</select>";
-	?>
-	<input type="submit" value="Play">
-	</form>
+<p>
 
+</p>
+	
+<form action="playSong.php" method="post">
+<?php if (count($songName) > 0): ?>
+<table>
+  <thead>
+    <tr>
+      <th><?php echo implode('</th><th>', array_keys(current($songName))); ?></th>
+    </tr>
+  </thead>
+  <tbody>
+<?php foreach ($songName as $row): array_map('htmlentities', $row); ?>
+    <tr>
+      <td><?php echo implode('</td><td>', $row); ?></td>
+    </tr>
+<?php endforeach; ?>
+  </tbody>
+</table>
+<?php endif; ?>
+</form>
 
 
 </body>

@@ -40,6 +40,8 @@
 				break;
 			}
 		}
+		$_SESSION['playlist'] = $myPlaylist;
+		
 		$name = $myPlaylist->getName();
 		?>
 		

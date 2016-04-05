@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.HAS.controller;
 
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,7 +96,6 @@ public class HASController
 		Song newSong = new Song(aName, aDuration, aPosition, a);
 		h.addSong(newSong);
 
-		// TODO TEST THIS
 		if (ftArtists != null)
 		{
 			for (Artist ftar : ftArtists)
@@ -107,8 +107,7 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	//TODO input list of songs
-	public void createPlaylist(String name, Song song1) throws InvalidInputException
+	public void createPlaylist(String name, List<Song> songs) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 
@@ -116,14 +115,22 @@ public class HASController
 
 		if (name == null || name.trim().length() == 0)
 			error = error + "Playlist must have a name!";
-		if (song1 == null)
+		if (songs == null || songs.size() == 0)
 			error = error + "Playlist must have at least one song!";
 
 		if (error.length() > 0)
 			throw new InvalidInputException(error);
 
-		Playlist newPlaylist = new Playlist(name, song1);
+		Song initialSong = songs.get(0);
+		Playlist newPlaylist = new Playlist(name, initialSong);
+		
+		List<Song> modifiedSongs = new ArrayList<Song>();
+		for (Song s : songs)
+			modifiedSongs.add(s);
+		
 		h.addPlaylist(newPlaylist);
+		for(Song song: modifiedSongs)
+			addSongtoPlaylist(newPlaylist, song);
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -147,14 +154,13 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	// When room is created, the volume is automatically set to 5.
 	public void createRoom(String name) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 
 		String error = "";
 
-		int volume = 5;
+		int volume = 50;
 		boolean mute = true;
 
 		if (name == null || name.trim().length() == 0)
@@ -168,8 +174,7 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	//TODO input list of rooms
-	public void createRoomGroup(String name, Room initialRoom) throws InvalidInputException
+	public void createRoomGroup(String name, List<Room> rooms) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 
@@ -177,15 +182,24 @@ public class HASController
 
 		if (name == null || name.trim().length() == 0)
 			error = error + "Room Group must have a name!";
-		if (initialRoom == null)
+		if (rooms == null || rooms.size() == 0)
 			error = error + "Room Group must have at least one room!";
 
 		if (error.length() > 0)
 			throw new InvalidInputException(error);
 
+		Room initialRoom = rooms.get(0);
 		RoomGroup newRG = new RoomGroup(name, initialRoom);
 		h.addRoomGroup(newRG);
-
+		
+		List<Room> modifiedRooms = new ArrayList<Room>();
+		for (Room r : rooms)
+			modifiedRooms.add(r);
+		
+		modifiedRooms.remove(0);
+		for(Room r: modifiedRooms)
+			addRoomToRoomGroup(newRG, r);
+		
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
@@ -236,7 +250,6 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	// TODO setMute view will need to check for the mute - CHECK BOX IN THE VIEW
 	public void setMute(Room room, boolean mute) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -344,8 +357,34 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	public void play(Playable play)
-	{
-		play.play();
+	public void playSingleRoom(Playable play, Room room) throws InvalidInputException
+	{		
+		String error = "";
+		if(play == null)
+			error = error + "A playable must be selected! ";
+		if(room == null)
+			error = error + "A room must be selected! ";
+		
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
+		room.setPlayable(play);
+		room.setPlayable(null);
 	}
+	
+	public void playRoomGroup(Playable play, RoomGroup rg) throws InvalidInputException
+	{
+		String error = "";
+		if(play == null)
+			error = error + "A playable must be selected! ";
+		if(rg == null)
+			error = error + "A room group must be selected! ";
+		
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
+		rg.setPlayable(play);
+		rg.setPlayable(null);//sets the playable in each individual room
+	}
+	
 }

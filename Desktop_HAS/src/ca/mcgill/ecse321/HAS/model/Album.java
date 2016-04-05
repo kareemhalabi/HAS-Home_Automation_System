@@ -223,10 +223,21 @@ public class Album extends Playable implements Comparable<Album>
 		super.delete();
 	}
 
-	public void play()
+	public void play(Room room)
 	{
+		Timer t = new Timer();
 		for (Song s : songs)
-			s.play();
+		{
+			s.play(room);
+			int delay = s.getDuration() * 1000; // milliseconds
+			t.schedule(new TimerTask()
+			{
+				@Override
+				public void run()
+				{
+				}
+			}, delay);
+		}
 	}
 
 	public String toString()

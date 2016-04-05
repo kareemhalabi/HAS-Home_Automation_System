@@ -174,10 +174,23 @@ public class Playlist extends Playable
 		super.delete();
 	}
 
-	public void play()
+	//TODO: NO WAY TO STOP AT THE END
+	public void play(Room room)
 	{
+		Timer t = new Timer();
+		int i = 0;
 		for (Song s : songs)
-			s.play();
+		{
+			s.play(room);
+			int delay = s.getDuration() * 1000; // milliseconds
+			t.schedule(new TimerTask()
+			{
+				@Override
+				public void run()
+				{
+				}
+			}, delay);
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Room;
 import ca.mcgill.ecse321.HAS.model.RoomGroup;
+import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 //TODO add tests for playlist
@@ -57,7 +59,9 @@ public class TestPersistence {
 		hc.setRoomVolumeLevel(room1, 7);
 		hc.setMute(room2, true);
 		
-		hc.createPlaylist("Playlist1", h.getSong(0));
+		List<Song> songs = h.getSongs();
+		
+		hc.createPlaylist("Playlist1", songs);
 	}
 
 	@After

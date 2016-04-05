@@ -199,6 +199,14 @@ public class RoomGroup implements Comparable<RoomGroup>
 	public boolean setPlayable(Playable aNewPlayable)
 	{
 		boolean wasSet = false;
+
+		for (Room room : rooms)
+		{
+			room.setPlayable(aNewPlayable);
+			if (aNewPlayable == null)
+				room.setCurrentSong(null);
+		}
+
 		playable = aNewPlayable;
 		wasSet = true;
 		return wasSet;

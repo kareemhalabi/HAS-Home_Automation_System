@@ -44,7 +44,8 @@ public abstract class Playable
   public void delete()
   {}
 
-  public abstract void play();
+  public abstract void play(Room room);
+
 
   public String toString()
   {

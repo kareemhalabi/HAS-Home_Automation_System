@@ -56,15 +56,23 @@
       </mainArtist>
     </ca.mcgill.ecse321.HAS.model.Album>
   </albums>
-  <playlists id="23"/>
-  <songs id="24">
+  <playlists id="23">
+    <ca.mcgill.ecse321.HAS.model.Playlist id="24">
+      <name>Playlist1</name>
+      <songs id="25">
+        <ca.mcgill.ecse321.HAS.model.Song reference="10"/>
+        <ca.mcgill.ecse321.HAS.model.Song reference="18"/>
+      </songs>
+    </ca.mcgill.ecse321.HAS.model.Playlist>
+  </playlists>
+  <songs id="26">
     <ca.mcgill.ecse321.HAS.model.Song reference="10"/>
     <ca.mcgill.ecse321.HAS.model.Song reference="18"/>
   </songs>
-  <roomGroups id="25">
-    <ca.mcgill.ecse321.HAS.model.RoomGroup id="26">
+  <roomGroups id="27">
+    <ca.mcgill.ecse321.HAS.model.RoomGroup id="28">
       <name>Group1</name>
-      <rooms id="27">
+      <rooms id="29">
         <ca.mcgill.ecse321.HAS.model.Room reference="3"/>
         <ca.mcgill.ecse321.HAS.model.Room reference="4"/>
       </rooms>

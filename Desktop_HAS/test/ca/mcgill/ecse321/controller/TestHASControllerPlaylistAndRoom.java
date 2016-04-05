@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +17,7 @@ import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.HAS.model.Room;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
@@ -99,7 +102,7 @@ public class TestHASControllerPlaylistAndRoom
 	}
 
 	@Test
-	public void testCreatePlaylist()
+	public void testCreatePlaylistManySongs()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
@@ -107,10 +110,11 @@ public class TestHASControllerPlaylistAndRoom
 		assertEquals(0, h.getPlaylists().size());
 
 		String playlistName = "Playlist1";
+		List<Song> songs = h.getAlbum(0).getSongs();
 
 		try
 		{
-			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
+			hc.createPlaylist(playlistName, songs);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -130,10 +134,12 @@ public class TestHASControllerPlaylistAndRoom
 
 		String error = "";
 		String playlistName = "";
+		
+		List<Song> songs = h.getAlbum(0).getSongs();
 
 		try
 		{
-			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
+			hc.createPlaylist(playlistName, songs);
 		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
@@ -153,10 +159,11 @@ public class TestHASControllerPlaylistAndRoom
 		String error = "";
 
 		String playlistName = "Name";
+		List<Song> songs = new ArrayList<Song>();
 
 		try
 		{
-			hc.createPlaylist(playlistName, null);
+			hc.createPlaylist(playlistName, songs);
 		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
@@ -172,10 +179,12 @@ public class TestHASControllerPlaylistAndRoom
 		HASController hc = new HASController();
 
 		String playlistName = "Playlist1";
+		
+		List<Song> songs = h.getAlbum(0).getSongs();
 
 		try
 		{
-			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
+			hc.createPlaylist(playlistName, songs);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -229,10 +238,11 @@ public class TestHASControllerPlaylistAndRoom
 		String error = "";
 
 		String playlistName = "Playlist1";
-
+		List<Song> songs = h.getAlbum(0).getSongs();
+		
 		try
 		{
-			hc.createPlaylist(playlistName, h.getAlbum(0).getSong(0));
+			hc.createPlaylist(playlistName, songs);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -293,7 +303,7 @@ public class TestHASControllerPlaylistAndRoom
 	}
 
 	@Test
-	public void testCreateRoomGroup()
+	public void testCreateRoomGroupOneRoom()
 	{
 		HAS h = HAS.getInstance();
 		assertEquals(0, h.getRooms().size());
@@ -310,10 +320,53 @@ public class TestHASControllerPlaylistAndRoom
 		}
 
 		String groupRoomName = "Group 1";
+		
+		List<Room> rooms = h.getRooms();
 
 		try
 		{
-			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+			hc.createRoomGroup(groupRoomName, rooms);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		assertEquals("Group 1", h.getRoomGroup(0).getName());
+		assertEquals("RoomName", h.getRoomGroup(0).getRoom(0).getName());
+	}
+	
+	@Test
+	public void testCreateRoomGroupMultipleRooms()
+	{
+		HAS h = HAS.getInstance();
+		assertEquals(0, h.getRooms().size());
+
+		HASController hc = new HASController();
+
+		String name = "RoomName";
+		try
+		{
+			hc.createRoom(name);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		try
+		{
+			hc.createRoom("Kitchen");
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		String groupRoomName = "Group 1";
+		
+		List<Room> rooms = h.getRooms();
+
+		try
+		{
+			hc.createRoomGroup(groupRoomName, rooms);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -343,9 +396,11 @@ public class TestHASControllerPlaylistAndRoom
 			fail();
 		}
 
+		List<Room> rooms = h.getRooms();
+		
 		try
 		{
-			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+			hc.createRoomGroup(groupRoomName, rooms);
 		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
@@ -365,10 +420,11 @@ public class TestHASControllerPlaylistAndRoom
 
 		String error = "";
 		String groupRoomName = "Group 1";
+		List<Room> rooms = h.getRooms();
 
 		try
 		{
-			hc.createRoomGroup(groupRoomName, null);
+			hc.createRoomGroup(groupRoomName, rooms);
 		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();
@@ -405,10 +461,11 @@ public class TestHASControllerPlaylistAndRoom
 		}
 
 		String groupRoomName = "Group 1";
-
+		List<Room> rooms = h.getRooms();
+		
 		try
 		{
-			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+			hc.createRoomGroup(groupRoomName, rooms);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -473,10 +530,12 @@ public class TestHASControllerPlaylistAndRoom
 		{
 			fail();
 		}
+		
+		List<Room> rooms = h.getRooms();
 
 		try
 		{
-			hc.createRoomGroup(groupRoomName, h.getRoom(0));
+			hc.createRoomGroup(groupRoomName, rooms);
 		} catch (InvalidInputException e)
 		{
 			fail();

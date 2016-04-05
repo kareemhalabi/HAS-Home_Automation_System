@@ -98,17 +98,21 @@
 </p>
 	
 <form action="playSong.php" method="post">
+<table id="tableID" border="1">
+<?php
+foreach($songName as $value){
+	echo "<tr><td>" . $value . "</td></tr>";
+}
+?>
+</table>
+
 <?php if (count($songName) > 0): ?>
 <table>
-  <thead>
-    <tr>
-      <th><?php echo implode('</th><th>', array_keys(current($songName))); ?></th>
-    </tr>
-  </thead>
+
   <tbody>
-<?php foreach ($songName as $row): array_map('htmlentities', $row); ?>
+<?php foreach ($songName as $row): array_map('htmlentities', $songName); ?>
     <tr>
-      <td><?php echo implode('</td><td>', $row); ?></td>
+      <td><?php echo implode('</td><td>', $songName); ?></td>
     </tr>
 <?php endforeach; ?>
   </tbody>

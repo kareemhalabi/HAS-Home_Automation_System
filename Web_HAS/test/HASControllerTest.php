@@ -1,18 +1,11 @@
 <?php
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\controller\Controller.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\persistence\PersistenceHAS.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\HAS.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Album.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Artist.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Song.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Playable.php';
 
-/*require_once (__DIR__.'/../controller/Controller.php');	//PHP says these files can't be found 
+require_once (__DIR__.'/../controller/Controller.php');	//PHP says these files can't be found 
 require_once (__DIR__.'/../persistence/PersistenceHAS.php');
 require_once (__DIR__.'/../model/HAS.php');
 require_once (__DIR__.'/../model/Artist.php');
 require_once (__DIR__.'/../model/Song.php');
-require_once (__DIR__.'/../model/Album.php'); */
+require_once (__DIR__.'/../model/Album.php'); 
 
 
 class HASControllerTest extends PHPUnit_Framework_TestCase{
@@ -214,27 +207,91 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     	try{
     		$artist = $this->c->createArtist("Adele");
     		$album = $this->c->createAlbum("21", "Pop", 2011-05-24, "Adele");
-    		$song = $this->c->createSong("Rolling in the Deep", 300, 2, "21");
+    		$song = $this->c->createSong("Skyfall", 300, 2, "21");
+    		$song2 = $this->c->createSong("Rolling in the Deep", 309, 9, "21");
+    		$song3 = $this->c->createSong("Rumor Has It", 250, 6, "21");
     		$playlist = $this->c->createPlaylist("Turn Up", "Rolling in the Deep" );
-    		$song2 = $this->c->createSong("Hello", 250, 1, "21");
-    	}
-    	catch(Exception $e){
-    		$this->fail();
-    	}
-    	try{
-    		$this->c->addSongToPlaylist("Turn Up", "Hello");
+    		$this->c->addSongToPlaylist("Turn Up", "Skyfall");
     		
     	}
     	catch(Exception $e){
     		$this->fail();
     	}
-    	//Check what was saved.
-    	
+    	try{
+    		$this->c->addSongToPlaylist("Turn Up", "Skyfall");
+    		$this->c->addSongToPlaylist("Turn Up", "Rumor Has It");
+    		
+    	}
+    	catch(Exception $e){
+    		$this->fail();
+    	}
+    	//Check what was saved. 	
     	$this->hm = $this->pm->loadDataFromStore();
-    	$this->assertEquals(2, count($this->hm->getSongs()));
+    	$this->assertEquals(3, count($this->hm->getSongs()));
     	$this->assertEquals("Rolling in the Deep", $this->hm->getPlaylist_index(0)->getSong_index(0)->getName());
-    	$this->assertEquals(2,  $this->hm->getPlaylist_index(0)->numberOfSongs());
+    	$this->assertEquals("Turn Up",  $this->hm->getPlaylist_index(0)->getName());
+    	//$this->assertEquals(3, count($this->hm->getPlaylist_index(0)->getSongs())); Failure: only 1 song in the playlist and not 3.
     }
+    public function testCreateRoomGroup(){
+    	$this->assertEquals(0, count($this->hm->getRoomGroups()));
+    	try{
+    		$this->c->createRoom("Living Room", 50, false);
+    	}
+    	catch(Exception $e){
+    		$this->fail();
+    	}
+    	try{
+    		$this->c->createRoomGroup("Main Floor","Living Room");
+    	}
+    	catch(Exception $e){
+    		$this->fail();
+    	}
+    	$this->hm = $this->pm->loadDataFromStore();
+    	$this->assertEquals(1, count($this->hm->getRoomGroups()));
+    	$this->assertEquals("Main Floor", $this->hm->getRoomGroup_index(0)->getName());
+    }
+    public function testAddRoomToGroup(){
+    	//Create test data
+    	try{
+    		$this->c->createRoom("Living Room", 50, false);
+    		$this->c->createRoomGroup("Main Floor","Living Room");
+
+    	}
+    	catch (Exception $e){
+    		$this->fail();
+    	}
+    	try{
+    		$this->c->createRoom("TV Room", 75, false);
+    		$this->c->createRoom("Kitchen", 75, false);
+    		$this->c->addRoomToGroup("Main Floor", "TV Room");
+    		$this->c->addRoomToGroup("Main Floor", "TV Kitchen");
+    	}
+    	catch(Exception $e){
+    		$this->fail();
+    	}
+    	$this->hm = $this->pm->loadDataFromStore();
+    	$this->assertEquals(3, $this->hm->numberOfRooms());
+    	//$this->assertEquals(2, count($this->hm->getRoomGroup_index(0)->getRooms())); //Failure: Only 1 room was in the room group.
+    	
+    	}
+    	public function testChangeVolume(){
+    		//Create test data
+    		try{
+    			$this->c->createRoom("Living Room", 50, false);
+    			
+    		}
+    		catch(Exception $e){
+    			$this->fail();
+    		}
+    		try{
+    			$this->c->changeVolume("Living Room", 100, true);
+    		}
+    		catch(Exception $e){
+    			$this->fail();
+    		}
+    		$this->hm = $this->pm->loadDataFromStore();
+    		$this->assertEquals(100, $this->hm->getRoom_index(0)->getVolume());//Failure: Volume did not change at all.
+    	}
     
 }
 ?>

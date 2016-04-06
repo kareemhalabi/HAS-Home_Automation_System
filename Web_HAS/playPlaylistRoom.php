@@ -41,18 +41,18 @@ foreach($hm->getRooms() as $tempRoom){
 		break;
 	}
 }
+$name = $myRoom->getName();
+
 $playlist = $_SESSION['playlist'];
 
 $playlistName = $playlist->getName();
-
-$name = $myRoom->getName();
 
 $c = new Controller();
 $c->playPlayableRoom($myRoom, $playlist);
 
 ?>
 
-<h3><?php echo $playlistName?> is now playing in the room: <?php echo $name?>.</h3>
+<h3>The playlist <?php echo $playlistName?>, is now playing in the room <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>

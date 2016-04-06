@@ -19,7 +19,12 @@ td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
     background-color: blue;
     color: #FFF;
 }
+
+tr:hover{
+	background-color: blue;
+	color: #FFF;
 }
+
 </style>
 <meta charset="UTF-8">
 <title>HAS</title>
@@ -49,13 +54,13 @@ td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
 		$hm = $pm->loadDataFromStore ();
 		
 		
-	//	$songs = array();
-		//$songs = $hm->getSongs();
-		
 		$songName = array();
 		foreach ($hm->getSongs() as $songs){
 			array_push($songName, $songs->getName());
 		}
+		
+		//sorting method in controller that takes the songs->getAlbums->getNames and sorts by album name into a new array that is returned with a list of songs that is in album name order
+		//
 		
 		?>
 	<form action="addMusic.php" method="post">
@@ -119,6 +124,7 @@ td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
 	
 
 
+<form name="songlist">
 <?php if (count($songName) > 0): ?>
 <table id="table">
 
@@ -129,7 +135,25 @@ td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
   </tbody>
 </table>
 <?php endif; ?>
+</form>
+<p>
 
+
+</p>
+
+
+<form name="songlistW">
+<?php if (count($songName) > 0): ?>
+<table id="table">
+
+  <tbody>
+<?php foreach ($hm->getSongs() as $song): ?>
+      <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td></tr>"; ?>
+<?php endforeach; ?>
+  </tbody>
+</table>
+<?php endif; ?>
+</form>
 
 </body>
 </html>

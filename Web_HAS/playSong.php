@@ -42,7 +42,7 @@
 		$name = $mySong->getName();
 		?>
 		
-		<form action="playPlaylistRoom.php" method="post">
+		<form action="playSongRoom.php" method="post">
 		<?php
 		echo "Which room or group of rooms would you like to play the song: {$name}";
 		?>
@@ -64,7 +64,7 @@
 		</form>
 		
 		
-		<form action="playPlaylistRG.php" method="post">
+		<form action="playSongRG.php" method="post">
 		<?php 
 		echo "<p>Group: <select name='groupspinner'>";
 		foreach ( $hm->getRoomGroups() as $group) {

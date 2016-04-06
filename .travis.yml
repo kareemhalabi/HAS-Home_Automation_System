@@ -1,4 +1,6 @@
 language: java
 jdk: oraclejdk7
 
-script: ant test
+script:
+-cd Desktop_HAS
+-ant test

@@ -21,6 +21,7 @@
 		require_once "model/Room.php";
 		require_once "model/RoomGroup.php";
 		require_once "persistence/PersistenceHAS.php";
+		require_once (__DIR__ . '\controller\Controller.php');
 
 session_start();
 
@@ -46,6 +47,9 @@ $name = $myGroup->getName();
 $playlist = $_SESSION['playlist'];
 
 $playlistName = $playlist->getName();
+
+$c=new Controller();
+$c->playPlayableRG($myGroup, $playlist);
 ?>
 
 <h3><?php $playlistName?> is now playing in the room group: <?php echo $name?>.</h3>

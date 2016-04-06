@@ -21,6 +21,7 @@
 		require_once "model/Room.php";
 		require_once "model/RoomGroup.php";
 		require_once "persistence/PersistenceHAS.php";
+		require_once (__DIR__ . '\controller\Controller.php');
 
 session_start();
 
@@ -46,7 +47,8 @@ $playlistName = $playlist->getName();
 
 $name = $myRoom->getName();
 
-
+$c = new Controller();
+$c->playPlayableRoom($myRoom, $playlist);
 
 ?>
 

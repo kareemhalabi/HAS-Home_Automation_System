@@ -6,12 +6,10 @@
 $(document).ready(function(){
 $("#table tr").click(function(){
 	   $(this).addClass('selected').siblings().removeClass('selected');    
-	   var value=$(this).find('td:first').html();    
+	   var value=$(this).find('td:first').html();
+	   window.location.href="playSong.php?name="+$(this).find('td:first').html();    
 	});
 
-	$('.ok').on('click', function(e){
-	    alert($("#table tr.selected td:first").html());
-	});
 });
 </script>
 <style>
@@ -120,7 +118,7 @@ td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
 </p>
 	
 
-<form action="playSong.php" method="post">
+
 <?php if (count($songName) > 0): ?>
 <table id="table">
 
@@ -131,8 +129,7 @@ td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
   </tbody>
 </table>
 <?php endif; ?>
-<input type="submit" name="OK" class="ok" value="Play Song"/>
-</form>
+
 
 </body>
 </html>

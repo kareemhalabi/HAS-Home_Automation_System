@@ -21,7 +21,8 @@
 		require_once "model/Room.php";
 		require_once "model/RoomGroup.php";
 		require_once "persistence/PersistenceHAS.php";
-
+		require_once (__DIR__ . '\controller\Controller.php');
+		
 session_start();
 
 //retrieve data from the model
@@ -41,8 +42,12 @@ foreach($hm->getRoomGroups() as $tempGroup){
 		break;
 	}
 }
+$album = $_SESSION['album'];
+
 $name = $myGroup->getName();
 
+$c = new Controller();
+$c->playPlayableRoom($myGroup, $album);
 ?>
 
 <h3>The album is now playing in the room group: <?php echo $name?>.</h3>

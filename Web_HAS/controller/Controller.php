@@ -309,4 +309,20 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	public function playPlayableRoom($room, $playable){
+		$pm = new PersistenceHAS();
+		$hm=$pm->loadDataFromStore();
+		
+		$room->setPlayable($playable);
+		
+		$pm->writeDataToStore($hm);
+	}
+	public function playPlayableRG($roomGroup, $playable){
+		$pm = new PersistenceHAS();
+		$hm=$pm->loadDataFromStore();
+		
+		$roomGroup->setPlayable($playable);
+		
+		$pm->writeDataToStore($hm);
+	}
 }

@@ -40,6 +40,8 @@
 				break;
 			}
 		}
+		$_SESSION['album'] = $myAlbum;
+		
 		$name = $myAlbum->getName();
 		?>
 		

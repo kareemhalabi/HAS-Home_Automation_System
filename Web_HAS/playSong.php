@@ -28,26 +28,23 @@
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		$playlist = NULL;
-		if (isset ( $_POST ['playlistspinner'] )) {
-			$playlist = $_POST ['playlistspinner'];
-		}
+		$song = $_GET['name'];
 		
-		$myPlaylist = NULL;
-		foreach ( $hm->getPlaylists () as $tempPlaylist ) {
-			if (strcmp ( $tempPlaylist->getName (), $playlist ) == 0) {
-				$myPlaylist = $tempPlaylist;
+		$mySong = NULL;
+		foreach ( $hm->getSongs () as $tempSong ) {
+			if (strcmp ( $tempSong->getName (), $song ) == 0) {
+				$mySong = $tempSong;
 				break;
 			}
 		}
-		$_SESSION['playlist'] = $myPlaylist;
+		$_SESSION['song'] = $mySong;
 		
-		$name = $myPlaylist->getName();
+		$name = $mySong->getName();
 		?>
 		
 		<form action="playPlaylistRoom.php" method="post">
 		<?php
-		echo "Which room or group of rooms would you like to play the playlist: {$name}";
+		echo "Which room or group of rooms would you like to play the song: {$name}";
 		?>
 		<?php 
 		echo "<p>Room: <select name='roomspinner'>";

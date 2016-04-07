@@ -32,7 +32,8 @@ public class RoomGroup implements Comparable<RoomGroup>
 		boolean didAddRooms = setRooms(allRooms);
 		if (!didAddRooms)
 		{
-			throw new RuntimeException("Unable to create RoomGroup, must have at least 1 rooms");
+			throw new RuntimeException(
+					"Unable to create RoomGroup, must have at least 1 rooms");
 		}
 	}
 
@@ -142,7 +143,8 @@ public class RoomGroup implements Comparable<RoomGroup>
 			verifiedRooms.add(aRoom);
 		}
 
-		if (verifiedRooms.size() != newRooms.length || verifiedRooms.size() < minimumNumberOfRooms())
+		if (verifiedRooms.size() != newRooms.length
+				|| verifiedRooms.size() < minimumNumberOfRooms())
 		{
 			return wasSet;
 		}
@@ -199,6 +201,11 @@ public class RoomGroup implements Comparable<RoomGroup>
 	public boolean setPlayable(Playable aNewPlayable)
 	{
 		boolean wasSet = false;
+
+		for (Room room : rooms)
+		{
+			room.setPlayable(aNewPlayable);
+		}
 		playable = aNewPlayable;
 		wasSet = true;
 		return wasSet;
@@ -214,8 +221,12 @@ public class RoomGroup implements Comparable<RoomGroup>
 	{
 		String outputString = "";
 		return super.toString() + "[" + "name" + ":" + getName() + "]"
-				+ System.getProperties().getProperty("line.separator") + "  " + "playable = "
-				+ (getPlayable() != null ? Integer.toHexString(System.identityHashCode(getPlayable())) : "null")
+				+ System.getProperties().getProperty("line.separator") + "  "
+				+ "playable = "
+				+ (getPlayable() != null
+						? Integer.toHexString(
+								System.identityHashCode(getPlayable()))
+						: "null")
 				+ outputString;
 	}
 

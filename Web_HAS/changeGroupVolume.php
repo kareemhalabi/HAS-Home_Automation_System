@@ -1,27 +1,18 @@
 <?php
-require_once (__DIR__. '\controller\Controller.php');
+require_once (__DIR__ . '\controller\Controller.php');
 
-session_start();
+session_start ();
 
-$$_SESSION ["errorGroupVolume"] = "";
+$_SESSION ["errorGroupVolume"] = "";
 
-$c = new Controller();
-try{
+$c = new Controller ();
+try {
 	$group = NULL;
-	if (isset ($_POST ['groupspinner'])){
+	if (isset ( $_POST ['groupspinner'] )) {
 		$group = $_POST ['groupspinner'];
 	}
-	$volume = $_POST ['volume'];
-	/*
-		if ($volume == 0) {
-		$c->changeGroupVolume($group, $volume, true);
-	} else {
-		$c->changeGroupVolume($group, $volume, false );
-	}
-	*/
-	$c->changeGroupVolume($group, $volume, false);
-	
-	
+	$volume=$_POST['volume'];
+	$c->changeGroupVolume ( $group, $volume, false );
 } catch ( Exception $e ) {
 	$_SESSION ["errorGroupVolume"] = $e->getMessage ();
 }

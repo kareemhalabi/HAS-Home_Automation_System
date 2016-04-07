@@ -1,13 +1,9 @@
 <?php 
 
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\persistence\PersistenceHAS.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\HAS.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Album.php';
-require_once 'C:\Users\Alex\Desktop\Documents\Group05\Web_HAS\model\Artist.php';
-//require_once (__DIR__.'/../persistence/PersistenceHAS.php');
-//require_once (__DIR__.'/../model/HAS.php');
-//require_once (__DIR__.'/../model/Album.php');
-//require_once (__DIR__.'/../model/Artist.php');
+require_once (__DIR__.'/../persistence/PersistenceHAS.php');
+require_once (__DIR__.'/../model/HAS.php');
+require_once (__DIR__.'/../model/Album.php');
+require_once (__DIR__.'/../model/Artist.php');
 
 
 

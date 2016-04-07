@@ -12,12 +12,7 @@ try {
 		$room = $_POST ['roomspinner'];
 	}
 	$volume = $_POST ['volume'];
-	if ($volume == 0) {
-		$c->changeVolume($room, $volume, true);
-	} else {
-		$c->changeVolume($room, $volume, false );
-	}
-	
+	$c->changeVolume ( $room, $volume, false );
 } catch ( Exception $e ) {
 	$_SESSION ["errorVolume"] = $e->getMessage ();
 }

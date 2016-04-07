@@ -230,7 +230,7 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     	$this->assertEquals(3, count($this->hm->getSongs()));
     	$this->assertEquals("Rolling in the Deep", $this->hm->getPlaylist_index(0)->getSong_index(0)->getName());
     	$this->assertEquals("Turn Up",  $this->hm->getPlaylist_index(0)->getName());
-    	//$this->assertEquals(3, count($this->hm->getPlaylist_index(0)->getSongs())); Failure: only 1 song in the playlist and not 3.
+    	$this->assertEquals(3, count($this->hm->getPlaylist_index(0)->getSongs())); //Failure: only 1 song in the playlist and not 3.
     }
     public function testCreateRoomGroup(){
     	$this->assertEquals(0, count($this->hm->getRoomGroups()));
@@ -271,7 +271,7 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     	}
     	$this->hm = $this->pm->loadDataFromStore();
     	$this->assertEquals(3, $this->hm->numberOfRooms());
-    	//$this->assertEquals(2, count($this->hm->getRoomGroup_index(0)->getRooms())); //Failure: Only 1 room was in the room group.
+    	$this->assertEquals(2, count($this->hm->getRoomGroup_index(0)->getRooms())); //Failure: Only 1 room was in the room group.
     	
     	}
     	public function testChangeVolume(){
@@ -292,6 +292,55 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     		$this->hm = $this->pm->loadDataFromStore();
     		$this->assertEquals(100, $this->hm->getRoom_index(0)->getVolume());//Failure: Volume did not change at all.
     	}
-    
+    	public function testChangeGroupVolume(){
+    		
+    	}
+    	
+    	public function testPlayPlayableRoom(){
+    		//Create test data
+    		try {
+    			$artist = $this->c->createArtist("Adele");
+    			$album = $this->c->createAlbum("21", "Pop", 2011-05-24, "Adele");    		
+    			$this->c->createSong("Skyfall", 300, 2, "21");
+    			$this->c->createRoom("Living Room", 50, false);			   			
+    		} 
+    		catch (Exception $e) {
+    			$this->fail();
+    		}
+    		$this->hm = $this->pm->loadDataFromStore();
+    		$myPlayable = $this->hm->getSong_index(0);
+    		$myRoom = $this->hm->getRoom_index(0);
+    		try {
+    			$this->c->playPlayableRoom($myRoom, $myPlayable);
+    		} 
+    		catch (Exception $e) {
+    			$this->fail();
+    		}
+    		//Check the data saved in the model.
+    		$this->hm = $this->pm->loadDataFromStore();
+    		$this->assertEquals(true,$this->hm->getRoom_index(0)->hasPlayable());//Fails: No playable was found in the room.
+    	}
+    	public function testPlayPlayableRG(){
+    		try {
+    			$this->c->createRoom("Living Room", 55, false);
+    			$this->c->createRoomGroup("Main Floor", "Living Room");
+    			$this->c->createArtist("ACDC");
+    			$this->c->createAlbum("Hits", "Rock", 1980-05-03, "ACDC");
+    		} catch (Exception $e) {
+    			$this->fail();
+    		}
+    		$this->hm = $this->pm->loadDataFromStore();
+    		$myPlayable = $this->hm->getAlbum_index(0);
+    		$myRoomGroup = $this->hm->getRoomGroup_index(0);
+    		try {
+    			$this->c->playPlayableRG($myRoomGroup, $myPlayable);
+    		} 
+    		catch (Exception $e) {
+    			$this->fail();
+    		}
+    		$this->hm = $this->pm->loadDataFromStore();
+    		$this->assertEquals(true, $this->hm->getRoomGroup_index(0)->hasPlayable());
+    		
+    	}
 }
 ?>

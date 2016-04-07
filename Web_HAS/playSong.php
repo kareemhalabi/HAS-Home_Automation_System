@@ -31,12 +31,18 @@
 		$song = $_GET['name'];
 		
 		$mySong = NULL;
+
 		foreach ( $hm->getSongs () as $tempSong ) {
 			if (strcmp ( $tempSong->getName (), $song ) == 0) {
 				$mySong = $tempSong;
 				break;
 			}
 		}
+		if($mySong == NULL){
+			header("Location: index.php");
+			exit();
+		}
+		
 		$_SESSION['song'] = $mySong;
 		
 		$name = $mySong->getName();

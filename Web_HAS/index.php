@@ -7,6 +7,9 @@ $(document).ready(function(){
 $("#table tr").click(function(){
 	   $(this).addClass('selected').siblings().removeClass('selected');    
 	   var value=$(this).find('td:first').html();
+	   if (!(value == "undefined")){
+			
+	   }
 	   window.location.href="playSong.php?name="+$(this).find('td:first').html();    
 	});
 
@@ -59,17 +62,18 @@ tr:hover{
 			array_push($songName, $songs->getName());
 		}
 		
-		//sorting method in controller that takes the songs->getAlbums->getNames and sorts by album name into a new array that is returned with a list of songs that is in album name order
+		//sorting method in controller that takes the songs->getAlbums->getNames and sorts by album name 
+		//into a new array that is returned with a list of songs that is in album name order
 		//
 		
 		?>
 	<form action="addMusic.php" method="post">
-		<input type="submit" value="Add Music" />
+		<input type="submit" value="Edit Music" />
 		<p></p>
 	</form>
 
 	<form action="selectRoom.php" method="post">
-		<input type="submit" value="Create Rooms" />
+		<input type="submit" value="Edit Rooms" />
 		<p></p>
 	</form>
 
@@ -79,7 +83,7 @@ tr:hover{
 	</form>
 
 	<form action="playlistView.php" method="post">
-		<input type="submit" value="Playlists" />
+		<input type="submit" value="Edit Playlists" />
 	</form>
 
 
@@ -120,32 +124,13 @@ tr:hover{
 
 <p>
 
+To play a song, simply click on it!
 </p>
 	
-
-
 <form name="songlist">
 <?php if (count($songName) > 0): ?>
 <table id="table">
-
-  <tbody>
-<?php foreach ($songName as $row): ?>
-      <?php echo "<tr><td>" . $row . "</td></tr>"; ?>
-<?php endforeach; ?>
-  </tbody>
-</table>
-<?php endif; ?>
-</form>
-<p>
-
-
-</p>
-
-
-<form name="songlistW">
-<?php if (count($songName) > 0): ?>
-<table id="table">
-
+<tr><th>Song</th><th>Album</th><th>Artist</th></tr>
   <tbody>
 <?php foreach ($hm->getSongs() as $song): ?>
       <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td></tr>"; ?>

@@ -5,3 +5,6 @@ jdk:
 script:
   - cd Desktop_HAS
   - ant test
+
+notifications:
+  email: false

@@ -254,7 +254,7 @@ public class TestHASController
 	}
 
 	@Test
-	public void testCreateArtistNull()
+	public void testCreateArtistNoName()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
@@ -498,69 +498,6 @@ public class TestHASController
 		assertEquals("Adele", h.getAlbum(0).getSong(0).getFtArtist(0).getName());
 		assertEquals("Black Jack", h.getAlbum(0).getSong(0).getFtArtist(1).getName());
 		assertEquals("Keiko", h.getAlbum(0).getSong(0).getFtArtist(2).getName());
-	}
-
-	@Test
-	public void testSortArtists()
-	{
-		HAS h = HAS.getInstance();
-		HASController hc = new HASController();
-
-		String[] names =
-		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
-		for (String name : names)
-			h.addArtist(new Artist(name));
-		hc.sortArtists();
-
-		Arrays.sort(names);
-		for (int i = 0; i < names.length; i++)
-		{
-			assertTrue(names[i].equals(h.getArtist(i).getName()));
-		}
-	}
-
-	@Test
-	public void testSortAlbums()
-	{
-		HAS h = HAS.getInstance();
-		HASController hc = new HASController();
-
-		String[] names =
-		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
-
-		@SuppressWarnings("deprecation")
-		Date d1 = new Date(116, 02, 8);
-		
-		Artist Bob = new Artist("Bob the Artist");
-		h.addArtist(Bob);
-
-		for (String name : names)
-		{
-			try{
-			hc.createAlbum(name, "Sort Yourself", d1, Bob);
-			}
-			catch(InvalidInputException e)
-			{
-				fail();
-			}
-		}
-		
-		hc.sortAlbums();
-		List<Album> sortedAlbums = h.getAlbums();
-
-		Arrays.sort(names);
-		for (int i = 0; i < names.length; i++)
-		{
-			assertTrue(names[i].equals(h.getAlbum(i).getName()));
-		}
-		
-		Artist bob = h.getArtist(0);
-		List<Album> albums = bob.getAlbums();
-		
-		for(Album a: sortedAlbums)
-		{
-			assertTrue(albums.contains(a));
-		}
 	}
 
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)

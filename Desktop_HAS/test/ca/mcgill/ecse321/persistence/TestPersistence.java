@@ -48,9 +48,11 @@ public class TestPersistence {
 		
 		h.getAlbum(0).addSong("Sintara", 2000, 1);
 		h.getAlbum(1).addSong("The Cave", 100, 2);
+		h.getAlbum(1).addSong("Why?", 120, 3);
 		
 		h.addSong(h.getAlbum(0).getSong(0));
 		h.addSong(h.getAlbum(1).getSong(0));
+		h.addSong(h.getAlbum(1).getSong(1));
 		
 		h.addRoom(room1);
 		h.addRoom(room2);
@@ -142,6 +144,10 @@ public class TestPersistence {
 		assertEquals(100, h.getSong(1).getDuration());
 		assertEquals(2, h.getSong(1).getPosition());
 		
+		assertEquals("Why?", h.getSong(2).getName());
+		assertEquals(120, h.getSong(2).getDuration());
+		assertEquals(3, h.getSong(2).getPosition());
+		
 		assertEquals(3, h.getRoomGroup(0).getRooms().size());
 		assertEquals("Kitchen", h.getRoomGroup(0).getRoom(0).getName());
 		assertEquals(7, h.getRoomGroup(0).getRoom(0).getVolume());
@@ -152,6 +158,9 @@ public class TestPersistence {
 		assertTrue(h.getRoomGroup(0).getRoom(1).getMute());
 		assertTrue(h.getRoom(1).getMute());
 		
+		assertEquals("Playlist1", h.getPlaylist(0).getName());
+		assertEquals("Sintara", h.getPlaylist(0).getSong(0).getName());
+		assertEquals("The Cave", h.getPlaylist(0).getSong(1).getName());
 	}
 
 }

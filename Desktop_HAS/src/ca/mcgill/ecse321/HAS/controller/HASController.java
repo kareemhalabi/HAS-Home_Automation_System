@@ -303,6 +303,7 @@ public class HASController
 	public void sortAlbums()
 	{
 		HAS h = HAS.getInstance();
+		
 		List<Album> albums = h.getAlbums();
 		List<Album> sortedAlbums = new ArrayList<Album>();
 		for (Album a : albums)
@@ -317,7 +318,37 @@ public class HASController
 		{
 			h.addAlbum(a);
 		}
-		// TODO CHECK THAT THE ALBUMS STILL BELONG TO THE ARTIST
+
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+	
+	public void sortSongs(Album a)
+	{
+		HAS h = HAS.getInstance();
+
+		if (h.getAlbums().contains(a) == true)
+		{
+			List<Song> songs = a.getSongs();
+			if (songs.size() > 1)
+			{
+				List<Song> sortedSongs = new ArrayList<Song>();
+				for (Song s : songs)
+					sortedSongs.add(s);
+
+				Collections.sort(sortedSongs);
+
+				for (Song s : sortedSongs)
+				{
+					s.delete();
+				}
+
+				for (Song s : sortedSongs)
+				{
+					a.addSong(s);
+					h.addSong(s);
+				}
+			}
+		}
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -339,36 +370,6 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	public void sortSongs(Album a)
-	{
-		HAS h = HAS.getInstance();
-
-		if (h.getAlbums().contains(a) == true)
-		{
-			List<Song> songs = a.getSongs();
-			if (songs.size() > 1)
-			{
-				List<Song> sortedSongs = new ArrayList<Song>();
-				for (Song s : songs)
-					sortedSongs.add(s);
-
-				Collections.sort(sortedSongs);
-
-				for (Song s : sortedSongs)
-				{
-					s.delete();// Songs are not being removed
-				}
-
-				for (Song s : sortedSongs)
-				{
-					a.addSong(s);
-					h.addSong(s);
-				}
-			}
-		}
-
-		PersistenceXStream.saveToXMLwithXStream(h);
-	}
 
 	public void playSingleRoom(Playable play, Room room)
 			throws InvalidInputException

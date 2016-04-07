@@ -315,7 +315,8 @@ public class TestHASControllerPlaylistAndRoom
 		assertEquals("Room must have a name!", error);
 		assertEquals(0, h.getRooms().size());
 	}
-
+	
+	//TODO MAY NOT NEED THIS BECAUSE THE MANY ROOMS TAKES THE SAME PATH 
 	@Test
 	public void testCreateRoomGroupOneRoom()
 	{
@@ -757,45 +758,6 @@ public class TestHASControllerPlaylistAndRoom
 	
 		assertEquals("Must select a featured artist!", error);
 		assertFalse(song.hasFtArtists());
-	}
-	
-	@Test
-	public void testSortSongs()
-	{
-		HAS h = HAS.getInstance();
-		HASController hc = new HASController();
-		@SuppressWarnings("deprecation")
-		Date d1 = new Date(116, 02, 8);
-
-		Album a = new Album("Jack", "Bring me food", d1, new Artist("Jack the Reaper"));
-		h.addAlbum(a);
-
-		String[] names =
-		{ "Wind Rises", "Dark Horses", "Leo's Oscar", "Life", "KIA", "IKEA", "Food", "Cake", "Porto", "Angel" };
-		int[] position =
-		{ 2, 3, 7, 8, 1, 4, 9, 10, 6, 5 };
-		int i = 0;
-
-		for (String name : names)
-		{
-			Song song =new Song(name, 123, position[i], a);
-			a.addSong(song);
-			i++;
-		}
-
-		hc.sortSongs(a);
-
-		for (int j = 0; j < names.length - 1; j++)
-		{
-			assertEquals(a.getSong(j).getPosition(), j + 1);
-		}
-		
-		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-		
-		for (int j = 0; j < names.length - 1; j++)
-		{
-			assertEquals(h2.getAlbum(1).getSong(j).getPosition(), j + 1);
-		}
 	}
 
 	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)

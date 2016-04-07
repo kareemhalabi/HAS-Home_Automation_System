@@ -29,33 +29,30 @@ session_start();
 $pm = new PersistenceHAS();
 $hm = $pm->loadDataFromStore();
 
-//pull data from playPlaylist.php
-$group = NULL;
-if(isset($_POST['groupspinner'])){
-	$group = $_POST['groupspinner'];
+$room = NULL;
+if(isset($_POST['roomspinner'])){
+	$room = $_POST['roomspinner'];
 }
 
-$myGroup = NULL;
-foreach($hm->getRoomGroups() as $tempGroup){
-	if(strcmp($tempGroup->getName(),$group)==0){
-		$myGroup=$tempGroup;
+$myRoom = NULL;
+foreach($hm->getRooms() as $tempRoom){
+	if(strcmp($tempRoom->getName(),$room)==0){
+		$myRoom=$tempRoom;
 		break;
 	}
 }
-$name = $myGroup->getName();
+$song = $_SESSION['song'];
+$songName = $song->getName();
 
-$playlist = $_SESSION['playlist'];
+$name = $myRoom->getName();
 
-$playlistName = $playlist->getName();
-
-$c=new Controller();
-$c->playPlayableRG($myGroup, $playlist);
+$c = new Controller();
+$c->playPlayableRoom($myRoom, $song);
 ?>
 
-<h3>The playlist <?php echo $playlistName?>, is now playing in the room group <?php echo $name?>.</h3>
+<h3>The song <?php echo $songName?>, is now playing in the room <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
-	
 </body>
 </html>

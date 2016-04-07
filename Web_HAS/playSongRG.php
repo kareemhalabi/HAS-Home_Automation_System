@@ -44,18 +44,15 @@ foreach($hm->getRoomGroups() as $tempGroup){
 }
 $name = $myGroup->getName();
 
-$playlist = $_SESSION['playlist'];
+$song = $_SESSION['song'];
 
-$playlistName = $playlist->getName();
+$songName = $song->getName();
 
 $c=new Controller();
-$c->playPlayableRG($myGroup, $playlist);
+$c->playPlayableRG($myGroup, $song);
 ?>
 
-<h3>The playlist <?php echo $playlistName?>, is now playing in the room group <?php echo $name?>.</h3>
+<h3>The song <?php echo $songName?>, is now playing in the room group <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
-	
-</body>
-</html>

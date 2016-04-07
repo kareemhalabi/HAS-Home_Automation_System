@@ -40,12 +40,14 @@
 				break;
 			}
 		}
+		$_SESSION['album'] = $myAlbum;
+		
 		$name = $myAlbum->getName();
 		?>
 		
 		<form action="playAlbumRoom.php" method="post">
 		<?php
-		echo "Which room or group of rooms would you like to play the Album: {$name}";
+		echo "Which room or group of rooms would you like to play the album: {$name}";
 		?>
 		<?php 
 		echo "<p>Room: <select name='roomspinner'>";

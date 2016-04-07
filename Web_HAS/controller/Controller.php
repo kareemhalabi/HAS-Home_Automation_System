@@ -12,6 +12,8 @@ require_once (__DIR__ . '/../controller/InputValidator.php');
 class Controller {
 	public function __construct() {
 	}
+	
+	// creates an album with user delcared parameters
 	public function createAlbum($albumName, $genre, $releaseDate, $aArtist) {
 		$albumName = InputValidator::validate_input ( $albumName );
 		$genre = InputValidator::validate_input ( $genre );
@@ -199,12 +201,13 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 		/*
-		$pm = new PersistenceHAS ();
-		$hm = $pm->loadDataFromStore ();
-		
-		$->add ( $room );
-		
-		$pm->writeDataToStore ( $hm );*/
+		 * $pm = new PersistenceHAS ();
+		 * $hm = $pm->loadDataFromStore ();
+		 *
+		 * $->add ( $room );
+		 *
+		 * $pm->writeDataToStore ( $hm );
+		 */
 	}
 	public function addRoomToGroup($aGroup, $aRoom) {
 		$pm = new PersistenceHAS ();
@@ -232,12 +235,17 @@ class Controller {
 				}
 			}
 		}
-		$pm = new PersistenceHAS ();
-		$hm = $pm->loadDataFromStore ();
 		
-		$group->addRoom ( $room );
-		
-		$pm->writeDataToStore ( $hm );
+		if (in_array ( $room, $group->getRooms () )) {
+			throw new Exception ( "Room already exists in this group!" );
+		} else {
+			$pm = new PersistenceHAS ();
+			$hm = $pm->loadDataFromStore ();
+			
+			$group->addRoom ( $room );
+			
+			$pm->writeDataToStore ( $hm );
+		}
 	}
 	public function changeVolume($aname, $volume, $mute) {
 		$pm = new PersistenceHAS ();
@@ -260,13 +268,17 @@ class Controller {
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
 			
+			if ($volume == 0) {
+				$name->setMute ( true );
+			} else {
+				$name->setMute ( false );
+			}
 			$name->setVolume ( $volume );
-			$name->setMute ( $mute );
 			
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	public function chnageGroupVolume($aGroup, $volume, $mute) {
+	public function changeGroupVolume($aGroup, $volume, $mute) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aGroup == null) {
@@ -287,8 +299,66 @@ class Controller {
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
 			
+			if ($volume == 0) {
+				$group->setMute ( true );
+			} else {
+				$group->setMute ( false );
+			}
 			$group->setVolume ( $volume );
-			$group->setMute ( $mute );
+			
+			$pm->writeDataToStore ( $hm );
+		}
+	}
+	public function playPlayableRoom($room, $playable) {
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		
+		$room->setPlayable ( $playable );
+		
+		$pm->writeDataToStore ( $hm );
+	}
+	public function playPlayableRG($roomGroup, $playable) {
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		
+		$roomGroup->setPlayable ( $playable );
+		
+		$pm->writeDataToStore ( $hm );
+	}
+	public function sortbyAlbum() {
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		
+		$orderedSongs = array ();
+		$songlist = array ();
+		$songlist = $hm->getSongs ();
+		
+		$albumlist = $hm->getAlbums ()->getName ();
+		
+		sort ( $albumlist, $sort_String );
+		
+		foreach ( $albumlist as $tempAlbum ) {
+		}
+	}
+	public function deleteSong($song) {
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		
+		if ($song== null) {
+			throw new Exception ( "This song does not exist!" );
+		} else {
+			$mySong = NULL;
+			foreach ( $hm->getsongs () as $songTemp ) {
+				if (strcmp ( $songTemp->getName (), $song ) == 0) { // Find the song.
+					$mySong = $songTemp;
+					break;
+				}
+			}
+		}
+		if ($mySong == NULL){
+			throw new Exception ( "Could not find song!" );
+		}else{
+			$mySong->delete();
 			
 			$pm->writeDataToStore ( $hm );
 		}

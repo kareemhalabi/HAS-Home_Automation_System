@@ -21,13 +21,15 @@
 		require_once "model/Room.php";
 		require_once "model/RoomGroup.php";
 		require_once "persistence/PersistenceHAS.php";
-
+		require_once (__DIR__ . '\controller\Controller.php');
+		
 session_start();
 
 //retrieve data from the model
 $pm = new PersistenceHAS();
 $hm = $pm->loadDataFromStore();
 
+//pull data from playAlbum.php
 $group = NULL;
 if(isset($_POST['groupspinner'])){
 	$group = $_POST['groupspinner'];
@@ -40,11 +42,17 @@ foreach($hm->getRoomGroups() as $tempGroup){
 		break;
 	}
 }
+$album = $_SESSION['album'];
+
+$albumName = $album->getName();
+
 $name = $myGroup->getName();
 
+$c = new Controller();
+$c->playPlayableRoom($myGroup, $album);
 ?>
 
-<h3>The album is now playing in the room group: <?php echo $name?>.</h3>
+<h3>The album <?php echo $albumName?>, is now playing in the room group <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>

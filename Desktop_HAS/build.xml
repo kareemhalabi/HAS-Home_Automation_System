@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="Desktop_HAS" basedir="." default="compile">
 
@@ -88,3 +89,90 @@
 	</target>
 	
 </project>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Desktop_HAS" basedir="." default="compile">
+
+	<property name="src.dir"     value="src"/>
+	<property name="test.dir"     value="test"/>
+	<property name="test.report.dir" value="test_reports"/>
+	<property name="build.dir"   value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir"     value="${build.dir}/jar"/>
+<!--	<property name="main-class"	 value="strategydemo.Demo"/> -->
+	<property name="lib.dir"     value="lib"/>
+	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/>
+    
+	<path id="classpath">
+        <pathelement location="${classes.dir}"/>
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+    
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	<target name="compile" depends="clean">
+    	<mkdir dir="${classes.dir}"/>
+    	<path refid="classpath"/>
+		
+    	<javac srcdir="${src.dir}" destdir="${classes.dir}"
+    		excludes="ca/mcgill/ecse321/HAS/view/**"> <!-- Excludes view for now -->
+    		<classpath>
+    			<fileset dir="${lib.dir}">
+	                <include name="**/*.jar" />
+	            </fileset>
+    		</classpath>
+    	</javac>
+
+    	<javac srcdir="${test.dir}" destdir="${classes.dir}">
+    		<classpath>
+	               <fileset dir="${lib.dir}">
+	                  <include name="**/*.jar" />
+	               </fileset>
+	         </classpath>
+    	</javac>
+    </target>
+	
+	<target name="test" depends="compile">
+	    <mkdir dir="${test.report.dir}"/>    
+		<junit fork="true" printsummary="true">
+            <classpath>
+                <path refid="classpath"/>
+                <path refid="application"/>
+            </classpath>
+			
+			<formatter type="xml" usefile="true" />
+			
+        	<batchtest todir="${test.report.dir}" >
+        		<fileset dir="${classes.dir}">
+        			<include name="**/*Test*.class" />
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+	
+	<target name="Android_jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}_lib.jar">
+			<fileset dir="${classes.dir}">
+				<include name="ca/mcgill/ecse321/HAS/controller/**"/>
+				<include name="ca/mcgill/ecse321/HAS/model/**"/>
+				<include name="ca/mcgill/ecse321/HAS/persistence/**"/>	
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="Desktop_jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<!--
+			<manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>	
+			-->
+		</jar>
+	</target>
+	
+</project>
+>>>>>>> dev

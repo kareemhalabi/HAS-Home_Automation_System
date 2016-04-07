@@ -61,6 +61,7 @@
       <name>Playlist1</name>
       <songs id="25">
         <ca.mcgill.ecse321.HAS.model.Song reference="10"/>
+        <ca.mcgill.ecse321.HAS.model.Song reference="18"/>
       </songs>
     </ca.mcgill.ecse321.HAS.model.Playlist>
   </playlists>

@@ -114,50 +114,55 @@ public class HASPage extends JFrame
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 
-		//refreshData(); TODO COME FIX THIS
+		// refreshData(); TODO COME FIX THIS
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 178, 202, 114, 0};
-		gridBagLayout.rowHeights = new int[]{1, 16, 29, 0, 16, 26, 26, 29, 29, 0, 16, 26, 26, 26, 29, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]
+		{ 0, 178, 202, 114, 0 };
+		gridBagLayout.rowHeights = new int[]
+		{ 1, 16, 29, 0, 16, 26, 26, 29, 29, 0, 16, 26, 26, 26, 29, 0, 0 };
+		gridBagLayout.columnWeights = new double[]
+		{ 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[]
+		{ 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
-				
-						// elements for error message
-						errorMessage = new JLabel();
-						errorMessage.setForeground(Color.RED);
-						GridBagConstraints gbc_errorMessage = new GridBagConstraints();
-						gbc_errorMessage.anchor = GridBagConstraints.NORTHWEST;
-						gbc_errorMessage.insets = new Insets(0, 0, 5, 5);
-						gbc_errorMessage.gridx = 1;
-						gbc_errorMessage.gridy = 0;
-						getContentPane().add(errorMessage, gbc_errorMessage);
-				artistLabel = new JLabel();
-				
-						artistLabel.setText("Artist");
-						GridBagConstraints gbc_artistLabel = new GridBagConstraints();
-						gbc_artistLabel.anchor = GridBagConstraints.NORTHWEST;
-						gbc_artistLabel.insets = new Insets(0, 0, 5, 5);
-						gbc_artistLabel.gridx = 1;
-						gbc_artistLabel.gridy = 1;
-						getContentPane().add(artistLabel, gbc_artistLabel);
-				artistNameLabel = new JLabel();
-				artistNameLabel.setText("Artist Name: ");
-				GridBagConstraints gbc_artistNameLabel = new GridBagConstraints();
-				gbc_artistNameLabel.anchor = GridBagConstraints.NORTHWEST;
-				gbc_artistNameLabel.insets = new Insets(0, 0, 5, 5);
-				gbc_artistNameLabel.gridx = 1;
-				gbc_artistNameLabel.gridy = 2;
-				getContentPane().add(artistNameLabel, gbc_artistNameLabel);
-		
-				// elements for add Artist
-				artistNameTextField = new JTextField();
-				GridBagConstraints gbc_artistNameTextField = new GridBagConstraints();
-				gbc_artistNameTextField.anchor = GridBagConstraints.NORTH;
-				gbc_artistNameTextField.fill = GridBagConstraints.HORIZONTAL;
-				gbc_artistNameTextField.insets = new Insets(0, 0, 5, 5);
-				gbc_artistNameTextField.gridx = 2;
-				gbc_artistNameTextField.gridy = 2;
-				getContentPane().add(artistNameTextField, gbc_artistNameTextField);
+
+		// elements for error message
+		errorMessage = new JLabel();
+		errorMessage.setForeground(Color.RED);
+		GridBagConstraints gbc_errorMessage = new GridBagConstraints();
+		gbc_errorMessage.anchor = GridBagConstraints.NORTHWEST;
+		gbc_errorMessage.insets = new Insets(0, 0, 5, 5);
+		gbc_errorMessage.gridx = 1;
+		gbc_errorMessage.gridy = 0;
+		getContentPane().add(errorMessage, gbc_errorMessage);
+		artistLabel = new JLabel();
+
+		artistLabel.setText("Artist");
+		GridBagConstraints gbc_artistLabel = new GridBagConstraints();
+		gbc_artistLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_artistLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_artistLabel.gridx = 1;
+		gbc_artistLabel.gridy = 1;
+		getContentPane().add(artistLabel, gbc_artistLabel);
+		artistNameLabel = new JLabel();
+		artistNameLabel.setText("Artist Name: ");
+		GridBagConstraints gbc_artistNameLabel = new GridBagConstraints();
+		gbc_artistNameLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_artistNameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_artistNameLabel.gridx = 1;
+		gbc_artistNameLabel.gridy = 2;
+		getContentPane().add(artistNameLabel, gbc_artistNameLabel);
+
+		// elements for add Artist
+		artistNameTextField = new JTextField();
+		GridBagConstraints gbc_artistNameTextField = new GridBagConstraints();
+		gbc_artistNameTextField.anchor = GridBagConstraints.NORTH;
+		gbc_artistNameTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_artistNameTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_artistNameTextField.gridx = 2;
+		gbc_artistNameTextField.gridy = 2;
+		getContentPane().add(artistNameTextField, gbc_artistNameTextField);
 		addArtistButton = new JButton();
 		addArtistButton.setText("Add Artist");
 		addArtistButton.addActionListener(new java.awt.event.ActionListener()
@@ -173,25 +178,25 @@ public class HASPage extends JFrame
 		gbc_addArtistButton.gridx = 3;
 		gbc_addArtistButton.gridy = 2;
 		getContentPane().add(addArtistButton, gbc_addArtistButton);
-				
-				separator_1 = new JSeparator();
-				GridBagConstraints gbc_separator_1 = new GridBagConstraints();
-				gbc_separator_1.gridwidth = 3;
-				gbc_separator_1.insets = new Insets(0, 0, 5, 0);
-				gbc_separator_1.gridx = 1;
-				gbc_separator_1.gridy = 3;
-				getContentPane().add(separator_1, gbc_separator_1);
-		
-				// elements for add Album
-				albumLabel = new JLabel();
-				
-						albumLabel.setText("Album");
-						GridBagConstraints gbc_albumLabel = new GridBagConstraints();
-						gbc_albumLabel.anchor = GridBagConstraints.NORTHWEST;
-						gbc_albumLabel.insets = new Insets(0, 0, 5, 5);
-						gbc_albumLabel.gridx = 1;
-						gbc_albumLabel.gridy = 4;
-						getContentPane().add(albumLabel, gbc_albumLabel);
+
+		separator_1 = new JSeparator();
+		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
+		gbc_separator_1.gridwidth = 3;
+		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_1.gridx = 1;
+		gbc_separator_1.gridy = 3;
+		getContentPane().add(separator_1, gbc_separator_1);
+
+		// elements for add Album
+		albumLabel = new JLabel();
+
+		albumLabel.setText("Album");
+		GridBagConstraints gbc_albumLabel = new GridBagConstraints();
+		gbc_albumLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_albumLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_albumLabel.gridx = 1;
+		gbc_albumLabel.gridy = 4;
+		getContentPane().add(albumLabel, gbc_albumLabel);
 		albumNameLabel = new JLabel();
 		albumNameLabel.setText("Album Name: ");
 		GridBagConstraints gbc_albumNameLabel = new GridBagConstraints();
@@ -233,120 +238,122 @@ public class HASPage extends JFrame
 				selectedAlbum = cb.getSelectedIndex();
 			}
 		});
-				
-						// release date stuff (need to figure that out)
-						albumReleaseDateLabel = new JLabel();
-						albumReleaseDateLabel.setText("Album Release Date");
-						GridBagConstraints gbc_albumReleaseDateLabel = new GridBagConstraints();
-						gbc_albumReleaseDateLabel.anchor = GridBagConstraints.NORTHWEST;
-						gbc_albumReleaseDateLabel.insets = new Insets(0, 0, 5, 5);
-						gbc_albumReleaseDateLabel.gridx = 1;
-						gbc_albumReleaseDateLabel.gridy = 7;
-						getContentPane().add(albumReleaseDateLabel, gbc_albumReleaseDateLabel);
-				albumReleaseDatePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-				GridBagConstraints gbc_albumReleaseDatePicker = new GridBagConstraints();
-				gbc_albumReleaseDatePicker.anchor = GridBagConstraints.NORTHWEST;
-				gbc_albumReleaseDatePicker.insets = new Insets(0, 0, 5, 5);
-				gbc_albumReleaseDatePicker.gridx = 2;
-				gbc_albumReleaseDatePicker.gridy = 7;
-				getContentPane().add(albumReleaseDatePicker, gbc_albumReleaseDatePicker);
-		
-				albumArtistLabel = new JLabel();
-				
-						albumArtistLabel.setText("Album Artist");
-						GridBagConstraints gbc_albumArtistLabel = new GridBagConstraints();
-						gbc_albumArtistLabel.anchor = GridBagConstraints.NORTHWEST;
-						gbc_albumArtistLabel.insets = new Insets(0, 0, 5, 5);
-						gbc_albumArtistLabel.gridx = 1;
-						gbc_albumArtistLabel.gridy = 8;
-						getContentPane().add(albumArtistLabel, gbc_albumArtistLabel);
-				
-						addAlbumButton = new JButton();
-						addAlbumButton.setText("Add Album");
-						addAlbumButton.addActionListener(new java.awt.event.ActionListener()
-						{
-							public void actionPerformed(java.awt.event.ActionEvent evt)
-							{
-								addAlbumButtonActionPerformed(evt);
-							}
-						});
-						artistList = new JComboBox<String>();
-						artistList.addActionListener(new java.awt.event.ActionListener()
-						{
-							public void actionPerformed(java.awt.event.ActionEvent evt)
-							{
-								JComboBox<String> cb = (JComboBox<String>) evt.getSource();
-								selectedArtist = cb.getSelectedIndex();
-							}
-						});
-						GridBagConstraints gbc_artistList = new GridBagConstraints();
-						gbc_artistList.anchor = GridBagConstraints.NORTH;
-						gbc_artistList.fill = GridBagConstraints.HORIZONTAL;
-						gbc_artistList.insets = new Insets(0, 0, 5, 5);
-						gbc_artistList.gridx = 2;
-						gbc_artistList.gridy = 8;
-						getContentPane().add(artistList, gbc_artistList);
-						GridBagConstraints gbc_addAlbumButton = new GridBagConstraints();
-						gbc_addAlbumButton.anchor = GridBagConstraints.NORTHWEST;
-						gbc_addAlbumButton.insets = new Insets(0, 0, 5, 0);
-						gbc_addAlbumButton.gridx = 3;
-						gbc_addAlbumButton.gridy = 8;
-						getContentPane().add(addAlbumButton, gbc_addAlbumButton);
-						
-						separator = new JSeparator();
-						GridBagConstraints gbc_separator = new GridBagConstraints();
-						gbc_separator.gridwidth = 3;
-						gbc_separator.insets = new Insets(0, 0, 5, 0);
-						gbc_separator.gridx = 1;
-						gbc_separator.gridy = 9;
-						getContentPane().add(separator, gbc_separator);
-				
-						// for adding a song
-						songLabel = new JLabel();
-						
-								songLabel.setText("Song");
-								GridBagConstraints gbc_songLabel = new GridBagConstraints();
-								gbc_songLabel.anchor = GridBagConstraints.NORTHWEST;
-								gbc_songLabel.insets = new Insets(0, 0, 5, 5);
-								gbc_songLabel.gridx = 1;
-								gbc_songLabel.gridy = 10;
-								getContentPane().add(songLabel, gbc_songLabel);
-		
-				songNameLabel = new JLabel();
-				songNameLabel.setText("Song Name: ");
-				GridBagConstraints gbc_songNameLabel = new GridBagConstraints();
-				gbc_songNameLabel.anchor = GridBagConstraints.NORTHWEST;
-				gbc_songNameLabel.insets = new Insets(0, 0, 5, 5);
-				gbc_songNameLabel.gridx = 1;
-				gbc_songNameLabel.gridy = 11;
-				getContentPane().add(songNameLabel, gbc_songNameLabel);
-				songNameTextField = new JTextField();
-				GridBagConstraints gbc_songNameTextField = new GridBagConstraints();
-				gbc_songNameTextField.anchor = GridBagConstraints.NORTH;
-				gbc_songNameTextField.fill = GridBagConstraints.HORIZONTAL;
-				gbc_songNameTextField.insets = new Insets(0, 0, 5, 5);
-				gbc_songNameTextField.gridx = 2;
-				gbc_songNameTextField.gridy = 11;
-				getContentPane().add(songNameTextField, gbc_songNameTextField);
-				
-						// PROBLEM MIGHT BE HERE
-						songDurationLabel = new JLabel();
-						songDurationLabel.setText("Song Duration (in seconds): ");
-						GridBagConstraints gbc_songDurationLabel = new GridBagConstraints();
-						gbc_songDurationLabel.anchor = GridBagConstraints.NORTHWEST;
-						gbc_songDurationLabel.insets = new Insets(0, 0, 5, 5);
-						gbc_songDurationLabel.gridx = 1;
-						gbc_songDurationLabel.gridy = 12;
-						getContentPane().add(songDurationLabel, gbc_songDurationLabel);
-		
-				songDurationSpinner = new JSpinner();
-				GridBagConstraints gbc_songDurationSpinner = new GridBagConstraints();
-				gbc_songDurationSpinner.anchor = GridBagConstraints.NORTH;
-				gbc_songDurationSpinner.fill = GridBagConstraints.HORIZONTAL;
-				gbc_songDurationSpinner.insets = new Insets(0, 0, 5, 5);
-				gbc_songDurationSpinner.gridx = 2;
-				gbc_songDurationSpinner.gridy = 12;
-				getContentPane().add(songDurationSpinner, gbc_songDurationSpinner);
+
+		// release date stuff (need to figure that out)
+		albumReleaseDateLabel = new JLabel();
+		albumReleaseDateLabel.setText("Album Release Date");
+		GridBagConstraints gbc_albumReleaseDateLabel = new GridBagConstraints();
+		gbc_albumReleaseDateLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_albumReleaseDateLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_albumReleaseDateLabel.gridx = 1;
+		gbc_albumReleaseDateLabel.gridy = 7;
+		getContentPane().add(albumReleaseDateLabel, gbc_albumReleaseDateLabel);
+		albumReleaseDatePicker = new JDatePickerImpl(datePanel,
+				new DateLabelFormatter());
+		GridBagConstraints gbc_albumReleaseDatePicker = new GridBagConstraints();
+		gbc_albumReleaseDatePicker.anchor = GridBagConstraints.NORTHWEST;
+		gbc_albumReleaseDatePicker.insets = new Insets(0, 0, 5, 5);
+		gbc_albumReleaseDatePicker.gridx = 2;
+		gbc_albumReleaseDatePicker.gridy = 7;
+		getContentPane().add(albumReleaseDatePicker,
+				gbc_albumReleaseDatePicker);
+
+		albumArtistLabel = new JLabel();
+
+		albumArtistLabel.setText("Album Artist");
+		GridBagConstraints gbc_albumArtistLabel = new GridBagConstraints();
+		gbc_albumArtistLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_albumArtistLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_albumArtistLabel.gridx = 1;
+		gbc_albumArtistLabel.gridy = 8;
+		getContentPane().add(albumArtistLabel, gbc_albumArtistLabel);
+
+		addAlbumButton = new JButton();
+		addAlbumButton.setText("Add Album");
+		addAlbumButton.addActionListener(new java.awt.event.ActionListener()
+		{
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				addAlbumButtonActionPerformed(evt);
+			}
+		});
+		artistList = new JComboBox<String>();
+		artistList.addActionListener(new java.awt.event.ActionListener()
+		{
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+				selectedArtist = cb.getSelectedIndex();
+			}
+		});
+		GridBagConstraints gbc_artistList = new GridBagConstraints();
+		gbc_artistList.anchor = GridBagConstraints.NORTH;
+		gbc_artistList.fill = GridBagConstraints.HORIZONTAL;
+		gbc_artistList.insets = new Insets(0, 0, 5, 5);
+		gbc_artistList.gridx = 2;
+		gbc_artistList.gridy = 8;
+		getContentPane().add(artistList, gbc_artistList);
+		GridBagConstraints gbc_addAlbumButton = new GridBagConstraints();
+		gbc_addAlbumButton.anchor = GridBagConstraints.NORTHWEST;
+		gbc_addAlbumButton.insets = new Insets(0, 0, 5, 0);
+		gbc_addAlbumButton.gridx = 3;
+		gbc_addAlbumButton.gridy = 8;
+		getContentPane().add(addAlbumButton, gbc_addAlbumButton);
+
+		separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.gridwidth = 3;
+		gbc_separator.insets = new Insets(0, 0, 5, 0);
+		gbc_separator.gridx = 1;
+		gbc_separator.gridy = 9;
+		getContentPane().add(separator, gbc_separator);
+
+		// for adding a song
+		songLabel = new JLabel();
+
+		songLabel.setText("Song");
+		GridBagConstraints gbc_songLabel = new GridBagConstraints();
+		gbc_songLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_songLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_songLabel.gridx = 1;
+		gbc_songLabel.gridy = 10;
+		getContentPane().add(songLabel, gbc_songLabel);
+
+		songNameLabel = new JLabel();
+		songNameLabel.setText("Song Name: ");
+		GridBagConstraints gbc_songNameLabel = new GridBagConstraints();
+		gbc_songNameLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_songNameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_songNameLabel.gridx = 1;
+		gbc_songNameLabel.gridy = 11;
+		getContentPane().add(songNameLabel, gbc_songNameLabel);
+		songNameTextField = new JTextField();
+		GridBagConstraints gbc_songNameTextField = new GridBagConstraints();
+		gbc_songNameTextField.anchor = GridBagConstraints.NORTH;
+		gbc_songNameTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_songNameTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_songNameTextField.gridx = 2;
+		gbc_songNameTextField.gridy = 11;
+		getContentPane().add(songNameTextField, gbc_songNameTextField);
+
+		// PROBLEM MIGHT BE HERE
+		songDurationLabel = new JLabel();
+		songDurationLabel.setText("Song Duration (in seconds): ");
+		GridBagConstraints gbc_songDurationLabel = new GridBagConstraints();
+		gbc_songDurationLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_songDurationLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_songDurationLabel.gridx = 1;
+		gbc_songDurationLabel.gridy = 12;
+		getContentPane().add(songDurationLabel, gbc_songDurationLabel);
+
+		songDurationSpinner = new JSpinner();
+		GridBagConstraints gbc_songDurationSpinner = new GridBagConstraints();
+		gbc_songDurationSpinner.anchor = GridBagConstraints.NORTH;
+		gbc_songDurationSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_songDurationSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_songDurationSpinner.gridx = 2;
+		gbc_songDurationSpinner.gridy = 12;
+		getContentPane().add(songDurationSpinner, gbc_songDurationSpinner);
 		songPositionLabel = new JLabel();
 		songPositionLabel.setText("Song Position: ");
 		GridBagConstraints gbc_songPositionLabel = new GridBagConstraints();
@@ -355,15 +362,15 @@ public class HASPage extends JFrame
 		gbc_songPositionLabel.gridx = 1;
 		gbc_songPositionLabel.gridy = 13;
 		getContentPane().add(songPositionLabel, gbc_songPositionLabel);
-		
-				songPositionSpinner = new JSpinner();
-				GridBagConstraints gbc_songPositionSpinner = new GridBagConstraints();
-				gbc_songPositionSpinner.anchor = GridBagConstraints.NORTH;
-				gbc_songPositionSpinner.fill = GridBagConstraints.HORIZONTAL;
-				gbc_songPositionSpinner.insets = new Insets(0, 0, 5, 5);
-				gbc_songPositionSpinner.gridx = 2;
-				gbc_songPositionSpinner.gridy = 13;
-				getContentPane().add(songPositionSpinner, gbc_songPositionSpinner);
+
+		songPositionSpinner = new JSpinner();
+		GridBagConstraints gbc_songPositionSpinner = new GridBagConstraints();
+		gbc_songPositionSpinner.anchor = GridBagConstraints.NORTH;
+		gbc_songPositionSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_songPositionSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_songPositionSpinner.gridx = 2;
+		gbc_songPositionSpinner.gridy = 13;
+		getContentPane().add(songPositionSpinner, gbc_songPositionSpinner);
 		songAlbumLabel = new JLabel();
 		songAlbumLabel.setText("Album: ");
 		GridBagConstraints gbc_songAlbumLabel = new GridBagConstraints();
@@ -485,11 +492,13 @@ public class HASPage extends JFrame
 		{
 			// call the method to create an album
 			HASController hc = new HASController();
-			Date selectedDate = (java.sql.Date) albumReleaseDatePicker.getModel().getValue();
+			Date selectedDate = (java.sql.Date) albumReleaseDatePicker
+					.getModel().getValue();
 
 			try
 			{
-				hc.createAlbum(albumNameTextField.getText(), albumGenreTextField.getText(), selectedDate,
+				hc.createAlbum(albumNameTextField.getText(),
+						albumGenreTextField.getText(), selectedDate,
 						artists.get(selectedArtist));
 			} catch (InvalidInputException e)
 			{
@@ -517,9 +526,11 @@ public class HASPage extends JFrame
 			try
 			{
 				// TODO:need to fix this for featured artist
-				hc.addSongtoAlbum(albums.get(selectedAlbum), songNameTextField.getText(),
+				hc.addSongtoAlbum(albums.get(selectedAlbum),
+						songNameTextField.getText(),
 						(Integer) (songDurationSpinner.getModel().getValue()),
-						(Integer) (songPositionSpinner.getModel().getValue()), null);
+						(Integer) (songPositionSpinner.getModel().getValue()),
+						null);
 			} catch (InvalidInputException e)
 			{
 				error = e.getMessage();

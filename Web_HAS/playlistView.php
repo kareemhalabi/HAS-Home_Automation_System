@@ -18,6 +18,7 @@ p { text-align:center; }
 		
 <?php
 // pull data from model folder
+require_once "model/Playable.php";
 require_once "model/Artist.php";
 require_once "model/Album.php";
 require_once "model/HAS.php";
@@ -101,8 +102,7 @@ $hm = $pm->loadDataFromStore ();
 			?>
 			</span>
 		</p>
-
-
 	</form>
+	
 </body>
 </html>

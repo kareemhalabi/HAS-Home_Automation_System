@@ -82,8 +82,6 @@ public class AddPlaylistActivity extends AppCompatActivity {
         TextView playListName = (TextView) findViewById(R.id.newplaylist_name);
 
         //TODO not yet implemented
-//        try {
-//            hc.addPla
-//        }
+        //add playlist
     }
 }

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +17,7 @@ import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Room;
 import ca.mcgill.ecse321.HAS.model.RoomGroup;
+import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 //TODO add tests for playlist
@@ -36,6 +39,7 @@ public class TestPersistence {
 		
 		Room room1 = new Room("Kitchen", 5, false);
 		Room room2 = new Room("Living Room", 5, false);
+		Room room3 = new Room("Bedroom", 5, false);
 		
 		RoomGroup roomGroup = new RoomGroup("Group1", room1);
 		
@@ -50,14 +54,22 @@ public class TestPersistence {
 		
 		h.addRoom(room1);
 		h.addRoom(room2);
+		h.addRoom(room3);
+		
+		List<Room> rooms = new ArrayList();
+		rooms.add(room1);
+		rooms.add(room2);
+		rooms.add(room3);
 		
 		h.addRoomGroup(roomGroup);
-		hc.addRoomToRoomGroup(roomGroup, room2);
+		hc.addRoomToRoomGroup(roomGroup, rooms);
 		
 		hc.setRoomVolumeLevel(room1, 7);
 		hc.setMute(room2, true);
 		
-		hc.createPlaylist("Playlist1", h.getSong(0));
+		List<Song> songs = h.getSongs();
+		
+		hc.createPlaylist("Playlist1", songs);
 	}
 
 	@After
@@ -130,12 +142,12 @@ public class TestPersistence {
 		assertEquals(100, h.getSong(1).getDuration());
 		assertEquals(2, h.getSong(1).getPosition());
 		
-		assertEquals(2, h.getRoomGroup(0).getRooms().size());
+		assertEquals(3, h.getRoomGroup(0).getRooms().size());
 		assertEquals("Kitchen", h.getRoomGroup(0).getRoom(0).getName());
 		assertEquals(7, h.getRoomGroup(0).getRoom(0).getVolume());
-		
-		assertEquals("Kitchen", h.getRoom(0).getName());
 		assertEquals(7, h.getRoom(0).getVolume());
+		
+		assertEquals("Living Room", h.getRoom(1).getName());
 		
 		assertTrue(h.getRoomGroup(0).getRoom(1).getMute());
 		assertTrue(h.getRoom(1).getMute());

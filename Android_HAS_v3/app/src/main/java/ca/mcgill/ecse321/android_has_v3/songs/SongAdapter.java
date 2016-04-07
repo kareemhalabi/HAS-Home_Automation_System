@@ -46,7 +46,7 @@ public class SongAdapter extends BaseAdapter{
 
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.songs_listview_item, null);
+            vi = inflater.inflate(R.layout.listview_item_song, null);
 
         Song song = songs.get(position);
 
@@ -56,7 +56,6 @@ public class SongAdapter extends BaseAdapter{
         // duration appears as "m...mm:ss"
         TextView songDuration = (TextView) vi.findViewById(R.id.song_duratonTextView);
         int duration = song.getDuration();
-//        String formattedDuration = "" + (duration / 60) + ":" + (duration % 60);
         String formattedDuration = String.format("%d:%02d", (duration/60), (duration%60));
         songDuration.setText(formattedDuration);
 

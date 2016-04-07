@@ -12,6 +12,7 @@
 <body>
 		<?php
 		// pull data from model folder
+		require_once "model/Playable.php";
 		require_once "model/Artist.php";
 		require_once "model/Album.php";
 		require_once "model/HAS.php";
@@ -122,6 +123,27 @@
 			</span>
 		</p>
 	</form>
+	<P>DO NOT USE YET</P>
+	<form action="deleteSong.php" method="post">
+		<?php
+		echo "Which song would you like to remove";
+		?>
+		<?php 
+		echo "<p>Song: <select name='songspinner'>";
+		foreach($hm->getSongs()as$song){
+			echo "<option>" . $song->getName() . "</option>";
+		}
+		echo "</select><span class='error'>";
+		echo "</span></p>";
+		?>
+		<input type="submit" value="Delete Song"/><span class="error">
+		<?php 
+		if(isset($_SESSION['errorSong'])&&! empty ( $_SESSION ['errorSong'] )) {
+				echo " * " . $_SESSION ["errorSong"];                            
+			}
+		?>
+		</span>
+		</form>
 		<form action="index.php" method="post">
 		<input type="submit" value="Home" />
 		</form>

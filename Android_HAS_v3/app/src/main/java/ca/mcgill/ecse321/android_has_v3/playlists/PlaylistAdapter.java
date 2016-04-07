@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.Playlist;
 import ca.mcgill.ecse321.android_has_v3.R;
 
@@ -39,7 +38,7 @@ public class PlaylistAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.playlists_listview_item, null);
+            vi = inflater.inflate(R.layout.listview_item_playlist, null);
 
         Playlist playlist = playlists.get(position);
         TextView playlistName = (TextView) vi.findViewById(R.id.playlist_nameTextView);

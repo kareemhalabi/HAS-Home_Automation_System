@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.android_has_v3.artists;
 
 
 import android.content.Context;
-import android.telecom.TelecomManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,7 @@ public class ArtistAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.artists_listview_item, null);
+            vi = inflater.inflate(R.layout.listview_item_artist, null);
 
         Artist artist = artists.get(position);
         TextView artistName = (TextView) vi.findViewById(R.id.artist_nameTextView);

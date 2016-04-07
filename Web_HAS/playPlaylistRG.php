@@ -52,7 +52,10 @@ $c=new Controller();
 $c->playPlayableRG($myGroup, $playlist);
 ?>
 
-<h3><?php $playlistName?> is now playing in the room group: <?php echo $name?>.</h3>
+<h3>The playlist <?php echo $playlistName?>, is now playing in the room group <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
+	
+</body>
+</html>

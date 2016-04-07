@@ -31,18 +31,24 @@
 		$song = $_GET['name'];
 		
 		$mySong = NULL;
+
 		foreach ( $hm->getSongs () as $tempSong ) {
 			if (strcmp ( $tempSong->getName (), $song ) == 0) {
 				$mySong = $tempSong;
 				break;
 			}
 		}
+		if($mySong == NULL){
+			header("Location: index.php");
+			exit();
+		}
+		
 		$_SESSION['song'] = $mySong;
 		
 		$name = $mySong->getName();
 		?>
 		
-		<form action="playPlaylistRoom.php" method="post">
+		<form action="playSongRoom.php" method="post">
 		<?php
 		echo "Which room or group of rooms would you like to play the song: {$name}";
 		?>
@@ -64,7 +70,7 @@
 		</form>
 		
 		
-		<form action="playPlaylistRG.php" method="post">
+		<form action="playSongRG.php" method="post">
 		<?php 
 		echo "<p>Group: <select name='groupspinner'>";
 		foreach ( $hm->getRoomGroups() as $group) {

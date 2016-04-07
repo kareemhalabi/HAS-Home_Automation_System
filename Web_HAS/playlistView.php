@@ -102,8 +102,7 @@ $hm = $pm->loadDataFromStore ();
 			?>
 			</span>
 		</p>
-
-
 	</form>
+	
 </body>
 </html>

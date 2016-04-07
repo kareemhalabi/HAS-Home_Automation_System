@@ -28,7 +28,8 @@ public class Album extends Playable implements Comparable<Album>
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Album(String aName, String aGenre, Date aReleaseDate, Artist aMainArtist)
+	public Album(String aName, String aGenre, Date aReleaseDate,
+			Artist aMainArtist)
 	{
 		super(aName);
 		genre = aGenre;
@@ -37,7 +38,8 @@ public class Album extends Playable implements Comparable<Album>
 		boolean didAddMainArtist = setMainArtist(aMainArtist);
 		if (!didAddMainArtist)
 		{
-			throw new RuntimeException("Unable to create album due to mainArtist");
+			throw new RuntimeException(
+					"Unable to create album due to mainArtist");
 		}
 	}
 
@@ -124,7 +126,8 @@ public class Album extends Playable implements Comparable<Album>
 			return false;
 		}
 		Album existingAlbum = aSong.getAlbum();
-		boolean isNewAlbum = existingAlbum != null && !this.equals(existingAlbum);
+		boolean isNewAlbum = existingAlbum != null
+				&& !this.equals(existingAlbum);
 		if (isNewAlbum)
 		{
 			aSong.setAlbum(this);
@@ -201,7 +204,8 @@ public class Album extends Playable implements Comparable<Album>
 
 		Artist existingMainArtist = mainArtist;
 		mainArtist = aMainArtist;
-		if (existingMainArtist != null && !existingMainArtist.equals(aMainArtist))
+		if (existingMainArtist != null
+				&& !existingMainArtist.equals(aMainArtist))
 		{
 			existingMainArtist.removeAlbum(this);
 		}
@@ -223,33 +227,26 @@ public class Album extends Playable implements Comparable<Album>
 		super.delete();
 	}
 
-	public void play(Room room)
+	public void play()
 	{
-		Timer t = new Timer();
-		for (Song s : songs)
-		{
-			s.play(room);
-			int delay = s.getDuration() * 1000; // milliseconds
-			t.schedule(new TimerTask()
-			{
-				@Override
-				public void run()
-				{
-				}
-			}, delay);
-		}
 	}
 
 	public String toString()
 	{
 		String outputString = "";
 		return super.toString() + "[" + "genre" + ":" + getGenre() + "]"
-				+ System.getProperties().getProperty("line.separator") + "  " + "releaseDate" + "="
+				+ System.getProperties().getProperty("line.separator") + "  "
+				+ "releaseDate" + "="
 				+ (getReleaseDate() != null
-						? !getReleaseDate().equals(this) ? getReleaseDate().toString().replaceAll("  ", "    ") : "this"
+						? !getReleaseDate().equals(this) ? getReleaseDate()
+								.toString().replaceAll("  ", "    ") : "this"
 						: "null")
-				+ System.getProperties().getProperty("line.separator") + "  " + "mainArtist = "
-				+ (getMainArtist() != null ? Integer.toHexString(System.identityHashCode(getMainArtist())) : "null")
+				+ System.getProperties().getProperty("line.separator") + "  "
+				+ "mainArtist = "
+				+ (getMainArtist() != null
+						? Integer.toHexString(
+								System.identityHashCode(getMainArtist()))
+						: "null")
 				+ outputString;
 	}
 

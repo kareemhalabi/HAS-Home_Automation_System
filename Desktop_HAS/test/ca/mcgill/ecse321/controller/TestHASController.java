@@ -530,15 +530,36 @@ public class TestHASController
 
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(116, 02, 8);
+		
+		Artist Bob = new Artist("Bob the Artist");
+		h.addArtist(Bob);
 
 		for (String name : names)
-			h.addAlbum(new Album(name, "Sort Yourself", d1, new Artist("Bob the Artist")));
+		{
+			try{
+			hc.createAlbum(name, "Sort Yourself", d1, Bob);
+			}
+			catch(InvalidInputException e)
+			{
+				fail();
+			}
+		}
+		
 		hc.sortAlbums();
+		List<Album> sortedAlbums = h.getAlbums();
 
 		Arrays.sort(names);
 		for (int i = 0; i < names.length; i++)
 		{
 			assertTrue(names[i].equals(h.getAlbum(i).getName()));
+		}
+		
+		Artist bob = h.getArtist(0);
+		List<Album> albums = bob.getAlbums();
+		
+		for(Album a: sortedAlbums)
+		{
+			assertTrue(albums.contains(a));
 		}
 	}
 

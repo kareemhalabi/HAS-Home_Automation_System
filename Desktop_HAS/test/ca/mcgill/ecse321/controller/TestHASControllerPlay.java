@@ -118,7 +118,6 @@ public class TestHASControllerPlay
 			fail();
 		}
 
-		assertEquals("testName", room.getCurrentSong().getName());
 		assertEquals("testName", room.getPlayable().getName());
 		assertTrue(room.hasPlayable());
 	}
@@ -181,7 +180,6 @@ public class TestHASControllerPlay
 		}
 
 		//iterated through both
-		assertEquals("testName2", room.getCurrentSong().getName());
 		assertEquals("Flume", room.getPlayable().getName());
 		assertTrue(room.hasPlayable());
 	}

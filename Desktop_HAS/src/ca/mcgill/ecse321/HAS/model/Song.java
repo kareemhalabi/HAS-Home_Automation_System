@@ -237,28 +237,19 @@ public class Song extends Playable implements Comparable<Song>
 	 * Java public void play() {} PHP
 	 */
 	// line 14 "../../../../../../../../ump/160303721337/model.ump"
-	public void play(Room room)
+	public void play()
 	{
-		room.setCurrentSong(this);
-		Timer t = new Timer();
-		int delay = this.getDuration() * 1000; // milliseconds
-		
-		t.schedule(new TimerTask()
-		{
-			@Override
-			public void run()
-			{
-			}
-		}, delay);
-		//TODO: ADD SOMETHING THAT ENDS THIS
 	}
 
 	public String toString()
 	{
 		String outputString = "";
-		return super.toString() + "[" + "duration" + ":" + getDuration() + "," + "position" + ":" + getPosition() + "]"
-				+ System.getProperties().getProperty("line.separator") + "  " + "album = "
-				+ (getAlbum() != null ? Integer.toHexString(System.identityHashCode(getAlbum())) : "null")
+		return super.toString() + "[" + "duration" + ":" + getDuration() + ","
+				+ "position" + ":" + getPosition() + "]"
+				+ System.getProperties().getProperty("line.separator") + "  "
+				+ "album = "
+				+ (getAlbum() != null ? Integer.toHexString(
+						System.identityHashCode(getAlbum())) : "null")
 				+ outputString;
 	}
 

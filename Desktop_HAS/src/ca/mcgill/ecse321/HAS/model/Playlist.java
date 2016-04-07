@@ -28,7 +28,8 @@ public class Playlist extends Playable
 		boolean didAddSongs = setSongs(allSongs);
 		if (!didAddSongs)
 		{
-			throw new RuntimeException("Unable to create Playlist, must have at least 1 songs");
+			throw new RuntimeException(
+					"Unable to create Playlist, must have at least 1 songs");
 		}
 	}
 
@@ -114,7 +115,8 @@ public class Playlist extends Playable
 			verifiedSongs.add(aSong);
 		}
 
-		if (verifiedSongs.size() != newSongs.length || verifiedSongs.size() < minimumNumberOfSongs())
+		if (verifiedSongs.size() != newSongs.length
+				|| verifiedSongs.size() < minimumNumberOfSongs())
 		{
 			return wasSet;
 		}
@@ -174,23 +176,8 @@ public class Playlist extends Playable
 		super.delete();
 	}
 
-	//TODO: NO WAY TO STOP AT THE END
-	public void play(Room room)
+	public void play()
 	{
-		Timer t = new Timer();
-		int i = 0;
-		for (Song s : songs)
-		{
-			s.play(room);
-			int delay = s.getDuration() * 1000; // milliseconds
-			t.schedule(new TimerTask()
-			{
-				@Override
-				public void run()
-				{
-				}
-			}, delay);
-		}
 	}
 
 }

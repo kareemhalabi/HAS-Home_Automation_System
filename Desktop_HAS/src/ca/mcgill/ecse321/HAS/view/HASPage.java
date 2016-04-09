@@ -83,7 +83,7 @@ public class HASPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HASPage frame = new HASPage();
+					HASPage2 frame = new HASPage2();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

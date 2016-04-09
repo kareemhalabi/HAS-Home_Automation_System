@@ -45,7 +45,7 @@ import ca.mcgill.ecse321.HAS.model.HAS;
  * 
  * And "Song is playing" message should be incorporated
 */
-public class HASPage extends JFrame
+public class HASPage2 extends JFrame
 {
 	private static final long serialVersionUID = -8062635784771606869L;
 
@@ -94,7 +94,7 @@ public class HASPage extends JFrame
 	private JSeparator separator;
 	private JSeparator separator_1;
 
-	public HASPage()
+	public HASPage2()
 	{
 		initComponents();
 		refreshData();

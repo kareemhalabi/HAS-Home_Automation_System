@@ -10,71 +10,77 @@
       <volume>5</volume>
       <mute>true</mute>
     </ca.mcgill.ecse321.HAS.model.Room>
+    <ca.mcgill.ecse321.HAS.model.Room id="5">
+      <name>Bedroom</name>
+      <volume>5</volume>
+      <mute>false</mute>
+    </ca.mcgill.ecse321.HAS.model.Room>
   </rooms>
-  <artists id="5"/>
-  <albums id="6">
-    <album id="7">
+  <artists id="6"/>
+  <albums id="7">
+    <album id="8">
       <name>Flume</name>
       <genre>Indie</genre>
-      <releaseDate id="8">3907-02-25</releaseDate>
-      <songs id="9">
-        <ca.mcgill.ecse321.HAS.model.Song id="10">
+      <releaseDate id="9">3907-02-25</releaseDate>
+      <songs id="10">
+        <ca.mcgill.ecse321.HAS.model.Song id="11">
           <name>Sintara</name>
           <duration>2000</duration>
           <position>1</position>
-          <ftArtists id="11"/>
-          <album reference="7"/>
+          <ftArtists id="12"/>
+          <album reference="8"/>
         </ca.mcgill.ecse321.HAS.model.Song>
       </songs>
-      <mainArtist id="12">
+      <mainArtist id="13">
         <name>Flume</name>
-        <songs id="13"/>
-        <albums id="14">
-          <album reference="7"/>
+        <songs id="14"/>
+        <albums id="15">
+          <album reference="8"/>
         </albums>
       </mainArtist>
     </album>
-    <album id="15">
+    <album id="16">
       <name>Sigh No More</name>
       <genre>Folk</genre>
-      <releaseDate id="16">3909-11-09</releaseDate>
-      <songs id="17">
-        <ca.mcgill.ecse321.HAS.model.Song id="18">
+      <releaseDate id="17">3909-11-09</releaseDate>
+      <songs id="18">
+        <ca.mcgill.ecse321.HAS.model.Song id="19">
           <name>The Cave</name>
           <duration>100</duration>
           <position>2</position>
-          <ftArtists id="19"/>
-          <album reference="15"/>
+          <ftArtists id="20"/>
+          <album reference="16"/>
         </ca.mcgill.ecse321.HAS.model.Song>
       </songs>
-      <mainArtist id="20">
+      <mainArtist id="21">
         <name>Mumford and Sons</name>
-        <songs id="21"/>
-        <albums id="22">
-          <album reference="15"/>
+        <songs id="22"/>
+        <albums id="23">
+          <album reference="16"/>
         </albums>
       </mainArtist>
     </album>
   </albums>
-  <playlists id="23">
-    <ca.mcgill.ecse321.HAS.model.Playlist id="24">
+  <playlists id="24">
+    <ca.mcgill.ecse321.HAS.model.Playlist id="25">
       <name>Playlist1</name>
-      <songs id="25">
-        <ca.mcgill.ecse321.HAS.model.Song reference="10"/>
-        <ca.mcgill.ecse321.HAS.model.Song reference="18"/>
+      <songs id="26">
+        <ca.mcgill.ecse321.HAS.model.Song reference="11"/>
+        <ca.mcgill.ecse321.HAS.model.Song reference="19"/>
       </songs>
     </ca.mcgill.ecse321.HAS.model.Playlist>
   </playlists>
-  <songs id="26">
-    <ca.mcgill.ecse321.HAS.model.Song reference="10"/>
-    <ca.mcgill.ecse321.HAS.model.Song reference="18"/>
+  <songs id="27">
+    <ca.mcgill.ecse321.HAS.model.Song reference="11"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="19"/>
   </songs>
-  <roomGroups id="27">
-    <ca.mcgill.ecse321.HAS.model.RoomGroup id="28">
+  <roomGroups id="28">
+    <ca.mcgill.ecse321.HAS.model.RoomGroup id="29">
       <name>Group1</name>
-      <rooms id="29">
+      <rooms id="30">
         <ca.mcgill.ecse321.HAS.model.Room reference="3"/>
         <ca.mcgill.ecse321.HAS.model.Room reference="4"/>
+        <ca.mcgill.ecse321.HAS.model.Room reference="5"/>
       </rooms>
     </ca.mcgill.ecse321.HAS.model.RoomGroup>
   </roomGroups>

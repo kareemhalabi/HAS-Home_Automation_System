@@ -21,6 +21,11 @@ body { text-align:center; }
 .error {
 	color: #FF0000;
 }
+.smallBox{
+	border: 2px solid blue;
+	width: 200px;
+	margin: auto;
+}
 der: 1px #DDD solid; padding: 5px; cursor: pointer;}
 
 .selected {
@@ -34,7 +39,6 @@ tr:hover{
 }
 .boxed {
   	border: 2px solid blue;
-  
 }
 
 </style>
@@ -140,10 +144,12 @@ tr:hover{
 			</span>
 	</form>
 
-<p>
 
-<h3> <blink><font color="blue">My Music Library</font></blink></h3>
-
+	<br>
+	<div class="smallBox">
+	<h2>
+	My Music Library</h2>
+	</div>
 	
 <form name="songlist">
 <?php if (count($songName) > 0): ?>

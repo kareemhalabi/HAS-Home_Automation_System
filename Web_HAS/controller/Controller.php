@@ -136,8 +136,6 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// TODO
-	// FAILING
 	public function addSongToPlaylist($aPlaylist, $aSong) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();

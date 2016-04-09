@@ -2,46 +2,158 @@
   <rooms id="2"/>
   <artists id="3">
     <artist id="4">
-      <name>Finals</name>
+      <name>Alaska</name>
       <songs id="5"/>
-      <albums id="6"/>
-    </artist>
-    <artist id="7">
-      <name>Louise Attaque</name>
-      <songs id="8"/>
-      <albums id="9">
-        <album id="10">
-          <name>Louise Attaque</name>
+      <albums id="6">
+        <album id="7">
+          <name>Dragons</name>
           <genre>Folk</genre>
-          <releaseDate id="11">1997-03-20</releaseDate>
-          <songs id="12">
-            <song id="13">
-              <name>Amours</name>
-              <duration>117</duration>
+          <releaseDate id="8">2016-04-06</releaseDate>
+          <songs id="9">
+            <song id="10">
+              <name>Brains</name>
+              <duration>4</duration>
               <position>1</position>
-              <ftArtists id="14"/>
-              <album reference="10"/>
+              <ftArtists id="11"/>
             </song>
-            <song id="15">
-              <name>J&apos;T&apos;emmene Au Vent</name>
-              <duration>184</duration>
+            <song id="12">
+              <name>Rabits</name>
+              <duration>7</duration>
               <position>2</position>
-              <ftArtists id="16"/>
-              <album reference="10"/>
+              <ftArtists id="13"/>
             </song>
           </songs>
-          <mainArtist reference="7"/>
+          <mainArtist reference="4"/>
+        </album>
+        <album id="14">
+          <name>aa</name>
+          <genre>sd</genre>
+          <releaseDate id="15">2016-04-06</releaseDate>
+          <songs id="16">
+            <song id="17">
+              <name>mwelkfa</name>
+              <duration>1</duration>
+              <position>2</position>
+              <ftArtists id="18"/>
+              <album reference="14"/>
+            </song>
+          </songs>
+          <mainArtist reference="4"/>
+        </album>
+        <album id="19">
+          <name>Al</name>
+          <genre>Folk</genre>
+          <releaseDate id="20">2016-04-06</releaseDate>
+          <songs id="21">
+            <song id="22">
+              <name>Please work</name>
+              <duration>1</duration>
+              <position>1</position>
+              <ftArtists id="23"/>
+              <album reference="19"/>
+            </song>
+          </songs>
+          <mainArtist reference="4"/>
         </album>
       </albums>
     </artist>
+    <artist id="24">
+      <name>Brian</name>
+      <songs id="25">
+        <song id="26">
+          <name>sdf</name>
+          <duration>2</duration>
+          <position>1</position>
+          <ftArtists id="27">
+            <artist reference="24"/>
+          </ftArtists>
+          <album id="28">
+            <name>skdf</name>
+            <genre>wefw</genre>
+            <releaseDate id="29">2016-04-06</releaseDate>
+            <songs id="30">
+              <song reference="26"/>
+            </songs>
+            <mainArtist reference="24"/>
+          </album>
+        </song>
+      </songs>
+      <albums id="31">
+        <album reference="28"/>
+        <album id="32">
+          <name>aaaaaa</name>
+          <genre>wefw</genre>
+          <releaseDate id="33">2016-04-06</releaseDate>
+          <songs id="34">
+            <song id="35">
+              <name>sdf</name>
+              <duration>2</duration>
+              <position>1</position>
+              <ftArtists id="36"/>
+              <album reference="32"/>
+            </song>
+          </songs>
+          <mainArtist reference="24"/>
+        </album>
+      </albums>
+    </artist>
+    <artist id="37">
+      <name>me</name>
+      <songs id="38"/>
+      <albums id="39">
+        <album id="40">
+          <name>woo</name>
+          <genre>java sucks</genre>
+          <releaseDate id="41">2016-04-05</releaseDate>
+          <songs id="42"/>
+          <mainArtist reference="37"/>
+        </album>
+      </albums>
+    </artist>
+    <artist id="43">
+      <name>s</name>
+      <songs id="44">
+        <song id="45">
+          <name>s</name>
+          <duration>1</duration>
+          <position>1</position>
+          <ftArtists id="46">
+            <artist reference="43"/>
+          </ftArtists>
+          <album id="47">
+            <name>s</name>
+            <genre>s</genre>
+            <releaseDate id="48">2016-04-06</releaseDate>
+            <songs id="49">
+              <song reference="45"/>
+            </songs>
+            <mainArtist reference="43"/>
+          </album>
+        </song>
+      </songs>
+      <albums id="50">
+        <album reference="47"/>
+      </albums>
+    </artist>
   </artists>
-  <albums id="17">
-    <album reference="10"/>
+  <albums id="51">
+    <album reference="19"/>
+    <album reference="7"/>
+    <album reference="14"/>
+    <album reference="32"/>
+    <album reference="47"/>
+    <album reference="28"/>
+    <album reference="40"/>
   </albums>
-  <playlists id="18"/>
-  <songs id="19">
-    <song reference="13"/>
-    <song reference="15"/>
+  <playlists id="52"/>
+  <songs id="53">
+    <song reference="45"/>
+    <song reference="10"/>
+    <song reference="12"/>
+    <song reference="17"/>
+    <song reference="22"/>
+    <song reference="26"/>
+    <song reference="35"/>
   </songs>
-  <roomGroups id="20"/>
+  <roomGroups id="54"/>
 </HAS>

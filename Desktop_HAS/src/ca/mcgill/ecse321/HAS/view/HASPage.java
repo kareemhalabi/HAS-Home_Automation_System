@@ -41,6 +41,8 @@ import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Room;
 import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.HAS.model.Song;
+import ca.mcgill.ecse321.HAS.persistence.PersistenceHAS;
+import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -139,8 +141,8 @@ public class HASPage extends JFrame {
 	private String error_MP = "";
 	private JComboBox locationCB;
 	private Integer selectedLocation = -1;
-	private Vector data= new Vector();
-	private Vector columnNames= new Vector();
+	private Vector data = new Vector();
+	private Vector columnNames = new Vector();
 	private DefaultTableModel tableModel;
 
 	/**
@@ -803,9 +805,10 @@ public class HASPage extends JFrame {
 	}
 
 	private void refreshData() {
+		
 		HAS h = HAS.getInstance();
 
-		resetData();
+		resetDataArtist();
 
 		// error
 		roomErrMsg.setText(error_RP);
@@ -1118,6 +1121,7 @@ public class HASPage extends JFrame {
 
 	private void resetData() {
 		HAS h = HAS.getInstance();
+		data.clear();
 		if (h.getAlbums().size() > 0) {
 			for (int in = 0; in < h.getAlbums().size(); in++) {
 				if (h.getAlbum(in).getSongs().size() > 0) {
@@ -1130,7 +1134,35 @@ public class HASPage extends JFrame {
 						tablerow.addElement(h.getAlbum(in).getSong(jn).getName());
 
 						data.addElement(tablerow);
-						
+
+					}
+				}
+			}
+		}
+		table.setModel(tableModel);
+		tableModel.fireTableDataChanged();
+
+	}
+	
+	private void resetDataArtist() {
+		HAS h = HAS.getInstance();
+		data.clear();
+		if (h.getArtists().size() > 0) {
+			for (int in = 0; in < h.getArtists().size(); in++) {
+				if (h.getArtist(in).getAlbums().size() > 0) {
+					for (int jn = 0; jn < h.getArtist(in).getAlbums().size(); jn++) {
+						if(h.getArtist(in).getAlbum(jn).getSongs().size()>0)
+							for(int kn=0; kn<h.getArtist(in).getAlbum(jn).getSongs().size();kn++){
+
+						Vector tablerowA = new Vector();
+
+						tablerowA.addElement(h.getArtist(in).getName());
+						tablerowA.addElement(h.getArtist(in).getAlbum(jn).getName());
+						tablerowA.addElement(h.getArtist(in).getAlbum(jn).getSong(kn).getName());
+
+						data.addElement(tablerowA);
+							}
+
 					}
 				}
 			}
@@ -1140,6 +1172,9 @@ public class HASPage extends JFrame {
 
 	}
 
+
+	
+	
 	// TODO maybe use this?
 	// public static DefaultTableModel buildTableModel(ResultSet rs) throws
 	// SQLException {
@@ -1175,18 +1210,17 @@ public class HASPage extends JFrame {
 			} catch (InvalidInputException e) {
 				error_AP = e.getMessage();
 			}
-		} else {
+	}
+	}
 
-		}
-
-		// private void mVolumeChanged(java.awt.event.evt)){
-		// HASController hc = new HASController();
-		// for(i=0;i<roomString.size();i++){
-		// try{
-		// hc.setRoomVolumeLevel(room, volumeLevel);
-		// }
-		// }
-		//
+//	private void mVolumeChanged(java.awt.event)){
+//		 HASController hc = new HASController();
+//		 for(i=0;i<roomString.size();i++){
+//		 try{
+//		 hc.setRoomVolumeLevel(room, volumeLevel);
+//		 }
+//		 }
+//		
 	}
 
 	/*
@@ -1206,4 +1240,4 @@ public class HASPage extends JFrame {
 	 * refreshData(); }
 	 * 
 	 */
-}
+

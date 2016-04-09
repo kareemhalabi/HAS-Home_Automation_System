@@ -184,7 +184,7 @@ class Controller {
 			}
 		}
 		$rooms = array ();
-		$rooms [] = $room;
+		array_push($rooms, $room);
 		$name = InputValidator::validate_input ( $name );
 		if ($name == null || strlen ( $name ) == 0) {
 			throw new Exception ( "Group name cannot be empty!" );
@@ -304,7 +304,6 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// Done!
 	public function playPlayableRoom($room, $playable) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -313,7 +312,6 @@ class Controller {
 		
 		$pm->writeDataToStore ( $hm );
 	}
-	// Done!
 	public function playPlayableRG($roomGroup, $playable) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();

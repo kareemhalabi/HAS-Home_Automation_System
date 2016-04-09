@@ -200,8 +200,6 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// TODO
-	// FAILING
 	public function addRoomToGroup($aGroup, $aRoom) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -243,8 +241,6 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// TODO
-	// FAILING
 	public function changeVolume($aname, $volume, $mute) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -277,8 +273,7 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// TODO
-	// FAILING
+	//Fails test as of Saturday 4/9 - same problem with not saving.
 	public function changeGroupVolume($aGroup, $volume, $mute) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -311,7 +306,7 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// TODO
+	// Done!
 	public function playPlayableRoom($room, $playable) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -320,7 +315,7 @@ class Controller {
 		
 		$pm->writeDataToStore ( $hm );
 	}
-	// TODO
+	// Done!
 	public function playPlayableRG($roomGroup, $playable) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();

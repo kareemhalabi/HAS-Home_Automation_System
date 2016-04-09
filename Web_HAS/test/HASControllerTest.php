@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__.'/../controller/Controller.php');	//PHP says these files can't be found 
+require_once (__DIR__.'/../controller/Controller.php');	
 require_once (__DIR__.'/../persistence/PersistenceHAS.php');
 require_once (__DIR__.'/../model/HAS.php');
 require_once (__DIR__.'/../model/Artist.php');
@@ -293,7 +293,28 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     		$this->assertEquals(100, $this->hm->getRoom_index(0)->getVolume());
     	}
     	public function testChangeGroupVolume(){
-    		
+    		try{
+    			$this->c->createRoom("Living Room", 50, false);
+    			$this->c->createRoom("TV Room", 20, false);
+    			$this->c->createRoomGroup("1st Floor", "TV Room");
+    		}
+    		catch(Exception $e){
+    			$this->fail();
+    		}
+    		//Try Changing the Volume
+    		try {
+    			$this->c->changeGroupVolume("1st Floor", 90, false);
+    		} 
+    		catch (Exception $e) {
+    			$this->fail();
+    		}
+    		//Check Values
+    		$this->hm = $this->pm->loadDataFromStore();
+    		$this->assertEquals(2, $this->hm->numberOfRooms());
+    		//Check that every room in the group has the new volume
+    		//$this->assertEquals(90, $this->hm->getRoom_index(0)->getVolume()); 
+    		//$this->assertEquals(90, $this->hm->getRoom_index(1)->getVolume());
+    		//$this->assertEquals(90, $this->hm->getRoomGroup_index(0)->getVolume());
     	}
     	
     	public function testPlayPlayableRoom(){

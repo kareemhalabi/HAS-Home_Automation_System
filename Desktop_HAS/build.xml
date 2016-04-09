@@ -8,16 +8,25 @@
 	<property name="classes.dir" value="${build.dir}/classes"/>
 	<property name="jar.dir"     value="${build.dir}/jar"/>
 	<property name="lib.dir"     value="lib"/>
-<!--	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/> -->
+	<property name="main.class"	value="ca.mcgill.ecse321.HAS.application.HASApp"/>
     
 	<path id="HAS.classpath">
         <pathelement location="${classes.dir}"/>
-        <fileset dir="${lib.dir}">
+		<path refid="libraries.path"/>
+<!--        <fileset dir="${lib.dir}">
+        	<include name="**/*.jar"/>
+        	<exclude name="**/junit.jar"/>
+        	<exclude name="**/org.hamcrest.core*.jar"/>
+        </fileset> -->
+    </path>
+	
+	<path id="libraries.path">
+		<fileset dir="${lib.dir}">
         	<include name="**/*.jar"/>
         	<exclude name="**/junit.jar"/>
         	<exclude name="**/org.hamcrest.core*.jar"/>
         </fileset>
-    </path>
+	</path>
 	
 	<path id="Junit.classpath">
 		<fileset dir="${lib.dir}">
@@ -33,8 +42,7 @@
 	<target name="compile" depends="clean">
     	<mkdir dir="${classes.dir}"/>
 		
-    	<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"
-    		excludes="ca/mcgill/ecse321/HAS/view/**"> <!-- Excludes view for now -->
+    	<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"> <!-- Excludes view for now -->
     		<classpath refid="HAS.classpath"/>
     	</javac>
 
@@ -79,14 +87,20 @@
 		</jar>
 	</target>
 	
+	
 	<target name="Desktop_jar" depends="compile">
 		<mkdir dir="${jar.dir}"/>
-		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-			<!--
+		
+		<manifestclasspath property="manifest.classpath" jarfile="${jar.dir}/${ant.project.name}.jar">
+            <classpath refid="HAS.classpath"/>
+        </manifestclasspath>
+		
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" excludes="**/*Test*.class" 
+			basedir="${classes.dir}">
 			<manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Main-Class" value="${main.class}"/>
+				<attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>	
-			-->
 		</jar>
 	</target>
 	

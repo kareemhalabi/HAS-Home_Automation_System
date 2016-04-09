@@ -34,11 +34,95 @@
         </albums>
       </mainArtist>
     </album>
+    <album id="16">
+      <name>Jack</name>
+      <genre>Bring me food</genre>
+      <releaseDate id="17">2016-03-08</releaseDate>
+      <songs id="18">
+        <ca.mcgill.ecse321.HAS.model.Song id="19">
+          <name>KIA</name>
+          <duration>123</duration>
+          <position>1</position>
+          <ftArtists id="20"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="21">
+          <name>Wind Rises</name>
+          <duration>123</duration>
+          <position>2</position>
+          <ftArtists id="22"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="23">
+          <name>Dark Horses</name>
+          <duration>123</duration>
+          <position>3</position>
+          <ftArtists id="24"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="25">
+          <name>IKEA</name>
+          <duration>123</duration>
+          <position>4</position>
+          <ftArtists id="26"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="27">
+          <name>Angel</name>
+          <duration>123</duration>
+          <position>5</position>
+          <ftArtists id="28"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="29">
+          <name>Porto</name>
+          <duration>123</duration>
+          <position>6</position>
+          <ftArtists id="30"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="31">
+          <name>Leo&apos;s Oscar</name>
+          <duration>123</duration>
+          <position>7</position>
+          <ftArtists id="32"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="33">
+          <name>Life</name>
+          <duration>123</duration>
+          <position>8</position>
+          <ftArtists id="34"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="35">
+          <name>Food</name>
+          <duration>123</duration>
+          <position>9</position>
+          <ftArtists id="36"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+        <ca.mcgill.ecse321.HAS.model.Song id="37">
+          <name>Cake</name>
+          <duration>123</duration>
+          <position>10</position>
+          <ftArtists id="38"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+      </songs>
+      <mainArtist id="39">
+        <name>Jack the Reaper</name>
+        <songs id="40"/>
+        <albums id="41">
+          <album reference="16"/>
+        </albums>
+      </mainArtist>
+    </album>
   </albums>
-  <playlists id="16"/>
-  <songs id="17">
+  <playlists id="42"/>
+  <songs id="43">
     <ca.mcgill.ecse321.HAS.model.Song reference="9"/>
     <ca.mcgill.ecse321.HAS.model.Song reference="11"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="19"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="21"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="23"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="25"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="27"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="29"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="31"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="33"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="35"/>
+    <ca.mcgill.ecse321.HAS.model.Song reference="37"/>
   </songs>
-  <roomGroups id="18"/>
+  <roomGroups id="44"/>
 </HAS>

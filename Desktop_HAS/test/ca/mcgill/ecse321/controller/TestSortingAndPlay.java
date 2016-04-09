@@ -58,13 +58,9 @@ public class TestSortingAndPlay
 			hc.createAlbum(name, genre, d1, ar1);
 		} catch (InvalidInputException e)
 		{
-			// check that no error has occurred in the creation of the album
 			fail();
 		}
 
-		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-
-		// new song 1 on album 1
 		String testSongName1 = "testName";
 		String testSongName2 = "testName2";
 		int songDuration1 = 5;
@@ -72,7 +68,6 @@ public class TestSortingAndPlay
 		int songPosition1 = 1;
 		int songPosition2 = 2;
 
-		// add song to an album
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
@@ -299,7 +294,6 @@ public class TestSortingAndPlay
 	}
 
 	@Test
-	// TODO: EXPECT TO FAIL
 	public void testPlayAlbumSingleRoom()
 	{
 		HAS h = HAS.getInstance();
@@ -315,7 +309,6 @@ public class TestSortingAndPlay
 			fail();
 		}
 
-		// iterated through both
 		assertEquals("Flume", room.getPlayable().getName());
 		assertTrue(room.hasPlayable());
 	}
@@ -323,7 +316,6 @@ public class TestSortingAndPlay
 	@Test
 	public void testPlaySongRoomGroup()
 	{
-		String error = "";
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 
@@ -337,7 +329,7 @@ public class TestSortingAndPlay
 		{
 			fail();
 		}
-		
+
 		RoomGroup rg = h.getRoomGroup(0);
 		try
 		{
@@ -350,7 +342,7 @@ public class TestSortingAndPlay
 		assertEquals("testName", rg.getPlayable().getName());
 		assertTrue(rg.hasPlayable());
 	}
-	
+
 	@Test
 	public void testPlayNoSongRoomGroup()
 	{
@@ -368,7 +360,7 @@ public class TestSortingAndPlay
 		{
 			fail();
 		}
-		
+
 		RoomGroup rg = h.getRoomGroup(0);
 		try
 		{
@@ -381,7 +373,7 @@ public class TestSortingAndPlay
 		assertEquals("A playable must be selected! ", error);
 		assertFalse(rg.hasPlayable());
 	}
-	
+
 	@Test
 	public void testPlaySongNoRoomGroup()
 	{

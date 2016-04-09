@@ -424,7 +424,6 @@ public class TestHASController
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
-		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
 		Artist ar1 = new Artist(artName);
@@ -460,7 +459,6 @@ public class TestHASController
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
-		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
 		Artist ar1 = new Artist(artName);

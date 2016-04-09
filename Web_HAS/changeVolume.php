@@ -7,6 +7,10 @@
 .error {
 	color: #FF0000;
 }
+body { text-align:center; }
+.error {
+	color: #FF0000;
+}
 </style>
 </head>
 <body>

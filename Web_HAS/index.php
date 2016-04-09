@@ -15,8 +15,13 @@ $("#table tr").click(function(){
 
 });
 </script>
+
 <style>
-td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
+body { text-align:center; }
+.error {
+	color: #FF0000;
+}
+der: 1px #DDD solid; padding: 5px; cursor: pointer;}
 
 .selected {
     background-color: blue;
@@ -27,6 +32,10 @@ tr:hover{
 	background-color: blue;
 	color: #FFF;
 }
+.boxed {
+  	border: 2px solid red;
+  
+}
 
 </style>
 <meta charset="UTF-8">
@@ -35,9 +44,18 @@ tr:hover{
 .error {
 	color: #FF0000;
 }
+
 </style>
+
 </head>
+<div class="boxed" > 
+<b>WELCOME TO HAS ONLINE</b>
+
+</div>
 <body>
+
+<p> What would you like to do? </p>
+
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";

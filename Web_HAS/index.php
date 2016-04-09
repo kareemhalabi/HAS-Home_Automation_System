@@ -142,16 +142,17 @@ tr:hover{
 
 <p>
 
-<h3> <blink><font color="blue">My Music Library</font></blink></h3>
 
+</p>
 	
 <form name="songlist">
 <?php if (count($songName) > 0): ?>
-<table id="table">
-<tr><th>Song</th><th>Album</th><th>Artist</th></tr>
+<h3> <blink><font color="blue">My Music Library</font></blink></h3>
+<table id="table" align="center">
+<tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>
 <?php foreach ($hm->getSongs() as $song): ?>
-      <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td></tr>"; ?>
+      <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td><td>" . $song->getDuration() . "</td><td>" . $song->getAlbum()->getGenre() . "</td></tr>"; ?>
 <?php endforeach; ?>
   </tbody>
 </table>

@@ -325,16 +325,8 @@ class Controller {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		$orderedSongs = array ();
-		$songlist = array ();
-		$songlist = $hm->getSongs ();
+		equals();
 		
-		$albumlist = $hm->getAlbums ()->getName ();
-		
-		sort ( $albumlist, $sort_String );
-		
-		foreach ( $albumlist as $tempAlbum ) {
-		}
 	}
 	// TODO
 	public function sortbyArtist() {

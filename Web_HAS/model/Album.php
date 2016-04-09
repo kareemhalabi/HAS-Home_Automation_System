@@ -208,6 +208,7 @@ class Album extends Playable
   {
     return $this == $compareTo;
   }
+  
 
   public function delete()
   {

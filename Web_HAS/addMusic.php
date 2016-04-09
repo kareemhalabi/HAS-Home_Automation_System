@@ -7,7 +7,7 @@
 .error {
 	color: #FF0000;
 }
-body { text-align:center; }
+div, h3, p { text-align:center; }
 .error {
 	color: #FF0000;
 }
@@ -22,6 +22,10 @@ body { text-align:center; }
 
 </div>
 <body>
+	</form>
+		<form action="index.php" method="post">
+		<input type="submit" value="Go Home" />
+	</form>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -42,7 +46,7 @@ body { text-align:center; }
 		?>
 				
 			<form action="addArtist.php" method="post">
-		<h3>Who's the Artist?</h3>
+		<h3>Enter a New Artist:</h3>
 		<p>	
 		
 			Artist: <input type="text" name="artistName" /> <span class="error">			
@@ -58,7 +62,7 @@ body { text-align:center; }
 		</p>
 	</form>
 	<form action="addAlbum.php" method="post">
-	<p>For creating an album, please fill out the following section above the Add Album button. If no artist exists, use the Add Artist button to create one.</p>
+	<h3>Enter a New Album:</h3>
 		<p>
 			Name of Album: <input type="text" name="albumName" /> <span
 				class="error"> </span>
@@ -102,7 +106,7 @@ body { text-align:center; }
 	</form>
 	
 	<form action="addSong.php" method="post">
-	<p>For adding a song to an album, make sure the album has been created first and select it from the drop down menu.</p>
+	<h3>Enter a New Song:</h3>
 		<?php
 		echo "<p>Album: <select name='albumspinner'>";
 		foreach ( $hm->getAlbums () as $album ) {
@@ -141,8 +145,5 @@ body { text-align:center; }
 		
 		
 		</span>
-		</form>
-		<form action="index.php" method="post">
-		<input type="submit" value="Home" />
-		</form>
+	
 		

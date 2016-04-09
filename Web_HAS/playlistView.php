@@ -16,7 +16,7 @@ p, div { text-align:center; }
 </style>
 </head>
 <div class="boxed" > 
-<b>Manage My Playlists</b>
+<h1>Manage My Playlists</h1>
 
 </div>
 <body>
@@ -46,7 +46,7 @@ $hm = $pm->loadDataFromStore ();
 	<form action="addPlaylist.php" method="post">
 		
 		<p>
-			<h2 align="center">Add a New Playlist</h2>
+			<h3 align="center">Add a New Playlist</h3>
 		
 		
 		<p>
@@ -80,7 +80,7 @@ $hm = $pm->loadDataFromStore ();
 	</form>
 	
 	<form action="addSongToPlaylist.php" method="post">
-		<h2 align="center">Edit Playlists</h2>
+		<h3 align="center">Edit Playlists</h3>
 		<p> Choose a Song to Add
 		<?php
 		echo "<p>Song: <select name='songSpinner'>";

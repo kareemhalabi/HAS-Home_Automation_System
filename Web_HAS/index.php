@@ -33,7 +33,7 @@ tr:hover{
 	color: #FFF;
 }
 .boxed {
-  	border: 2px solid red;
+  	border: 2px solid blue;
   
 }
 
@@ -49,7 +49,7 @@ tr:hover{
 
 </head>
 <div class="boxed" > 
-<b>WELCOME TO HAS ONLINE</b>
+<h1>WELCOME TO HAS ONLINE</h1>
 
 </div>
 <body>
@@ -142,8 +142,8 @@ tr:hover{
 
 <p>
 
-To play a song, simply click on it!
-</p>
+<h3> <blink><font color="blue">My Music Library</font></blink></h3>
+
 	
 <form name="songlist">
 <?php if (count($songName) > 0): ?>

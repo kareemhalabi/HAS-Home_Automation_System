@@ -14,7 +14,10 @@ body { text-align:center; }
 </style>
 </head>
 <body>
+<div class="boxed" > 
+<h1>Manage Rooms</h1>
 
+</div>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";

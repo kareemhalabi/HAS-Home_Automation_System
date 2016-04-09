@@ -339,7 +339,7 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     		}
     		//Check the data saved in the model.
     		$this->hm = $this->pm->loadDataFromStore();
-    		$this->assertEquals(true,$myRoom->hasPlayable());//Fails: No playable was found in the room.
+    		$this->assertEquals(true,$myRoom->hasPlayable());
     	}
     	public function testPlayPlayableRG(){
     		try {

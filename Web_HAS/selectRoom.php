@@ -14,6 +14,7 @@ body { text-align:center; }
 </style>
 </head>
 <body>
+
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";

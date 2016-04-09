@@ -44,18 +44,24 @@ import ca.mcgill.ecse321.HAS.model.Song;
 
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class HASPage extends JFrame {
 	/**
@@ -70,11 +76,16 @@ public class HASPage extends JFrame {
 	private JTable table;
 
 	// data elements Control page
+	private String error_CP = "";
 	private JLabel ctlErrMsg;
-
 	private Integer selectedRoom = -1;
 	private Integer selectedRoomGroup = -1;
 	private HashMap<Integer, RoomGroup> roomGroups;
+	private Integer mVolume = 50;
+	private Integer rVolume = 50;
+	private JComboBox location2CB;
+	private Integer selected2location = -1;
+	private HashMap<Integer, String> location2Map;
 
 	// room page
 	private JLabel roomErrMsg;
@@ -125,9 +136,12 @@ public class HASPage extends JFrame {
 	// my music
 	private Integer row = -1;
 	private Integer column = -1;
-	private String error_MP="";
+	private String error_MP = "";
 	private JComboBox locationCB;
-	private Integer selectedLocation=-1;
+	private Integer selectedLocation = -1;
+	private Vector data= new Vector();
+	private Vector columnNames= new Vector();
+	private DefaultTableModel tableModel;
 
 	/**
 	 * Launch the application.
@@ -200,6 +214,13 @@ public class HASPage extends JFrame {
 		control.add(lblMasterVolume, gbc_lblMasterVolume);
 
 		JSlider sliderMasterVolume = new JSlider();
+		sliderMasterVolume.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				mVolume = sliderMasterVolume.getValue();
+				// mVolumenChanged(e);
+			}
+		});
+
 		GridBagConstraints gbc_sliderMasterVolume = new GridBagConstraints();
 		gbc_sliderMasterVolume.gridwidth = 2;
 		gbc_sliderMasterVolume.insets = new Insets(0, 0, 5, 5);
@@ -230,14 +251,21 @@ public class HASPage extends JFrame {
 		gbc_lblRoom.gridy = 4;
 		control.add(lblRoom, gbc_lblRoom);
 
-		JComboBox comboBox_4 = new JComboBox();
-		GridBagConstraints gbc_comboBox_4 = new GridBagConstraints();
-		gbc_comboBox_4.gridwidth = 2;
-		gbc_comboBox_4.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_4.gridx = 1;
-		gbc_comboBox_4.gridy = 4;
-		control.add(comboBox_4, gbc_comboBox_4);
+		location2CB = new JComboBox();
+		location2CB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<String> cb = (JComboBox<String>) e.getSource();
+				selected2location = cb.getSelectedIndex();
+			}
+		});
+
+		GridBagConstraints gbc_location2CB = new GridBagConstraints();
+		gbc_location2CB.gridwidth = 2;
+		gbc_location2CB.insets = new Insets(0, 0, 5, 5);
+		gbc_location2CB.fill = GridBagConstraints.HORIZONTAL;
+		gbc_location2CB.gridx = 1;
+		gbc_location2CB.gridy = 4;
+		control.add(location2CB, gbc_location2CB);
 
 		JLabel lblVolume = new JLabel("Volume:");
 		GridBagConstraints gbc_lblVolume = new GridBagConstraints();
@@ -247,6 +275,13 @@ public class HASPage extends JFrame {
 		control.add(lblVolume, gbc_lblVolume);
 
 		JSlider sliderVolume = new JSlider();
+		sliderVolume.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (selected2location > -1) {
+
+				}
+			}
+		});
 		GridBagConstraints gbc_sliderVolume = new GridBagConstraints();
 		gbc_sliderVolume.gridwidth = 2;
 		gbc_sliderVolume.insets = new Insets(0, 0, 5, 5);
@@ -545,11 +580,11 @@ public class HASPage extends JFrame {
 		gbl_myMusic.columnWeights = new double[] { 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		gbl_myMusic.rowWeights = new double[] { 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		myMusic.setLayout(gbl_myMusic);
+		columnNames.addElement("Artist");
+		columnNames.addElement("Album");
+		columnNames.addElement("Song");
 
-		String[] columnNames = { "Artist", "Album", "Song" };
-		Object[][] data = { { "h", "i", "o" } };
-
-		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+		tableModel = new DefaultTableModel(data, columnNames) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// all cells false
@@ -596,7 +631,7 @@ public class HASPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<String> cb = (JComboBox<String>) e.getSource();
 				selectedLocation = cb.getSelectedIndex();
-				
+
 			}
 		});
 		GridBagConstraints gbc_locationCB = new GridBagConstraints();
@@ -770,21 +805,57 @@ public class HASPage extends JFrame {
 	private void refreshData() {
 		HAS h = HAS.getInstance();
 
+		resetData();
+
 		// error
 		roomErrMsg.setText(error_RP);
 		playlistErrMsg.setText(error_PP);
 		addMusicErrMsg.setText(error_AP);
+
+		roomsString = new HashMap<Integer, String>();
+		Iterator<Room> roomIt = h.getRooms().iterator();
+		Integer index = 0;
+		while (roomIt.hasNext()) {
+			Room r = roomIt.next();
+			roomsString.put(index, r.getName());
+			index++;
+		}
+
+		roomGroupString = new HashMap<Integer, String>();
+		Iterator<RoomGroup> roomGIt = h.getRoomGroups().iterator();
+		Integer index2 = 0;
+		while (roomGIt.hasNext()) {
+			RoomGroup rg = roomGIt.next();
+			roomGroupString.put(index, rg.getName());
+			index2++;
+		}
+
+		// ctl page
+		if (error_CP == null || error_CP.length() == 0) {
+			if (roomsString.size() > 0) {
+				location2Map = new HashMap<Integer, String>();
+				for (int i = 0; i < (roomsString.size() + roomGroupString.size()); i++) {
+					if (i < roomsString.size()) {
+						location2Map.put(i, roomsString.get(i));
+					} else {
+						location2Map.put(i, roomGroupString.get((i - roomsString.size())));
+					}
+				}
+				location2CB.addItem(location2Map.values());
+			}
+
+		}
 
 		if (error_AP == null || error_AP.length() == 0)
 
 		{
 			fArtistString = new HashMap<Integer, String>();
 			Iterator<Artist> artIt = h.getArtists().iterator();
-			Integer index = 0;
+			Integer index3 = 0;
 			while (artIt.hasNext()) {
 				Artist a = artIt.next();
-				fArtistString.put(index, a.getName());
-				index++;
+				fArtistString.put(index3, a.getName());
+				index3++;
 			}
 
 			if (!fArtistString.isEmpty()) {
@@ -795,12 +866,12 @@ public class HASPage extends JFrame {
 			artists = new HashMap<Integer, Artist>();
 			albumArtistCB.removeAllItems();
 			Iterator<Artist> alarIt = h.getArtists().iterator();
-			index = 0;
+			Integer index4 = 0;
 			while (alarIt.hasNext()) {
 				Artist alar = alarIt.next();
-				artists.put(index, alar);
+				artists.put(index4, alar);
 				albumArtistCB.addItem(alar.getName());
-				index++;
+				index4++;
 			}
 			selectedArtist = -1;
 			albumArtistCB.setSelectedIndex(selectedArtist);
@@ -824,23 +895,6 @@ public class HASPage extends JFrame {
 		if (error_RP == null || error_RP.length() == 0)
 
 		{
-			roomsString = new HashMap<Integer, String>();
-			Iterator<Room> roomIt = h.getRooms().iterator();
-			Integer index = 0;
-			while (roomIt.hasNext()) {
-				Room r = roomIt.next();
-				roomsString.put(index, r.getName());
-				index++;
-			}
-
-			roomGroupString = new HashMap<Integer, String>();
-			Iterator<RoomGroup> roomGIt = h.getRoomGroups().iterator();
-			Integer index2 = 0;
-			while (roomGIt.hasNext()) {
-				RoomGroup rg = roomGIt.next();
-				roomGroupString.put(index, rg.getName());
-				index2++;
-			}
 
 			txtRoomName.setText("");
 
@@ -870,11 +924,11 @@ public class HASPage extends JFrame {
 		{
 			songsString = new HashMap<Integer, String>();
 			Iterator<Song> songIt = h.getSongs().iterator();
-			Integer index = 0;
+			Integer index5 = 0;
 			while (songIt.hasNext()) {
 				Song s = songIt.next();
-				songsString.put(index, s.getName());
-				index++;
+				songsString.put(index5, s.getName());
+				index5++;
 			}
 
 			txtRoomName.setText("");
@@ -886,19 +940,18 @@ public class HASPage extends JFrame {
 
 			}
 		}
-		
-		if(error_MP==null || error_MP.length()==0){
-		
-		locationMap = new HashMap<Integer, String>();
-		for (int i = 0; i < (roomsString.size() + roomGroupString.size()); i++) {
-			if (i < roomsString.size()) {
-				locationMap.put(i, roomsString.get(i));
+
+		if (error_MP == null || error_MP.length() == 0) {
+
+			locationMap = new HashMap<Integer, String>();
+			for (int i = 0; i < (roomsString.size() + roomGroupString.size()); i++) {
+				if (i < roomsString.size()) {
+					locationMap.put(i, roomsString.get(i));
+				} else {
+					locationMap.put(i, roomGroupString.get((i - roomsString.size())));
+				}
 			}
-			else{
-				locationMap.put(i, roomGroupString.get((i-roomsString.size())));
-			}
-		}
-		locationCB.addItem(locationMap.values());
+			locationCB.addItem(locationMap.values());
 		}
 
 	}
@@ -1063,21 +1116,77 @@ public class HASPage extends JFrame {
 
 	}
 
+	private void resetData() {
+		HAS h = HAS.getInstance();
+		if (h.getAlbums().size() > 0) {
+			for (int in = 0; in < h.getAlbums().size(); in++) {
+				if (h.getAlbum(in).getSongs().size() > 0) {
+					for (int jn = 0; jn < h.getAlbum(in).getSongs().size(); jn++) {
+
+						Vector tablerow = new Vector();
+
+						tablerow.addElement(h.getAlbum(in).getMainArtist().getName());
+						tablerow.addElement(h.getAlbum(in).getName());
+						tablerow.addElement(h.getAlbum(in).getSong(jn).getName());
+
+						data.addElement(tablerow);
+						
+					}
+				}
+			}
+		}
+		table.setModel(tableModel);
+		tableModel.fireTableDataChanged();
+
+	}
+
+	// TODO maybe use this?
+	// public static DefaultTableModel buildTableModel(ResultSet rs) throws
+	// SQLException {
+	//
+	// ResultSetMetaData metaData = rs.getMetaData();
+	//
+	// // names of columns
+	// Vector<String> columnNames = new Vector<String>();
+	// int columnCount = metaData.getColumnCount();
+	// for (int column = 1; column <= columnCount; column++) {
+	// columnNames.add(metaData.getColumnName(column));
+	// }
+	//
+	// // data of the table
+	// Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	// while (rs.next()) {
+	// Vector<Object> vector = new Vector<Object>();
+	// for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+	// vector.add(rs.getObject(columnIndex));
+	// }
+	// data.add(vector);
+	// }
+	//
+	// return new DefaultTableModel(data, columnNames);
+	//
+	// }
+
 	private void playSltSongActionPerformed(java.awt.event.ActionEvent evt) {
 		HASController hc = new HASController();
-		if( selectedLocation>roomsString.size()){
-			try{
-			hc.playRoomGroup(null, roomGroups.get(selectedLocation));
-			}
-			catch (InvalidInputException e) {
+		if (selectedLocation > roomsString.size()) {
+			try {
+				hc.playRoomGroup(null, roomGroups.get(selectedLocation));
+			} catch (InvalidInputException e) {
 				error_AP = e.getMessage();
 			}
+		} else {
+
 		}
-		else{
-			
-		}
-		
-		
+
+		// private void mVolumeChanged(java.awt.event.evt)){
+		// HASController hc = new HASController();
+		// for(i=0;i<roomString.size();i++){
+		// try{
+		// hc.setRoomVolumeLevel(room, volumeLevel);
+		// }
+		// }
+		//
 	}
 
 	/*

@@ -19,6 +19,8 @@ import ca.mcgill.ecse321.android_has_v3.artists.AddArtistActivity;
 import ca.mcgill.ecse321.android_has_v3.artists.ArtistNavFragment;
 import ca.mcgill.ecse321.android_has_v3.playlists.AddPlaylistActivity;
 import ca.mcgill.ecse321.android_has_v3.playlists.PlaylistNavFragment;
+import ca.mcgill.ecse321.android_has_v3.roomgroups.AddRoomGroupActivity;
+import ca.mcgill.ecse321.android_has_v3.roomgroups.RoomGroupNavFragment;
 import ca.mcgill.ecse321.android_has_v3.rooms.AddRoomActivity;
 import ca.mcgill.ecse321.android_has_v3.rooms.RoomNavFragment;
 import ca.mcgill.ecse321.android_has_v3.songs.AddSongActivity;
@@ -101,7 +103,7 @@ public class MyMusicActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_room_groups:
-
+                fragment = new RoomGroupNavFragment();
                 setTitle("Room Groups ");
                 break;
         }
@@ -137,6 +139,11 @@ public class MyMusicActivity extends AppCompatActivity
 
     public void addRoom(View v) {
         Intent intent = new Intent(this, AddRoomActivity.class);
+        startActivity(intent);
+    }
+
+    public void addRoomGroup(View v) {
+        Intent intent = new Intent(this, AddRoomGroupActivity.class);
         startActivity(intent);
     }
 

@@ -2,41 +2,46 @@
   <rooms id="2"/>
   <artists id="3">
     <artist id="4">
-      <name>Louise Attaque</name>
+      <name>Finals</name>
       <songs id="5"/>
-      <albums id="6">
-        <album id="7">
+      <albums id="6"/>
+    </artist>
+    <artist id="7">
+      <name>Louise Attaque</name>
+      <songs id="8"/>
+      <albums id="9">
+        <album id="10">
           <name>Louise Attaque</name>
           <genre>Folk</genre>
-          <releaseDate id="8">1997-03-20</releaseDate>
-          <songs id="9">
-            <song id="10">
+          <releaseDate id="11">1997-03-20</releaseDate>
+          <songs id="12">
+            <song id="13">
               <name>Amours</name>
               <duration>117</duration>
               <position>1</position>
-              <ftArtists id="11"/>
-              <album reference="7"/>
+              <ftArtists id="14"/>
+              <album reference="10"/>
             </song>
-            <song id="12">
+            <song id="15">
               <name>J&apos;T&apos;emmene Au Vent</name>
               <duration>184</duration>
               <position>2</position>
-              <ftArtists id="13"/>
-              <album reference="7"/>
+              <ftArtists id="16"/>
+              <album reference="10"/>
             </song>
           </songs>
-          <mainArtist reference="4"/>
+          <mainArtist reference="7"/>
         </album>
       </albums>
     </artist>
   </artists>
-  <albums id="14">
-    <album reference="7"/>
+  <albums id="17">
+    <album reference="10"/>
   </albums>
-  <playlists id="15"/>
-  <songs id="16">
-    <song reference="10"/>
-    <song reference="12"/>
+  <playlists id="18"/>
+  <songs id="19">
+    <song reference="13"/>
+    <song reference="15"/>
   </songs>
-  <roomGroups id="17"/>
+  <roomGroups id="20"/>
 </HAS>

@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Playlist;
 import ca.mcgill.ecse321.HAS.model.Room;
+import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.HAS.model.Song;
 
 public class PersistenceHAS
@@ -53,6 +54,10 @@ public class PersistenceHAS
 			while (rIt.hasNext())
 				h.addRoom(rIt.next());
 
+			Iterator<RoomGroup> rgIt = h2.getRoomGroups().iterator();
+			while (rgIt.hasNext())
+				h.addRoomGroup(rgIt.next());
+			
 			Iterator<Song> sIt = h2.getSongs().iterator();
 			while (sIt.hasNext())
 				h.addSong(sIt.next());

@@ -497,6 +497,53 @@ public class TestHASController
 		assertEquals("Black Jack", h.getAlbum(0).getSong(0).getFtArtist(1).getName());
 		assertEquals("Keiko", h.getAlbum(0).getSong(0).getFtArtist(2).getName());
 	}
+	
+	@Test
+	public void testAddSongSamePosition()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		
+		assertEquals(0, h.getAlbums().size());
+
+		Artist ar1 = new Artist(artName);
+
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		assertEquals(1, h.getAlbums().size());
+
+		List<Artist> featured = new ArrayList<Artist>();
+
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		String errors = "";
+		
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), "Please fail", songDuration1, songPosition1, null);
+		}
+		catch(InvalidInputException e)
+		{
+			errors = e.getMessage();
+		}
+		
+		assertEquals("A song already occupies this position, please choose another position!", errors);
+	}
 
 	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)
 	{

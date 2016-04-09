@@ -51,11 +51,11 @@ public class TestSortingAndPlay
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(107, 01, 25);
 
-		Artist ar1 = new Artist(artName);
+		hc.createArtist(artName);
 
 		try
 		{
-			hc.createAlbum(name, genre, d1, ar1);
+			hc.createAlbum(name, genre, d1, h.getArtist(0));
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -182,7 +182,7 @@ public class TestSortingAndPlay
 			assertTrue(names[i].equals(h.getAlbum(i).getName()));
 		}
 
-		Artist bob = h.getArtist(0);
+		Artist bob = h.getArtist(1);
 		List<Album> albums = bob.getAlbums();
 
 		for (Album a : sortedAlbums)
@@ -208,6 +208,9 @@ public class TestSortingAndPlay
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 
+		h.delete();
+		HAS h2 = HAS.getInstance();
+
 		String[] names =
 		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie",
 				"Andrew", "Wang", "Gabe" };
@@ -218,7 +221,7 @@ public class TestSortingAndPlay
 		Arrays.sort(names);
 		for (int i = 0; i < names.length; i++)
 		{
-			assertTrue(names[i].equals(h.getArtist(i).getName()));
+			assertTrue(names[i].equals(h2.getArtist(i).getName()));
 		}
 	}
 
@@ -226,11 +229,95 @@ public class TestSortingAndPlay
 	public void testSortArtistNoArtists()
 	{
 		HAS h = HAS.getInstance();
+		h.delete();
+
+		HAS h2 = HAS.getInstance();
 		HASController hc = new HASController();
 
-		assertEquals(0, h.getArtists().size());
+		assertEquals(0, h2.getArtists().size());
 
 		hc.sortArtists();
+	}
+
+	@Test
+	public void testSortRooms()
+	{
+		HAS h = HAS.getInstance();
+		h.delete();
+
+		HAS h2 = HAS.getInstance();
+		HASController hc = new HASController();
+		String[] roomNames =
+		{ "Bob's Room", "Jeb's Room", "Oscar's Room", "Vlad's Den",
+				"Aidan's Garage", "Living Room", "Kitchen", };
+
+		for (String name : roomNames)
+		{
+			try
+			{
+				hc.createRoom(name);
+			} catch (InvalidInputException e)
+			{
+				fail();
+			}
+		}
+		
+		hc.sortRooms();
+		Arrays.sort(roomNames);
+		for (int i = 0; i < roomNames.length; i++)
+		{
+			assertTrue(roomNames[i].equals(h2.getRoom(i).getName()));
+		}
+		
+	}
+	
+	@Test
+	public void testSortRoomGroups()
+	{
+		HAS h = HAS.getInstance();
+		h.delete();
+
+		HAS h2 = HAS.getInstance();
+		HASController hc = new HASController();
+		String[] roomNames =
+		{ "Bob's Room", "Jeb's Room", "Oscar's Room", "Vlad's Den",
+				"Aidan's Garage", "Living Room", "Kitchen", };
+
+		for (String name : roomNames)
+		{
+			try
+			{
+				hc.createRoom(name);
+			} catch (InvalidInputException e)
+			{
+				fail();
+			}
+		}
+		
+		String[] rgNames = { "Bob's Set", "Rg1", "Guests", "Family",
+				"Bedrooms", "Living Rooms", "Kitchens"};
+		
+		for(String rgName: rgNames)
+		{
+			try
+			{
+				hc.createRoomGroup(rgName, h.getRooms());
+			}
+			catch(InvalidInputException e)
+			{
+				fail();
+			}
+		}
+
+		Arrays.sort(rgNames);
+		hc.sortRoomGroups();
+		
+		for (int i = 0; i < rgNames.length; i++)
+		{
+			System.out.println(rgNames[i] + " " + h2.getRoomGroup(i).getName());
+			assertTrue(rgNames[i].equals(h2.getRoomGroup(i).getName()));
+		}
+		
 	}
 
 	@Test
@@ -390,4 +477,5 @@ public class TestSortingAndPlay
 
 		assertEquals("A room group must be selected! ", error);
 	}
+
 }

@@ -7,14 +7,33 @@
 	<property name="build.dir"   value="build"/>
 	<property name="classes.dir" value="${build.dir}/classes"/>
 	<property name="jar.dir"     value="${build.dir}/jar"/>
-<!--	<property name="main-class"	 value="strategydemo.Demo"/> -->
 	<property name="lib.dir"     value="lib"/>
-	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/>
+	<property name="main.class"	value="ca.mcgill.ecse321.HAS.application.HASApp"/>
     
-	<path id="classpath">
+	<path id="HAS.classpath">
         <pathelement location="${classes.dir}"/>
-        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+		<path refid="libraries.path"/>
+<!--        <fileset dir="${lib.dir}">
+        	<include name="**/*.jar"/>
+        	<exclude name="**/junit.jar"/>
+        	<exclude name="**/org.hamcrest.core*.jar"/>
+        </fileset> -->
     </path>
+	
+	<path id="libraries.path">
+		<fileset dir="${lib.dir}">
+        	<include name="**/*.jar"/>
+        	<exclude name="**/junit.jar"/>
+        	<exclude name="**/org.hamcrest.core*.jar"/>
+        </fileset>
+	</path>
+	
+	<path id="Junit.classpath">
+		<fileset dir="${lib.dir}">
+        	<include name="**/junit.jar"/>
+        	<include name="**/org.hamcrest.core*.jar"/>
+        </fileset>
+	</path>
     
 	<target name="clean">
 		<delete dir="${build.dir}"/>
@@ -22,23 +41,16 @@
 	
 	<target name="compile" depends="clean">
     	<mkdir dir="${classes.dir}"/>
-    	<path refid="classpath"/>
 		
-    	<javac srcdir="${src.dir}" destdir="${classes.dir}"
-    		excludes="ca/mcgill/ecse321/HAS/view/**"> <!-- Excludes view for now -->
-    		<classpath>
-    			<fileset dir="${lib.dir}">
-	                <include name="**/*.jar" />
-	            </fileset>
-    		</classpath>
+    	<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"> <!-- Excludes view for now -->
+    		<classpath refid="HAS.classpath"/>
     	</javac>
 
-    	<javac srcdir="${test.dir}" destdir="${classes.dir}">
+    	<javac srcdir="${test.dir}" destdir="${classes.dir}" includeantruntime="false">
     		<classpath>
-	               <fileset dir="${lib.dir}">
-	                  <include name="**/*.jar" />
-	               </fileset>
-	         </classpath>
+                <path refid="HAS.classpath"/>
+                <path refid="Junit.classpath"/>
+            </classpath>
     	</javac>
     </target>
 	
@@ -46,44 +58,49 @@
 	    <mkdir dir="${test.report.dir}"/>    
 		<junit fork="true" printsummary="true">
             <classpath>
-                <path refid="classpath"/>
-                <path refid="application"/>
+                <path refid="HAS.classpath"/>
+                <path refid="Junit.classpath"/>
             </classpath>
 			
 			<formatter type="xml" usefile="true" />
-			
-        	<batchtest todir="${test.report.dir}" >
+			<test todir="${test.report.dir}" name="ca.mcgill.ecse321.HAS.AllTests"/>
+<!--        	<batchtest todir="${test.report.dir}" >
         		<fileset dir="${classes.dir}">
-        			<include name="**/*Test*.class" />
+        			<include name="**/AllTests.class" />
                 </fileset>
-            </batchtest>
+            </batchtest> -->
         </junit>
     </target>
 	
-	<target name="Android_jar" depends="compile">
-		<jar destfile="../Android_HAS_v3/app/libs/Android_HAS_lib.jar">
+	<target name="Android_jar" depends="test">
+		<jar destfile="../Android_HAS_v3/app/libs/HAS_for_Android.jar">
 			<fileset dir="${classes.dir}">
 				<include name="ca/mcgill/ecse321/HAS/controller/**"/>
 				<include name="ca/mcgill/ecse321/HAS/model/**"/>
 				<include name="ca/mcgill/ecse321/HAS/persistence/**"/>	
-				<exclude name="**/*Test*.class"/>
 			</fileset>
-			<zipgroupfileset dir="${lib.dir}">
+			<fileset dir="${lib.dir}">
 				<include name="**/*.jar"/>
-				<exclude name="${lib.dir}/junit.jar"/>
-				<exclude name="${lib.dir}/org.hamcrest.core_1.3.0.v201303031735.jar"/>
-			</zipgroupfileset>	
+	        	<exclude name="**/junit.jar"/>
+	        	<exclude name="**/org.hamcrest.core*.jar"/>
+			</fileset>
 		</jar>
 	</target>
 	
+	
 	<target name="Desktop_jar" depends="compile">
 		<mkdir dir="${jar.dir}"/>
-		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-			<!--
+		
+		<manifestclasspath property="manifest.classpath" jarfile="${jar.dir}/${ant.project.name}.jar">
+            <classpath refid="HAS.classpath"/>
+        </manifestclasspath>
+		
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" excludes="**/*Test*.class" 
+			basedir="${classes.dir}">
 			<manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Main-Class" value="${main.class}"/>
+				<attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>	
-			-->
 		</jar>
 	</target>
 	

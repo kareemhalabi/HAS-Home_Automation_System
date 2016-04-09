@@ -91,7 +91,7 @@ body { text-align:center; }
 		echo "</span></p>";
 		?>
 		<?php
-		echo "<p>Room to Add to Group: <select name='roomspinner'>";
+		echo "<p>Add Room to Group: <select name='roomspinner'>";
 		foreach ( $hm->getRooms () as $room ) {
 			echo "<option>" . $room->getName () . "</option>";
 		}

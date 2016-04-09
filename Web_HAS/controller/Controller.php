@@ -15,6 +15,7 @@ class Controller {
 	
 	// creates an album with user delcared parameters
 	public function createAlbum($albumName, $genre, $releaseDate, $aArtist) {
+		//validate input incase of special characters
 		$albumName = InputValidator::validate_input ( $albumName );
 		$genre = InputValidator::validate_input ( $genre );
 		
@@ -184,7 +185,7 @@ class Controller {
 			}
 		}
 		$rooms = array ();
-		array_push($rooms, $room);
+		array_push ( $rooms, $room );
 		$name = InputValidator::validate_input ( $name );
 		if ($name == null || strlen ( $name ) == 0) {
 			throw new Exception ( "Group name cannot be empty!" );
@@ -227,12 +228,11 @@ class Controller {
 		
 		if (in_array ( $room, $group->getRooms () )) {
 			throw new Exception ( "Room already exists in this group!" );
-		}else if($group == NULL){
-			throw new Exception ("Group does not exist!");
-		}else if ($room == NULL){
-			throw new Exception ("Room does not exist!");
-		}
-		else {
+		} else if ($group == NULL) {
+			throw new Exception ( "Group does not exist!" );
+		} else if ($room == NULL) {
+			throw new Exception ( "Room does not exist!" );
+		} else {
 			
 			$group->addRoom ( $room );
 			
@@ -256,10 +256,9 @@ class Controller {
 		
 		if ($volume > 100 || $volume < 0) {
 			throw new Exception ( "Volume must be between 0 and 100." );
-		} else if ($room == NULL){
-			throw new Exception ("Room does not exist!");
-		}
-		else {
+		} else if ($room == NULL) {
+			throw new Exception ( "Room does not exist!" );
+		} else {
 			
 			if ($volume == 0) {
 				$room->setMute ( true );
@@ -271,7 +270,6 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	//Fails test as of Saturday 4/9 - same problem with not saving.
 	public function changeGroupVolume($aGroup, $volume, $mute) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -291,14 +289,14 @@ class Controller {
 			throw new Exception ( "Volume must be between 0 and 100." );
 		} else if ($group == null) {
 			throw new Exception ( "Group does not exist!" );
-		}else {
-			foreach($group->getRooms() as $room){
-				if ($volume == 0){
-					$room->setMute(true);
-				}else{
-					$room->setMute(false);
+		} else {
+			foreach ( $group->getRooms () as $room ) {
+				if ($volume == 0) {
+					$room->setMute ( true );
+				} else {
+					$room->setMute ( false );
 				}
-				$room->setVolume($volume);
+				$room->setVolume ( $volume );
 			}
 			
 			$pm->writeDataToStore ( $hm );
@@ -325,8 +323,7 @@ class Controller {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		equals();
-		
+		equals ();
 	}
 	// TODO
 	public function sortbyArtist() {
@@ -404,6 +401,12 @@ class Controller {
 	public function deleteRG() {
 	}
 	// TODO
-	public function deleteRoomFromGroup() {
+	public function deleteRoomFromGroup($aGroup, $aRoom) {
+		$pm = new PersistenceHAS ();
+		$hm = $pm->loadDataFromStore ();
+		
+		if ($aGroup == NULL) {
+			throw new Exception("This group does not exist!");
+		}
 	}
 }

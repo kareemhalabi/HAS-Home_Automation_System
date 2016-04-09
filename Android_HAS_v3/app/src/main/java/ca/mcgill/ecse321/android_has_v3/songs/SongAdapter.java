@@ -17,7 +17,12 @@ import ca.mcgill.ecse321.android_has_v3.R;
 public class SongAdapter extends BaseAdapter{
 
     Context context;
-    List<Song> songs;
+
+    private List<Song> songs;
+
+    public List<Song> getSongs() {
+        return songs;
+    }
     private static LayoutInflater inflater = null;
 
     public SongAdapter(Context context, List<Song> songs) {

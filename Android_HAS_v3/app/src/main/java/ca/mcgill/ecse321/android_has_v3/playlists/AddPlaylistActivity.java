@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ca.mcgill.ecse321.HAS.controller.HASController;
+import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.android_has_v3.R;
@@ -80,8 +82,21 @@ public class AddPlaylistActivity extends AppCompatActivity {
         HASController hc = new HASController();
 
         TextView playListName = (TextView) findViewById(R.id.newplaylist_name);
+        try {
+            hc.createPlaylist(playListName.getText().toString(), playlistSongs);
+        } catch (InvalidInputException e) {
+            error = e.getMessage();
+        }
 
-        //TODO not yet implemented
-        //add playlist
+        //confirms the addition of a playlist and closes the activity
+        if(error == null || error.length() == 0) {
+            String confirmationMessage = "Added playlist: " + playListName.getText();
+            Toast confirmation = Toast.makeText(getApplicationContext(),
+                    confirmationMessage, Toast.LENGTH_SHORT);
+            confirmation.show();
+            finish();
+        }
+        else
+            refreshError();
     }
 }

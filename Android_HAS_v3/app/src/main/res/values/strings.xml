@@ -38,5 +38,9 @@
     <string name="room_hint">Room Name?</string>
     <string name="addroom_button">Add Room</string>
     <string name="addRoom_button">Add Room</string>
+    <string name="addRoomGroup_button">Add Room Group</string>
+    <string name="room_group_name_hint">Room Group Name?</string>
+    <string name="room_spinner_label">Add Room</string>
+    <string name="addRoomToRoomGroup_button">Add Room to Group</string>
 
 </resources>

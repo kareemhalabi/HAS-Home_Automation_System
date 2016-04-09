@@ -1,4 +1,5 @@
-package ca.mcgill.ecse321.android_has_v3.playlists;
+package ca.mcgill.ecse321.android_has_v3.roomgroups;
+
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,13 +10,12 @@ import android.widget.ListView;
 
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.android_has_v3.R;
-import ca.mcgill.ecse321.android_has_v3.artists.ArtistAdapter;
-
-public class PlaylistNavFragment extends Fragment {
 
 
+public class RoomGroupNavFragment extends Fragment {
 
-    public PlaylistNavFragment() {
+
+    public RoomGroupNavFragment() {
         // Required empty public constructor
     }
 
@@ -25,18 +25,16 @@ public class PlaylistNavFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v =  inflater.inflate(R.layout.fragment_room_group_nav, container, false);
 
-        View v = inflater.inflate(R.layout.fragment_playlist_nav, container, false);
-
-        ListView listView = (ListView) v.findViewById(R.id.playlist_list_view);
+        ListView listView = (ListView) v.findViewById(R.id.room_group_list_view);
 
         HAS h = HAS.getInstance();
 
-        PlaylistAdapter adapter = new PlaylistAdapter(getActivity().getApplicationContext(), h.getPlaylists());
+        RoomGroupAdapter adapter = new RoomGroupAdapter(getActivity().getApplicationContext(), h.getRoomGroups());
         listView.setAdapter(adapter);
 
         return v;
     }
-
 
 }

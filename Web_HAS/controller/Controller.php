@@ -15,15 +15,16 @@ class Controller {
 	
 	// creates an album with user delcared parameters
 	public function createAlbum($albumName, $genre, $releaseDate, $aArtist) {
-		//validate input incase of special characters
+		// validate input incase of special characters
 		$albumName = InputValidator::validate_input ( $albumName );
 		$genre = InputValidator::validate_input ( $genre );
 		
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aArtist == null) {
 			throw new Exception ( "Artist does not exist! " );
-		} else {
+		} else { // finds the object that matches the name
 			$myArtist = NULL;
 			foreach ( $hm->getArtists () as $artist ) {
 				if (strcmp ( $artist->getName (), $aArtist ) == 0) {
@@ -48,11 +49,12 @@ class Controller {
 	}
 	public function createSong($songName, $duration, $position, $aAlbum) {
 		$songName = InputValidator::validate_input ( $songName );
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aAlbum == null) {
 			throw new Exception ( "Album does not exist! " );
-		} else {
+		} else { // finds the object that matches the name
 			$myAlbum = NULL;
 			foreach ( $hm->getAlbums () as $album ) {
 				if (strcmp ( $album->getName (), $aAlbum ) == 0) {
@@ -83,6 +85,7 @@ class Controller {
 		if ($name == null || strlen ( $name ) == 0) {
 			throw new Exception ( "Artist name cannot be empty!" );
 		} else {
+			// loads Persistence layer to be able to retireve data from the layer
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
 			
@@ -99,6 +102,7 @@ class Controller {
 		} else if ($volume > 100 || $volume < 0) {
 			throw new Exception ( "Volume must be between 0 and 100." );
 		} else {
+			// loads Persistence layer to be able to retireve data from the layer
 			$pm = new PersistenceHAS ();
 			$hm = $pm->loadDataFromStore ();
 			
@@ -109,11 +113,12 @@ class Controller {
 		}
 	}
 	public function createPlaylist($name, $aSong) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aSong == null) {
 			throw new Exception ( "This song does not exist!" );
-		} else {
+		} else { // finds the object that matches the name
 			$mySong = NULL;
 			foreach ( $hm->getsongs () as $song ) {
 				if (strcmp ( $song->getName (), $aSong ) == 0) { // Find the song.
@@ -138,11 +143,12 @@ class Controller {
 		}
 	}
 	public function addSongToPlaylist($aPlaylist, $aSong) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aSong == null) {
 			throw new Exception ( "Song does not exist! " );
-		} else {
+		} else { // finds the object that matches the name
 			$song = null;
 			foreach ( $hm->getSongs () as $tempSong ) {
 				if (strcmp ( $tempSong->getName (), $aSong ) == 0) {
@@ -156,7 +162,7 @@ class Controller {
 			throw new Exception ( "Playlist does not exist!" );
 		} else if ($song == null) {
 			throw new Exception ( "Song does not exist!" );
-		} else {
+		} else { // finds the object that matches the name
 			$playlist = null;
 			foreach ( $hm->getPlaylists () as $tempPlaylist ) {
 				if (strcmp ( $tempPlaylist->getName (), $aPlaylist ) == 0) {
@@ -166,16 +172,19 @@ class Controller {
 			}
 		}
 		
-		$playlist->addSong ( $song );
-		
-		$pm->writeDataToStore ( $hm );
+		if (! ($playlist == null || $song == null)) {
+			$playlist->addSong ( $song );
+			
+			$pm->writeDataToStore ( $hm );
+		}
 	}
 	public function createRoomGroup($name, $aRoom) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aRoom == null) {
 			throw new Exception ( "Room does not exist! " );
-		} else {
+		} else { // finds the object that matches the name
 			$room = NULL;
 			foreach ( $hm->getRooms () as $roomTemp ) {
 				if (strcmp ( $roomTemp->getName (), $aRoom ) == 0) {
@@ -200,11 +209,12 @@ class Controller {
 		}
 	}
 	public function addRoomToGroup($aGroup, $aRoom) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aRoom == null) {
 			throw new Exception ( "Room does not exist! " );
-		} else {
+		} else { // finds the object that matches the name
 			$room = NULL;
 			foreach ( $hm->getRooms () as $roomTemp ) {
 				if (strcmp ( $roomTemp->getName (), $aRoom ) == 0) {
@@ -216,7 +226,7 @@ class Controller {
 		
 		if ($aGroup == null) {
 			throw new Exception ( "Group does not exist! " );
-		} else {
+		} else { // finds the object that matches the name
 			$group = NULL;
 			foreach ( $hm->getRoomGroups () as $groupTemp ) {
 				if (strcmp ( $groupTemp->getName (), $aGroup ) == 0) {
@@ -240,11 +250,12 @@ class Controller {
 		}
 	}
 	public function changeVolume($aname, $volume, $mute) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aname == null) {
 			throw new Exception ( "Room does not exist! " );
-		} else {
+		} else { // finds the object that matches the name
 			$room = NULL;
 			foreach ( $hm->getRooms () as $temproom ) {
 				if (strcmp ( $temproom->getName (), $aname ) == 0) {
@@ -271,11 +282,12 @@ class Controller {
 		}
 	}
 	public function changeGroupVolume($aGroup, $volume, $mute) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		if ($aGroup == null) {
 			throw new Exception ( "Group does not exist!" );
-		} else {
+		} else { // finds the object that matches the name
 			$group = null;
 			foreach ( $hm->getRoomGroups () as $name ) {
 				if (strcmp ( $name->getName (), $aGroup ) == 0) {
@@ -303,6 +315,7 @@ class Controller {
 		}
 	}
 	public function playPlayableRoom($room, $playable) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
@@ -311,6 +324,7 @@ class Controller {
 		$pm->writeDataToStore ( $hm );
 	}
 	public function playPlayableRG($roomGroup, $playable) {
+		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
@@ -323,7 +337,7 @@ class Controller {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		equals ();
+		
 	}
 	// TODO
 	public function sortbyArtist() {
@@ -335,7 +349,7 @@ class Controller {
 		
 		if ($song == null) {
 			throw new Exception ( "This song does not exist!" );
-		} else {
+		} else { // finds the object that matches the name
 			$mySong = NULL;
 			foreach ( $hm->getSongs () as $songTemp ) {
 				if (strcmp ( $songTemp->getName (), $song ) == 0) { // Find the song.
@@ -359,7 +373,7 @@ class Controller {
 		
 		if ($aSong == null) {
 			throw new Exception ( "This song does not exist!" );
-		} else {
+		} else { // finds the object that matches the name
 			$mySong = NULL;
 			foreach ( $hm->getsongs () as $songTemp ) {
 				if (strcmp ( $songTemp->getName (), $aSong ) == 0) { // Find the song.
@@ -371,7 +385,7 @@ class Controller {
 		
 		if ($aPlaylist == null) {
 			throw new Exception ( "This song does not exist!" );
-		} else {
+		} else { // finds the object that matches the name
 			$myPlaylist = NULL;
 			foreach ( $hm->getPlaylists () as $playlistTemp ) {
 				if (strcmp ( $playlistTemp->getName (), $aPlaylist ) == 0) { // Find the playlist.
@@ -381,9 +395,11 @@ class Controller {
 			}
 		}
 		
-		$myPlaylist->removeSong ( $mySong );
-		
-		$pm->writeDataToStore ( $hm );
+		if (! ($mySong == null || $myPlaylist == null)) {
+			$myPlaylist->removeSong ( $mySong );
+			
+			$pm->writeDataToStore ( $hm );
+		}
 	}
 	// TODO
 	public function deleteSongFromAlbum($aAlbum, $aSong) {
@@ -406,7 +422,17 @@ class Controller {
 		$hm = $pm->loadDataFromStore ();
 		
 		if ($aGroup == NULL) {
-			throw new Exception("This group does not exist!");
+			throw new Exception ( "This group does not exist!" );
+		}else{
+			$myGroup = null;
+			foreach($hm->getRoomGroups() as $group){
+				if(strcmp($group->getName(), $aGroup)){
+					$myGroup = $group;
+					break;
+				}
+			}
 		}
+		
+		
 	}
 }

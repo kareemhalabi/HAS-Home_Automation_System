@@ -40,7 +40,9 @@ tr:hover{
 .boxed {
   	border: 2px solid blue;
 }
-
+table {
+    border: 1px solid blue;
+}
 </style>
 <meta charset="UTF-8">
 <title>HAS</title>
@@ -146,22 +148,42 @@ tr:hover{
 
 
 	<br>
-	<div class="smallBox">
-	<h2>
-	My Music Library</h2>
-	</div>
+	
 	
 <form name="songlist">
 <?php if (count($songName) > 0): ?>
-<table id="table">
-<tr><th>Song</th><th>Album</th><th>Artist</th></tr>
+<div class="smallBox">
+	<h2>
+	My Music Library</h2>
+	</div>
+<table id="table" align="center" >
+<tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>
 <?php foreach ($hm->getSongs() as $song): ?>
-      <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td></tr>"; ?>
+      <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td><td>" . $song->getDuration() . "</td><td>" . $song->getAlbum()->getGenre() . "</td></tr>"; ?>
 <?php endforeach; ?>
   </tbody>
 </table>
 <?php endif; ?>
+</form>
+<br>
+<form name="currentPlayables">
+<?php if (count($hm->getRooms()) > 0):?>
+<div class="smallBox">
+<h2>
+Currently Playing</h2>
+</div>
+<?php 
+foreach($hm->getRooms() as $room){
+	//DOESNT WORK
+	if($room->hasPlayable()){
+		echo "<p>" . $room->getName() . ": " . $room->getPlayable()->getName() . "</p>";
+	}else{
+		echo "<p>" . $room->getName() . ": Nothing </p>";
+	}
+}
+endif;
+?>
 </form>
 
 </body>

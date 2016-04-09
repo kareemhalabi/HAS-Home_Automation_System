@@ -11,6 +11,9 @@ body { text-align:center; }
 .error {
 	color: #FF0000;
 }
+.boxed {
+  	border: 2px solid blue;
+}
 </style>
 </head>
 <body>

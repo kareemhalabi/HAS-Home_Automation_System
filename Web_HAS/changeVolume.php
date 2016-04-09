@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <title>HAS</title>
 <style>
+.smallBox{
+	border: 2px solid blue;
+	width: 250px;
+	margin: auto;
+}
 .error {
 	color: #FF0000;
 }
@@ -14,6 +19,10 @@ body { text-align:center; }
 </style>
 </head>
 <body>
+	<div class="smallBox" > 
+		<h1>Adjust Volume</h1>
+
+	</div>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -34,7 +43,6 @@ body { text-align:center; }
 		
 		?>
 		<form action="changeRoomVolume.php" method="post">
-		<p>For muting a room, set volume to 0.</p>
 		<?php
 		echo "<p>Room: <select name='roomspinner'>";
 		foreach ( $hm->getRooms () as $room ) {

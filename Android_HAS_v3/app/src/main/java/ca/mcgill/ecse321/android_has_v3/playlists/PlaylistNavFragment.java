@@ -13,6 +13,8 @@ import ca.mcgill.ecse321.android_has_v3.artists.ArtistAdapter;
 
 public class PlaylistNavFragment extends Fragment {
 
+
+
     public PlaylistNavFragment() {
         // Required empty public constructor
     }

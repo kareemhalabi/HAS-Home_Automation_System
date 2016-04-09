@@ -136,8 +136,6 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// TODO
-	// FAILING
 	public function addSongToPlaylist($aPlaylist, $aSong) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -186,7 +184,7 @@ class Controller {
 			}
 		}
 		$rooms = array ();
-		$rooms [] = $room;
+		array_push($rooms, $room);
 		$name = InputValidator::validate_input ( $name );
 		if ($name == null || strlen ( $name ) == 0) {
 			throw new Exception ( "Group name cannot be empty!" );
@@ -306,7 +304,6 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
-	// Done!
 	public function playPlayableRoom($room, $playable) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -315,7 +312,6 @@ class Controller {
 		
 		$pm->writeDataToStore ( $hm );
 	}
-	// Done!
 	public function playPlayableRG($roomGroup, $playable) {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -329,16 +325,8 @@ class Controller {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
 		
-		$orderedSongs = array ();
-		$songlist = array ();
-		$songlist = $hm->getSongs ();
+		equals();
 		
-		$albumlist = $hm->getAlbums ()->getName ();
-		
-		sort ( $albumlist, $sort_String );
-		
-		foreach ( $albumlist as $tempAlbum ) {
-		}
 	}
 	// TODO
 	public function sortbyArtist() {

@@ -15,8 +15,13 @@ $("#table tr").click(function(){
 
 });
 </script>
+
 <style>
-td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
+body { text-align:center; }
+.error {
+	color: #FF0000;
+}
+der: 1px #DDD solid; padding: 5px; cursor: pointer;}
 
 .selected {
     background-color: blue;
@@ -27,6 +32,10 @@ tr:hover{
 	background-color: blue;
 	color: #FFF;
 }
+.boxed {
+  	border: 2px solid blue;
+  
+}
 
 </style>
 <meta charset="UTF-8">
@@ -35,9 +44,18 @@ tr:hover{
 .error {
 	color: #FF0000;
 }
+
 </style>
+
 </head>
+<div class="boxed" > 
+<h1>WELCOME TO HAS ONLINE</h1>
+
+</div>
 <body>
+
+<p> What would you like to do? </p>
+
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -124,8 +142,8 @@ tr:hover{
 
 <p>
 
-To play a song, simply click on it!
-</p>
+<h3> <blink><font color="blue">My Music Library</font></blink></h3>
+
 	
 <form name="songlist">
 <?php if (count($songName) > 0): ?>

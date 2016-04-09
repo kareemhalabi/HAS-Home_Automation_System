@@ -7,9 +7,25 @@
 .error {
 	color: #FF0000;
 }
+div, h3, p { text-align:center; }
+.error {
+	color: #FF0000;
+}
+.boxed {
+   
+    border: 3px solid red;
+}
 </style>
 </head>
+<div class="boxed" > 
+<h1>Manage My Music</h1>
+
+</div>
 <body>
+	</form>
+		<form action="index.php" method="post">
+		<input type="submit" value="Go Home" />
+	</form>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -30,7 +46,9 @@
 		?>
 				
 			<form action="addArtist.php" method="post">
-		<p>
+		<h3>Enter a New Artist:</h3>
+		<p>	
+		
 			Artist: <input type="text" name="artistName" /> <span class="error">			
 			<?php
 			if (isset ( $_SESSION ['errorArtistName'] ) && ! empty ( $_SESSION ['errorArtistName'] )) {
@@ -44,7 +62,7 @@
 		</p>
 	</form>
 	<form action="addAlbum.php" method="post">
-	<p>For creating an album, please fill out the following section above the Add Album button. If no artist exists, use the Add Artist button to create one.</p>
+	<h3>Enter a New Album:</h3>
 		<p>
 			Name of Album: <input type="text" name="albumName" /> <span
 				class="error"> </span>
@@ -88,7 +106,7 @@
 	</form>
 	
 	<form action="addSong.php" method="post">
-	<p>For adding a song to an album, make sure the album has been created first and select it from the drop down menu.</p>
+	<h3>Enter a New Song:</h3>
 		<?php
 		echo "<p>Album: <select name='albumspinner'>";
 		foreach ( $hm->getAlbums () as $album ) {
@@ -123,28 +141,9 @@
 			</span>
 		</p>
 	</form>
-	<P>DO NOT USE YET</P>
-	<form action="deleteSong.php" method="post">
-		<?php
-		echo "Which song would you like to remove";
-		?>
-		<?php 
-		echo "<p>Song: <select name='songspinner'>";
-		foreach($hm->getSongs()as$song){
-			echo "<option>" . $song->getName() . "</option>";
-		}
-		echo "</select><span class='error'>";
-		echo "</span></p>";
-		?>
-		<input type="submit" value="Delete Song"/><span class="error">
-		<?php 
-		if(isset($_SESSION['errorSong'])&&! empty ( $_SESSION ['errorSong'] )) {
-				echo " * " . $_SESSION ["errorSong"];                            
-			}
-		?>
+	
+		
+		
 		</span>
-		</form>
-		<form action="index.php" method="post">
-		<input type="submit" value="Home" />
-		</form>
+	
 		

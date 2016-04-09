@@ -294,16 +294,17 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     	}
     	public function testChangeGroupVolume(){
     		try{
-    			$this->c->createRoom("Living Room", 50, false);
-    			$this->c->createRoom("TV Room", 20, false);
-    			$this->c->createRoomGroup("1st Floor", "TV Room");
+    			$this->c->createRoom("Bedroom", 20, false);
+    			$this->c->createRoom("TV Room", 75, false);
+    			$this->c->createRoomGroup("Main Floor", "Bedroom");
+    			$this->c->addRoomToGroup("Main Floor", "TV Room");
     		}
     		catch(Exception $e){
     			$this->fail();
     		}
     		//Try Changing the Volume
     		try {
-    			$this->c->changeGroupVolume("1st Floor", 90, false);
+    			$this->c->changeGroupVolume("Main Floor", 90, false);
     		} 
     		catch (Exception $e) {
     			$this->fail();
@@ -312,11 +313,9 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     		$this->hm = $this->pm->loadDataFromStore();
     		$this->assertEquals(2, $this->hm->numberOfRooms());
     		//Check that every room in the group has the new volume
-    		//$this->assertEquals(90, $this->hm->getRoom_index(0)->getVolume()); 
-    		//$this->assertEquals(90, $this->hm->getRoom_index(1)->getVolume());
-    		//$this->assertEquals(90, $this->hm->getRoomGroup_index(0)->getVolume());
+    		$this->assertEquals(90, $this->hm->getRoomGroup_index(0)->getRoom_index(0)->getVolume()); 
+    		$this->assertEquals(90, $this->hm->getRoomGroup_index(0)->getRoom_index(1)->getVolume()); 
     	}
-    	
     	public function testPlayPlayableRoom(){
     		//Create test data
     		try {
@@ -339,7 +338,7 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     		}
     		//Check the data saved in the model.
     		$this->hm = $this->pm->loadDataFromStore();
-    		$this->assertEquals(true,$myRoom->hasPlayable());//Fails: No playable was found in the room.
+    		$this->assertEquals(true,$myRoom->hasPlayable());
     	}
     	public function testPlayPlayableRG(){
     		try {

@@ -5,12 +5,20 @@
 <meta charset="UTF-8">
 <title>HAS</title>
 <style>
-p { text-align:center; }
+p, div { text-align:center; }
+
 .error {
 	color: #FF0000;
 }
+.boxed {
+	border: 2px solid red;
+}
 </style>
 </head>
+<div class="boxed" > 
+<h1>Manage My Playlists</h1>
+
+</div>
 <body>
 	<form action="index.php" method="post">
 		<b><input type="submit" value="Go Home" /></b>
@@ -38,7 +46,7 @@ $hm = $pm->loadDataFromStore ();
 	<form action="addPlaylist.php" method="post">
 		
 		<p>
-			<h1 align="center">Add a New Playlist</h1>
+			<h3 align="center">Add a New Playlist</h3>
 		
 		
 		<p>
@@ -72,7 +80,7 @@ $hm = $pm->loadDataFromStore ();
 	</form>
 	
 	<form action="addSongToPlaylist.php" method="post">
-		<h1 align="center">Manage Your Playlists</h1>
+		<h3 align="center">Edit Playlists</h3>
 		<p> Choose a Song to Add
 		<?php
 		echo "<p>Song: <select name='songSpinner'>";

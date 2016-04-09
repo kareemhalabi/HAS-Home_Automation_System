@@ -5,44 +5,57 @@
       <volume>50</volume>
       <mute>true</mute>
     </room>
+    <room id="4">
+      <name>My Name is Kristina</name>
+      <volume>50</volume>
+      <mute>true</mute>
+    </room>
   </rooms>
-  <artists id="4">
-    <artist id="5">
+  <artists id="5">
+    <artist id="6">
       <name>Louise Attaque</name>
-      <songs id="6"/>
-      <albums id="7">
-        <album id="8">
+      <songs id="7"/>
+      <albums id="8">
+        <album id="9">
           <name>Louise Attaque</name>
           <genre>Folk</genre>
-          <releaseDate id="9">1997-03-20</releaseDate>
-          <songs id="10">
-            <song id="11">
+          <releaseDate id="10">1997-03-20</releaseDate>
+          <songs id="11">
+            <song id="12">
               <name>Amours</name>
               <duration>117</duration>
               <position>1</position>
-              <ftArtists id="12"/>
-              <album reference="8"/>
+              <ftArtists id="13"/>
+              <album reference="9"/>
             </song>
-            <song id="13">
+            <song id="14">
               <name>J&apos;T&apos;emmene Au Vent</name>
               <duration>184</duration>
               <position>2</position>
-              <ftArtists id="14"/>
-              <album reference="8"/>
+              <ftArtists id="15"/>
+              <album reference="9"/>
             </song>
           </songs>
-          <mainArtist reference="5"/>
+          <mainArtist reference="6"/>
         </album>
       </albums>
     </artist>
   </artists>
-  <albums id="15">
-    <album reference="8"/>
+  <albums id="16">
+    <album reference="9"/>
   </albums>
-  <playlists id="16"/>
-  <songs id="17">
-    <song reference="11"/>
-    <song reference="13"/>
+  <playlists id="17"/>
+  <songs id="18">
+    <song reference="12"/>
+    <song reference="14"/>
   </songs>
-  <roomGroups id="18"/>
+  <roomGroups id="19">
+    <ca.mcgill.ecse321.HAS.model.RoomGroup id="20">
+      <name>Kristina&apos;s Room Groups</name>
+      <rooms id="21">
+        <room reference="3"/>
+        <room reference="4"/>
+      </rooms>
+    </ca.mcgill.ecse321.HAS.model.RoomGroup>
+  </roomGroups>
 </HAS>

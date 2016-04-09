@@ -65,7 +65,7 @@ public class TestPersistence {
 		hc.addRoomToRoomGroup(roomGroup, rooms);
 		
 		hc.setRoomVolumeLevel(room1, 7);
-		hc.setMute(room2, true);
+		hc.setRoomMute(room2, true);
 		
 		List<Song> songs = h.getSongs();
 		

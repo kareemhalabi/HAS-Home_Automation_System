@@ -666,7 +666,7 @@ public class TestHASControllerPlaylistAndRoom
 
 		try
 		{
-			hc.setMute(h.getRoom(0), true);
+			hc.setRoomMute(h.getRoom(0), true);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -684,7 +684,7 @@ public class TestHASControllerPlaylistAndRoom
 
 		try
 		{
-			hc.setMute(null, true);
+			hc.setRoomMute(null, true);
 		} catch (InvalidInputException e)
 		{
 			error = e.getMessage();

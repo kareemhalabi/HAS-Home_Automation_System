@@ -37,12 +37,17 @@ import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Room;
 import ca.mcgill.ecse321.HAS.model.RoomGroup;
+import ca.mcgill.ecse321.HAS.model.Song;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class HASPage extends JFrame {
 	/**
@@ -63,7 +68,7 @@ public class HASPage extends JFrame {
 
 	// data elements Control page
 	private JLabel ctlErrMsg;
-	private String error_RP = "";
+	
 	private Integer selectedRoom = -1;
 	private Integer selectedRoomGroup = -1;
 	private HashMap<Integer, RoomGroup> roomGroups;
@@ -73,7 +78,17 @@ public class HASPage extends JFrame {
 	private JTextField txtRoomName;
 	private JList roomList;
 	private HashMap<Integer, String> roomsString;
+	private HashMap<Integer,Room> roomMap;
 	private Integer selectedRoom_RP=-1;
+	private List<Room> roomSelectionlist;
+	private JTextField txtRoomGroupName;
+	private String error_RP = "";
+	
+	//playlist page
+	private String error_PP="";
+	private JTextField txtPlaylistName;
+	private List<Song> songSelectionlist;
+	private HashMap<Integer, String> songsString;
 
 	
 	/**
@@ -83,7 +98,7 @@ public class HASPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HASPage2 frame = new HASPage2();
+					HASPage frame = new HASPage();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -527,17 +542,22 @@ public class HASPage extends JFrame {
 		gbc_verticalStrut.gridy = 3;
 		RoomPanel.add(verticalStrut, gbc_verticalStrut);
 
-		JComboBox comboBox_RoomGroups = new JComboBox();
-		comboBox_RoomGroups.setToolTipText("Room Group Name\n");
-		comboBox_RoomGroups.setEditable(true);
-		GridBagConstraints gbc_comboBox_RoomGroups = new GridBagConstraints();
-		gbc_comboBox_RoomGroups.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_RoomGroups.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_RoomGroups.gridx = 0;
-		gbc_comboBox_RoomGroups.gridy = 4;
-		RoomPanel.add(comboBox_RoomGroups, gbc_comboBox_RoomGroups);
-
 		roomList = new JList();
+		roomList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				roomListSelectionListener(e);
+			}
+		});
+		
+		txtRoomGroupName = new JTextField();
+		txtRoomGroupName.setText("Room Group Name");
+		GridBagConstraints gbc_txtRoomGroupName = new GridBagConstraints();
+		gbc_txtRoomGroupName.insets = new Insets(0, 0, 5, 5);
+		gbc_txtRoomGroupName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtRoomGroupName.gridx = 0;
+		gbc_txtRoomGroupName.gridy = 4;
+		RoomPanel.add(txtRoomGroupName, gbc_txtRoomGroupName);
+		txtRoomGroupName.setColumns(10);
 		GridBagConstraints gbc_roomList = new GridBagConstraints();
 		gbc_roomList.insets = new Insets(0, 0, 0, 5);
 		gbc_roomList.fill = GridBagConstraints.BOTH;
@@ -573,15 +593,16 @@ public class HASPage extends JFrame {
 		gbc_lblPlaylistName.gridx = 0;
 		gbc_lblPlaylistName.gridy = 0;
 		Playlist.add(lblPlaylistName, gbc_lblPlaylistName);
-
-		JComboBox comboBox_Playlists = new JComboBox();
-		comboBox_Playlists.setEditable(true);
-		GridBagConstraints gbc_comboBox_Playlists = new GridBagConstraints();
-		gbc_comboBox_Playlists.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_Playlists.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_Playlists.gridx = 1;
-		gbc_comboBox_Playlists.gridy = 0;
-		Playlist.add(comboBox_Playlists, gbc_comboBox_Playlists);
+		
+		txtPlaylistName = new JTextField();
+		txtPlaylistName.setText("Playlist Name");
+		GridBagConstraints gbc_txtPlaylistName = new GridBagConstraints();
+		gbc_txtPlaylistName.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPlaylistName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPlaylistName.gridx = 1;
+		gbc_txtPlaylistName.gridy = 0;
+		Playlist.add(txtPlaylistName, gbc_txtPlaylistName);
+		txtPlaylistName.setColumns(10);
 
 		JLabel lblSelectSongs = new JLabel("Select Songs:");
 		GridBagConstraints gbc_lblSelectSongs = new GridBagConstraints();
@@ -590,20 +611,30 @@ public class HASPage extends JFrame {
 		gbc_lblSelectSongs.gridy = 1;
 		Playlist.add(lblSelectSongs, gbc_lblSelectSongs);
 
-		JList list = new JList();
-		GridBagConstraints gbc_list = new GridBagConstraints();
-		gbc_list.insets = new Insets(0, 0, 0, 5);
-		gbc_list.fill = GridBagConstraints.BOTH;
-		gbc_list.gridx = 1;
-		gbc_list.gridy = 1;
-		Playlist.add(list, gbc_list);
+		JList songsList = new JList();
+		songsList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				songListSelectionListener(e);
+			}
+		});
+		GridBagConstraints gbc_songsList = new GridBagConstraints();
+		gbc_songsList.insets = new Insets(0, 0, 0, 5);
+		gbc_songsList.fill = GridBagConstraints.BOTH;
+		gbc_songsList.gridx = 1;
+		gbc_songsList.gridy = 1;
+		Playlist.add(songsList, gbc_songsList);
 
-		JButton btnCreate = new JButton("Create\nPlaylist");
-		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
-		gbc_btnCreate.anchor = GridBagConstraints.SOUTH;
-		gbc_btnCreate.gridx = 2;
-		gbc_btnCreate.gridy = 1;
-		Playlist.add(btnCreate, gbc_btnCreate);
+		JButton btnCreatePlaylist = new JButton("Create\nPlaylist");
+		btnCreatePlaylist.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createPlaylistActionPerformed(e);
+			}
+		});
+		GridBagConstraints gbc_btnCreatePlaylist = new GridBagConstraints();
+		gbc_btnCreatePlaylist.anchor = GridBagConstraints.SOUTH;
+		gbc_btnCreatePlaylist.gridx = 2;
+		gbc_btnCreatePlaylist.gridy = 1;
+		Playlist.add(btnCreatePlaylist, gbc_btnCreatePlaylist);
 	}
 
 	private void refreshData()
@@ -632,8 +663,31 @@ public class HASPage extends JFrame {
 		
 		if(!roomsString.isEmpty()){
 		roomList.setListData(roomsString.values().toArray());
-					selectedRoom_RP = -1;
-					//artistList.setSelectedIndex(selectedArtist);
+		roomList.clearSelection();
+		txtRoomGroupName.setText("");
+		
+		}
+	}
+	
+	if(error_PP==null||error_PP.length()==0)
+
+	{
+		songsString = new HashMap<Integer, String>();
+		Iterator<Song> songIt = h.getSongs().iterator();
+		Integer index = 0;
+		while ( songIt.hasNext()) {
+			Song s = songIt.next();		
+			songsString.put(index, s.getName());
+			index++;
+		}
+		
+		txtRoomName.setText("");
+		
+		if(!roomsString.isEmpty()){
+		roomList.setListData(roomsString.values().toArray());
+		roomList.clearSelection();
+		txtRoomGroupName.setText("");
+		
 		}
 	}
 
@@ -653,16 +707,61 @@ public class HASPage extends JFrame {
 	refreshData();	
 	}
 	
+	private void roomListSelectionListener(ListSelectionEvent e){
+		HAS h = HAS.getInstance();
+		
+		boolean adjust = e.getValueIsAdjusting();
+		if (!adjust) {
+	          JList list = (JList) e.getSource();
+	          int roomSelections[] = list.getSelectedIndices();
+	        //  Object selectionValues[] = list.getSelectedValues();
+	          roomSelectionlist = new ArrayList<Room>();
+	          for (int i=0; i<roomSelections.length;i++){
+	        	  roomSelectionlist.add(i, h.getRoom(roomSelections[i]));
+	        
+	          }
+		}
+	}
+	
+	private void songListSelectionListener(ListSelectionEvent e){
+		HAS h = HAS.getInstance();
+		
+		boolean adjust = e.getValueIsAdjusting();
+		if (!adjust) {
+	          JList list = (JList) e.getSource();
+	          int songSelections[] = list.getSelectedIndices();
+	        //  Object selectionValues[] = list.getSelectedValues();
+	          songSelectionlist = new ArrayList<Song>();
+	          for (int i=0; i<songSelections.length;i++){
+	        	  songSelectionlist.add(i, h.getSong(songSelections[i]));
+	        
+	          }
+		}
+	}
+	
+
 	
 	private void createRoomGroupActionPerformed(java.awt.event.ActionEvent evt){
 		HASController hc = new HASController();
-		/*try{
-			//hc.createRoomGroup(name, initialRoom);
+		try{
+			hc.createRoomGroup(txtRoomGroupName.getText(), roomSelectionlist);
 		}
 	
 		catch (InvalidInputException e){
-			error_RP=e.getMessage();
-		}*/
+			error_PP=e.getMessage();
+		}
+		refreshData();
+	}
+	
+	private void createPlaylistActionPerformed(java.awt.event.ActionEvent evt){
+		HASController hc = new HASController();
+		try{
+			hc.createPlaylist(txtPlaylistName.getText(), songSelectionlist);
+		}
+		catch (InvalidInputException e){
+			error_PP=e.getMessage();
+		}
+		refreshData(); 
 	}
 	
 

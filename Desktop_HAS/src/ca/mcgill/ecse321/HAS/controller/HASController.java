@@ -16,15 +16,19 @@ import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
-/*
- * TODO: Play function
- */
 public class HASController
 {
 	public HASController()
 	{
 	}
 
+	/**
+	 * Creates an artist object within the HAS system
+	 * 
+	 * @param artName
+	 *            The name of the new artist
+	 * @throws InvalidInputException
+	 */
 	public void createArtist(String artName) throws InvalidInputException
 	{
 		if (artName == null || artName.trim().length() == 0)
@@ -38,10 +42,22 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Creates an album object within the HAS system, linking it to its artist
+	 * 
+	 * @param name
+	 *            Album name
+	 * @param genre
+	 *            Album genre
+	 * @param releaseDate
+	 *            Album release date
+	 * @param ar
+	 *            Album artist
+	 * @throws InvalidInputException
+	 */
 	public void createAlbum(String name, String genre, Date releaseDate,
 							Artist ar) throws InvalidInputException
 	{
-		// check that the input is valid for this
 		java.util.Calendar cal = Calendar.getInstance();
 		java.util.Date utilDate = new java.util.Date();
 		cal.setTime(utilDate);
@@ -70,6 +86,21 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Creates a song within the system
+	 * 
+	 * @param a
+	 *            Album to which the song is affiliated
+	 * @param aName
+	 *            Name of the song
+	 * @param aDuration
+	 *            Duration of the song in seconds
+	 * @param aPosition
+	 *            Position of the song within the album
+	 * @param ftArtists
+	 *            List of featured artists
+	 * @throws InvalidInputException
+	 */
 	public void addSongtoAlbum(	Album a, String aName, int aDuration,
 								int aPosition, List<Artist> ftArtists)
 										throws InvalidInputException
@@ -80,8 +111,9 @@ public class HASController
 
 		if (a == null)
 			error = error + "Song must belong to an album! ";
-		else if (!h.getAlbums().contains(a))
-			error = error + "Album does not exist! ";
+		// TODO
+		// if (!h.getAlbums().contains(a))
+		// error = error + "Album does not exist! ";
 
 		if (aName == null || aName.trim().length() == 0)
 			error = error + "Song must have a name! ";
@@ -97,6 +129,8 @@ public class HASController
 		Song newSong = new Song(aName, aDuration, aPosition, a);
 		h.addSong(newSong);
 
+		// TODO: CHECK IF CAN BE REMOVED, lines wouldn't execute if the list has
+		// no entries
 		if (ftArtists != null)
 		{
 			for (Artist ftar : ftArtists)
@@ -108,6 +142,15 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Creates a playlist within the HAS system
+	 * 
+	 * @param name
+	 *            name of the playlist
+	 * @param songs
+	 *            List of songs that will be part of the playlist
+	 * @throws InvalidInputException
+	 */
 	public void createPlaylist(String name, List<Song> songs)
 			throws InvalidInputException
 	{
@@ -136,7 +179,15 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	// TODO TEST
+	/**
+	 * Adds songs to an already existing playlist
+	 * 
+	 * @param p
+	 *            Playlist to which the songs will be added
+	 * @param songs
+	 *            List of songs that are to be added to the playlist
+	 * @throws InvalidInputException
+	 */
 	public void addSongtoPlaylist(Playlist p, List<Song> songs)
 			throws InvalidInputException
 	{
@@ -158,6 +209,13 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Creates a new room within the HAS system
+	 * 
+	 * @param name
+	 *            Name of the new room
+	 * @throws InvalidInputException
+	 */
 	public void createRoom(String name) throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
@@ -178,6 +236,15 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Creates a room group
+	 * 
+	 * @param name
+	 *            Name of the new room group
+	 * @param rooms
+	 *            List of rooms that are to be added to the new room group
+	 * @throws InvalidInputException
+	 */
 	public void createRoomGroup(String name, List<Room> rooms)
 			throws InvalidInputException
 	{
@@ -207,7 +274,15 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	// TODO FIX AND TEST
+	/**
+	 * Adds rooms to an already existing room group
+	 * 
+	 * @param rG
+	 *            Room group to which the songs will be added
+	 * @param rooms
+	 *            List of rooms that will be added
+	 * @throws InvalidInputException
+	 */
 	public void addRoomToRoomGroup(RoomGroup rG, List<Room> rooms)
 			throws InvalidInputException
 	{
@@ -229,6 +304,15 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Sets the volume of a room
+	 * 
+	 * @param room
+	 *            Room whose volume will be changed
+	 * @param volumeLevel
+	 *            Desired volume level
+	 * @throws InvalidInputException
+	 */
 	public void setRoomVolumeLevel(Room room, int volumeLevel)
 			throws InvalidInputException
 	{
@@ -260,7 +344,64 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	public void setMute(Room room, boolean mute) throws InvalidInputException
+	/**
+	 * Sets the volume of a room group
+	 * 
+	 * @param rg
+	 *            Room Group whose volume is to be changed
+	 * @param volumeLevel
+	 *            Desired volume level
+	 * @throws InvalidInputException
+	 */
+	public void setRoomGroupVolumeLevel(RoomGroup rg, int volumeLevel)
+			throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		String error = "";
+
+		if (rg == null)
+			error = error + "Must select a room group to set the volume in!";
+		if (volumeLevel < 0)
+			error = error + "Must select a positive volume level!";
+		if (error.length() > 0)
+			throw new InvalidInputException(error);
+
+		if (volumeLevel > 100)
+			volumeLevel = 100;
+
+		if (volumeLevel == 0)
+		{
+			for (Room r : rg.getRooms())
+			{
+				r.setMute(true);
+				r.setVolume(0);
+			}
+
+		}
+
+		else
+		{
+			for (Room r : rg.getRooms())
+			{
+				r.setMute(false);
+				r.setVolume(volumeLevel);
+			}
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	/**
+	 * Sets a room to mute
+	 * 
+	 * @param room
+	 *            Room that will be muted
+	 * @param mute
+	 *            Boolean that determines if the room is muted
+	 * @throws InvalidInputException
+	 */
+	public void setRoomMute(Room room, boolean mute)
+			throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
 		String error = "";
@@ -279,6 +420,43 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Mutes all rooms in a room group
+	 * 
+	 * @param rg
+	 *            Room Group to be muted
+	 * @param mute
+	 *            Boolean that determines if the room is muted
+	 * @throws InvalidInputException
+	 */
+	public void setRoomGroupMute(RoomGroup rg, boolean mute)
+			throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		String error = "";
+
+		if (rg == null)
+			error = error + "Must select a room group to mute!";
+
+		if (error.length() > 0)
+			throw new InvalidInputException(error);
+
+		if (mute == true)
+		{
+			for (Room r : rg.getRooms())
+				r.setMute(true);
+		} else
+		{
+			for (Room r : rg.getRooms())
+				r.setMute(false);
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	/**
+	 * Sorts the artists contained in the HAS alphabetically
+	 */
 	public void sortArtists()
 	{
 		HAS h = HAS.getInstance();
@@ -300,9 +478,13 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Sorts the albums within the HAS alphabetically
+	 */
 	public void sortAlbums()
 	{
 		HAS h = HAS.getInstance();
+
 		List<Album> albums = h.getAlbums();
 		List<Album> sortedAlbums = new ArrayList<Album>();
 		for (Album a : albums)
@@ -317,28 +499,16 @@ public class HASController
 		{
 			h.addAlbum(a);
 		}
-		// TODO CHECK THAT THE ALBUMS STILL BELONG TO THE ARTIST
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
-	public void addFeaturedArtist(Song song, Artist ar)
-			throws InvalidInputException
-	{
-		HAS h = HAS.getInstance();
-		String error = "";
-		if (song == null)
-			error = error + "Must select a song to add a featured artist!";
-		if (ar == null)
-			error = error + "Must select a featured artist!";
-
-		if (error.length() > 0)
-			throw new InvalidInputException(error);
-
-		song.addFtArtist(ar);
-		PersistenceXStream.saveToXMLwithXStream(h);
-	}
-
+	/**
+	 * Sorts the songs in an album based on position
+	 * 
+	 * @param a
+	 *            Album whose songs are to be sorted
+	 */
 	public void sortSongs(Album a)
 	{
 		HAS h = HAS.getInstance();
@@ -356,7 +526,7 @@ public class HASController
 
 				for (Song s : sortedSongs)
 				{
-					s.delete();// Songs are not being removed
+					s.delete();
 				}
 
 				for (Song s : sortedSongs)
@@ -370,6 +540,41 @@ public class HASController
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
+	/**
+	 * Adds a featured artist to a song
+	 * 
+	 * @param song
+	 *            The song
+	 * @param ar
+	 *            The featured artist
+	 * @throws InvalidInputException
+	 */
+	public void addFeaturedArtist(Song song, Artist ar)
+			throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		String error = "";
+		if (song == null)
+			error = error + "Must select a song to add a featured artist!";
+		if (ar == null)
+			error = error + "Must select a featured artist!";
+
+		if (error.length() > 0)
+			throw new InvalidInputException(error);
+
+		song.addFtArtist(ar);
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	/**
+	 * Plays a playable within a single room
+	 * 
+	 * @param play
+	 *            Playable that is to be played
+	 * @param room
+	 *            Room in which the playable must play
+	 * @throws InvalidInputException
+	 */
 	public void playSingleRoom(Playable play, Room room)
 			throws InvalidInputException
 	{
@@ -385,6 +590,15 @@ public class HASController
 		room.setPlayable(play);
 	}
 
+	/**
+	 * Plays a playable within a room group
+	 * 
+	 * @param play
+	 *            Playable that is to be played
+	 * @param rg
+	 *            Room Group in which the playable must play
+	 * @throws InvalidInputException
+	 */
 	public void playRoomGroup(Playable play, RoomGroup rg)
 			throws InvalidInputException
 	{

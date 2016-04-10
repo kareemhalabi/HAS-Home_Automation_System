@@ -45,12 +45,15 @@
             android:name=".rooms.AddRoomActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".roomgroups.AddRoomGroupActivity"
+        <activity
+            android:name=".roomgroups.AddRoomGroupActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".SendPlayable"
+        <activity
+            android:name=".SendPlayableActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity android:name=".LocationSettingsActivity"></activity>
     </application>
 
 </manifest>

@@ -30,6 +30,7 @@ public class ArtistNavFragment extends Fragment {
         HAS h = HAS.getInstance();
 
         ArtistAdapter adapter = new ArtistAdapter(getActivity().getApplicationContext(), h.getArtists());
+        adapter.notifyDataSetChanged(); //sometimes doesn't update automatically
         listView.setAdapter(adapter);
 
         return v;

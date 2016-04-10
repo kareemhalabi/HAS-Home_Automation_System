@@ -3,7 +3,6 @@
 /*This code was generated using the UMPLE 1.23.0-599796a modeling language!*/
 
 
-//require_once 'model/Playable.php';
 class Album extends Playable
 {
 
@@ -207,6 +206,10 @@ class Album extends Playable
   public function equals($compareTo)
   {
     return $this == $compareTo;
+  }
+  
+  public function compareTo($compareTo){
+  	return $this->getName() == $compareTo->getName();
   }
   
 

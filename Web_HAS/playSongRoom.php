@@ -45,14 +45,16 @@ $song = $_SESSION['song'];
 $songName = $song->getName();
 
 $name = $myRoom->getName();
-
+//echo "<p>" . $myRoom->getPlayable()->getName() . "</p>";
 $c = new Controller();
 $c->playPlayableRoom($myRoom, $song);
+echo "<p>" . $myRoom->getPlayable()->getName() . "</p>";
 ?>
 
 <h3>The song <?php echo $songName?>, is now playing in the room <?php echo $name?>.</h3>
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
+	<?php $pm->writeDataToStore($hm);?>
 </body>
 </html>

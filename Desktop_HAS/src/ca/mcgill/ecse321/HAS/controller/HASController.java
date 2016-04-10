@@ -281,6 +281,8 @@ public class HASController
 			throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
+		int volume = 50;
+		boolean mute = true;
 
 		String error = "";
 
@@ -293,7 +295,7 @@ public class HASController
 			throw new InvalidInputException(error);
 
 		Room initialRoom = rooms.get(0);
-		RoomGroup newRG = new RoomGroup(name, initialRoom);
+		RoomGroup newRG = new RoomGroup(name, volume, mute, initialRoom);
 		h.addRoomGroup(newRG);
 
 		List<Room> modifiedRooms = new ArrayList<Room>();

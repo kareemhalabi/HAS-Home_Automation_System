@@ -28,6 +28,9 @@ public class TestPersistence {
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 		
+		int volume = 50;
+		boolean mute = true;
+		
 		Date d1 = new Date(2007,01,25);
 		Date d2 = new Date(2009,10,9);
 		
@@ -41,7 +44,7 @@ public class TestPersistence {
 		Room room2 = new Room("Living Room", 5, false);
 		Room room3 = new Room("Bedroom", 5, false);
 		
-		RoomGroup roomGroup = new RoomGroup("Group1", room1);
+		RoomGroup roomGroup = new RoomGroup("Group1", volume, mute, room1);
 		
 		h.addAlbum(a1);
 		h.addAlbum(a2);
@@ -58,7 +61,7 @@ public class TestPersistence {
 		h.addRoom(room2);
 		h.addRoom(room3);
 		
-		List<Room> rooms = new ArrayList();
+		List<Room> rooms = new ArrayList<Room>();
 		rooms.add(room1);
 		rooms.add(room2);
 		rooms.add(room3);

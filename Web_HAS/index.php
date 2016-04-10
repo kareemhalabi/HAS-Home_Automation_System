@@ -156,7 +156,7 @@ table {
 	<h2>
 	My Music Library</h2>
 	</div>
-<table id="table" align="center" >
+<table id="table" align="center">
 <tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>
 <?php foreach ($hm->getSongs() as $song): ?>

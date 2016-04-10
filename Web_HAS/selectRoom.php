@@ -7,7 +7,7 @@
 .error {
 	color: #FF0000;
 }
-body { text-align:center; }
+div, h3, p { text-align:center; }
 .error {
 	color: #FF0000;
 }
@@ -16,11 +16,14 @@ body { text-align:center; }
 }
 </style>
 </head>
-<body>
 <div class="boxed" > 
 <h1>Manage Rooms</h1>
 
 </div>
+<body>
+<form action="index.php" method="post">
+		<input type="submit" value="Go Home" />
+	</form>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -41,6 +44,7 @@ body { text-align:center; }
 		
 		?>
 	<form action="addRoom.php" method="post">
+	<h3>Enter a New Room:</h3>
 		<p>
 			Name of Room: <input type="text" name="roomName" /> <span
 				class="error"> </span>
@@ -61,6 +65,7 @@ body { text-align:center; }
 	</form>
 	
 	<form action="addRoomGroup.php" method="post">
+	<h3>Enter a New Room Group:</h3>
 		<p>
 			Name of Room Group: <input type="text" name="groupName" /> <span
 				class="error"> </span>
@@ -85,6 +90,7 @@ body { text-align:center; }
 	</form>
 	
 	<form action="addRoomToGroup.php" method="post">
+	<h3>Add Room to Group:</h3>
 		<?php 
 		echo "<p>Group: <select name='groupspinner'>";
 		foreach ( $hm->getRoomGroups() as $group) {
@@ -112,9 +118,5 @@ body { text-align:center; }
 		</p>
 	</form>
 	
-
-	<form action="index.php" method="post">
-		<input type="submit" value="Home" />
-	</form>
 </body>
 </html>

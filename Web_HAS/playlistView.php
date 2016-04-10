@@ -11,7 +11,7 @@ p, div { text-align:center; }
 	color: #FF0000;
 }
 .boxed {
-	border: 2px solid red;
+	border: 2px solid blue;
 }
 </style>
 </head>

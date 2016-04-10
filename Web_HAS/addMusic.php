@@ -13,7 +13,7 @@ div, h3, p { text-align:center; }
 }
 .boxed {
    
-    border: 3px solid red;
+    border: 3px solid blue;
 }
 </style>
 </head>

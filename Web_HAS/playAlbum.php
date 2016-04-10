@@ -65,8 +65,8 @@
 		<p>
 		
 		<form action="playAlbumRoom.php" method="post"><br>
-		<?php 
-		echo "Play {$name} in a Room? ";
+<?php
+		echo "Which room or group of rooms would you like to play the album: {$name}";
 		?>
 		<?php 
 		echo "<p>Room: <select name='roomspinner'>";
@@ -85,12 +85,7 @@
 		</span>
 		</form>
 		
-		<p>
-		
-		</p>
-		<?php
-		echo "Play {$name} in a Room Group? ";
-		?>
+		<br>
 		
 		<form action="playAlbumRG.php" method="post">
 		<?php 

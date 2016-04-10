@@ -63,8 +63,8 @@ body {
 		?>
 		
 		<form action="playSongRoom.php" method="post">
-		<?php
-		echo "Play {$name} in a Room?";
+<?php
+		echo "Which room or group of rooms would you like to play the song: {$name}";
 		?>
 		<?php 
 		echo "<p>Room: <select name='roomspinner'>";
@@ -85,9 +85,6 @@ body {
 		
 		
 		<form action="playSongRG.php" method="post">
-		<?php
-		echo "Play {$name} in a Room Group?";
-		?>
 		<?php 
 		echo "<p>Group: <select name='groupspinner'>";
 		foreach ( $hm->getRoomGroups() as $group) {

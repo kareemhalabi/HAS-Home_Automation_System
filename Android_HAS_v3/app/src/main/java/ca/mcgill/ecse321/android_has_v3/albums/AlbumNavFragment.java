@@ -34,6 +34,7 @@ public class AlbumNavFragment extends Fragment {
         HAS h = HAS.getInstance();
 
         AlbumAdapter adapter = new AlbumAdapter(getActivity().getApplicationContext(), h.getAlbums());
+        adapter.notifyDataSetChanged(); //sometimes doesn't update automatically
         listView.setAdapter(adapter);
 
         return v;

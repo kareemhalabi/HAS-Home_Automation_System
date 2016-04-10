@@ -16,7 +16,7 @@ import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.android_has_v3.roomgroups.RoomGroupAdapter;
 import ca.mcgill.ecse321.android_has_v3.rooms.RoomAdapter;
 
-public class SendPlayable extends AppCompatActivity {
+public class SendPlayableActivity extends AppCompatActivity {
 
     private static Playable selectedPlayable;
 

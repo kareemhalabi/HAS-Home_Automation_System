@@ -35,6 +35,7 @@ public class PlaylistNavFragment extends Fragment {
         HAS h = HAS.getInstance();
 
         PlaylistAdapter adapter = new PlaylistAdapter(getActivity().getApplicationContext(), h.getPlaylists());
+        adapter.notifyDataSetChanged(); //sometimes doesn't update automatically
         listView.setAdapter(adapter);
 
         return v;

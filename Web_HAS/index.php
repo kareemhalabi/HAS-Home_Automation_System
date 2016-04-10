@@ -182,7 +182,6 @@ Currently Playing</h2>
 </div>
 <?php 
 foreach($hm->getRooms() as $room){
-	//DOESNT WORK
 	if($room->hasPlayable()){
 		echo "<p>" . $room->getName() . ": " . $room->getPlayable()->getName() . "</p>";
 	}else{

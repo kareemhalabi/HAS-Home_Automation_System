@@ -675,8 +675,6 @@ public class HASController
 			throws InvalidInputException
 	{
 		String error = "";
-		if (play == null)
-			error = error + "A playable must be selected! ";
 		if (room == null)
 			error = error + "A room must be selected! ";
 
@@ -699,8 +697,6 @@ public class HASController
 			throws InvalidInputException
 	{
 		String error = "";
-		if (play == null)
-			error = error + "A playable must be selected! ";
 		if (rg == null)
 			error = error + "A room group must be selected! ";
 

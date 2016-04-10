@@ -47,6 +47,9 @@ body {
 		$playlist = NULL;
 		if (isset ( $_POST ['playlistspinner'] )) {
 			$playlist = $_POST ['playlistspinner'];
+		}else{
+			header("Location: index.php");
+			exit();
 		}
 		
 		$myPlaylist = NULL;
@@ -55,6 +58,10 @@ body {
 				$myPlaylist = $tempPlaylist;
 				break;
 			}
+		}
+		if($myPlaylist == NULL){
+				header("Location: index.php");
+				exit();
 		}
 		$_SESSION['playlist'] = $myPlaylist;
 		

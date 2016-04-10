@@ -46,6 +46,10 @@ body { text-align:center; }
 		?>
 		<form action="changeRoomVolume.php" method="post">
 		<?php
+		echo "Enter a new volume for the room";
+		?>
+		<p>For muting a room, set volume to 0.</p>
+		<?php
 		echo "<p>Room: <select name='roomspinner'>";
 		foreach ( $hm->getRooms () as $room ) {
 			echo "<option>" . $room->getName () . "</option>";
@@ -69,6 +73,9 @@ body { text-align:center; }
 	</form>
 	
 	<form action="changeGroupVolume.php" method="post">
+	<?php
+		echo "Enter a new volume for the group";
+		?>
 	<p>For muting a group, set volume to 0.</p>
 		<?php
 		echo "<p>Group: <select name='groupspinner'>";

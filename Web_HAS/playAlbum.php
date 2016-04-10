@@ -49,6 +49,9 @@
 		$album = NULL;
 		if (isset ( $_POST ['albumspinner'] )) {
 			$album = $_POST ['albumspinner'];
+		}else{
+			header("Location: index.php");
+			exit();
 		}
 		
 		$myAlbum = NULL;
@@ -57,6 +60,10 @@
 				$myAlbum = $tempAlbum;
 				break;
 			}
+		}
+		if($myAlbum == NULL){
+			header("Location: index.php");
+			exit();
 		}
 		$_SESSION['album'] = $myAlbum;
 		

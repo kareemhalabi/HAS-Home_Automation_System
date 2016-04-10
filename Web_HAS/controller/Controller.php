@@ -13,7 +13,9 @@ class Controller {
 	public function __construct() {
 	}
 	
-	// creates an album with user delcared parameters
+	/**
+	 * creates an album with user delcared parameters
+	 */
 	public function createAlbum($albumName, $genre, $releaseDate, $aArtist) {
 		// validate input incase of special characters
 		$albumName = InputValidator::validate_input ( $albumName );
@@ -47,6 +49,14 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Creates a song inside an album.
+	 * @param String $songName
+	 * @param Number $duration
+	 * @param Number $position
+	 * @param String $aAlbum
+	 * @throws Exception
+	 */
 	public function createSong($songName, $duration, $position, $aAlbum) {
 		$songName = InputValidator::validate_input ( $songName );
 		// loads Persistence layer to be able to retireve data from the layer
@@ -80,6 +90,11 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Creates an Artist
+	 * @param String $name
+	 * @throws Exception
+	 */
 	public function createArtist($name) {
 		$name = InputValidator::validate_input ( $name );
 		if ($name == null || strlen ( $name ) == 0) {
@@ -95,6 +110,13 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Creates a room.
+	 * @param String $name
+	 * @param Number $volume
+	 * @param Boolean $mute
+	 * @throws Exception
+	 */
 	public function createRoom($name, $volume, $mute) {
 		$name = InputValidator::validate_input ( $name );
 		if ($name == null || strlen ( $name ) == 0) {
@@ -112,6 +134,12 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Creates a playlist with a chosen song that already exists
+	 * @param String $name
+	 * @param String $aSong
+	 * @throws Exception
+	 */
 	public function createPlaylist($name, $aSong) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -128,7 +156,7 @@ class Controller {
 			}
 		}
 		$songs = array ();
-		$songs [] = $mySong;
+		$songs [] = $mySong;//addPlaylist takes an array of songs as parameter
 		$name = InputValidator::validate_input ( $name );
 		if ($name == null || strlen ( $name ) == 0) {
 			throw new Exception ( "Playlist name cannot be empty!" );
@@ -142,6 +170,12 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Add an existing song to an existing playlist
+	 * @param String $aPlaylist
+	 * @param String $aSong
+	 * @throws Exception
+	 */
 	public function addSongToPlaylist($aPlaylist, $aSong) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -178,6 +212,12 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Creates a room group with an already existing room
+	 * @param String $name
+	 * @param String $aRoom
+	 * @throws Exception
+	 */
 	public function createRoomGroup($name, $aRoom) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -208,6 +248,12 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Add an existing room to an existing room group
+	 * @param String $aGroup
+	 * @param String $aRoom
+	 * @throws Exception
+	 */
 	public function addRoomToGroup($aGroup, $aRoom) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -249,6 +295,13 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Changes the volume of an existing room. If the volume specified is 0, mute.
+	 * @param String $aname
+	 * @param Number $volume
+	 * @param Boolean $mute
+	 * @throws Exception
+	 */
 	public function changeVolume($aname, $volume, $mute) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -281,6 +334,13 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Changes volume of an existing room group by changing the volume of each room iside the room group.
+	 * @param String $aGroup
+	 * @param Number $volume
+	 * @param Boolean $mute
+	 * @throws Exception
+	 */
 	public function changeGroupVolume($aGroup, $volume, $mute) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -314,6 +374,11 @@ class Controller {
 			$pm->writeDataToStore ( $hm );
 		}
 	}
+	/**
+	 * Sets a playable into the room specified
+	 * @param Room $room
+	 * @param Playable $playable
+	 */
 	public function playPlayableRoom($room, $playable) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -323,6 +388,11 @@ class Controller {
 		
 		$pm->writeDataToStore ( $hm );
 	}
+	/**
+	 * Sets a playable into the room group specified
+	 * @param RoomGroup $roomGroup
+	 * @param Playable $playable
+	 */
 	public function playPlayableRG($roomGroup, $playable) {
 		// loads Persistence layer to be able to retireve data from the layer
 		$pm = new PersistenceHAS ();
@@ -332,7 +402,9 @@ class Controller {
 		
 		$pm->writeDataToStore ( $hm );
 	}
-	// TODO
+	/**
+	 * sorts songs by album name
+	 */
 	public function sortbyAlbum() {
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
@@ -342,17 +414,17 @@ class Controller {
 		$sortedSongs = array();
 		
 	
-		usort($albums, array("Album", "cmp_obj"));
+		usort($albums, array("Album", "cmp_obj"));//built in sorting function
 		
 		foreach($albums as $album){
 			$sortedSongs = array_merge($sortedSongs, $album->getSongs());
 		}
 		
 		return $sortedSongs;
-		
-
 	}
-	// TODO
+	/**
+	 * Sorts songs by artist name
+	 */
 	public function sortbyArtist() {
 		$pm = new PersistenceHAS();
 		$hm = $pm->loadDataFromStore();
@@ -361,12 +433,12 @@ class Controller {
 		$sortedAlbums = array();
 		$sortedSongs = array();
 		
-		usort($artists, array("Artist", "cmp_obj"));
+		usort($artists, array("Artist", "cmp_obj")); //built in sorting funcion
 		
-		foreach($artists as $artist){
+		foreach($artists as $artist){//sorts albums by artists name
 			$sortedAlbums = array_merge($sortedAlbums, $artist->getAlbums());
 		}
-		foreach($sortedAlbums as $album){
+		foreach($sortedAlbums as $album){//get the songs from the albums 
 			$sortedSongs = array_merge($sortedSongs, $album->getSongs());
 		}
 		

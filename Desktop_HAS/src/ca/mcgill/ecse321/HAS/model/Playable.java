@@ -8,49 +8,49 @@ package ca.mcgill.ecse321.HAS.model;
 public abstract class Playable
 {
 
-	// ------------------------
-	// MEMBER VARIABLES
-	// ------------------------
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
 
-	// Playable Attributes
-	private String name;
+  //Playable Attributes
+  private String name;
 
-	// ------------------------
-	// CONSTRUCTOR
-	// ------------------------
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
 
-	public Playable(String aName)
-	{
-		name = aName;
-	}
+  public Playable(String aName)
+  {
+    name = aName;
+  }
 
-	// ------------------------
-	// INTERFACE
-	// ------------------------
+  //------------------------
+  // INTERFACE
+  //------------------------
 
-	public boolean setName(String aName)
-	{
-		boolean wasSet = false;
-		name = aName;
-		wasSet = true;
-		return wasSet;
-	}
+  public boolean setName(String aName)
+  {
+    boolean wasSet = false;
+    name = aName;
+    wasSet = true;
+    return wasSet;
+  }
 
-	public String getName()
-	{
-		return name;
-	}
+  public String getName()
+  {
+    return name;
+  }
 
-	public void delete()
-	{
-	}
+  public void delete()
+  {}
 
-	public abstract void play();
+  public abstract void play();
 
-	public String toString()
-	{
-		String outputString = "";
-		return super.toString() + "[" + "name" + ":" + getName() + "]"
-				+ outputString;
-	}
+  public String toString()
+  {
+    String outputString = "";
+    return super.toString() + "["+
+            "name" + ":" + getName()+ "]"
+     + outputString;
+  }
 }

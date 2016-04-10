@@ -223,8 +223,7 @@ public class Artist implements Comparable<Artist>
 			return false;
 		}
 		Artist existingMainArtist = aAlbum.getMainArtist();
-		boolean isNewMainArtist = existingMainArtist != null
-				&& !this.equals(existingMainArtist);
+		boolean isNewMainArtist = existingMainArtist != null && !this.equals(existingMainArtist);
 		if (isNewMainArtist)
 		{
 			aAlbum.setMainArtist(this);
@@ -309,8 +308,7 @@ public class Artist implements Comparable<Artist>
 	public String toString()
 	{
 		String outputString = "";
-		return super.toString() + "[" + "name" + ":" + getName() + "]"
-				+ outputString;
+		return super.toString() + "[" + "name" + ":" + getName() + "]" + outputString;
 	}
 
 	@Override

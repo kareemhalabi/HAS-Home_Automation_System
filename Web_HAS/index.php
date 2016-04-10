@@ -156,12 +156,8 @@ table {
 	<h2>
 	My Music Library</h2>
 	</div>
-<<<<<<< HEAD
 	
 <table id="table" align="center" >
-=======
-<table id="table" align="center">
->>>>>>> 540ba248ea762e618b36a5faadf7bca797c4cf40
 <tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>
 <?php 

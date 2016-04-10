@@ -21,6 +21,9 @@ body { text-align:center; }
 .error {
 	color: #FF0000;
 }
+#horizontal div {
+	display: inline-block;
+}
 .smallBox{
 	border: 2px solid blue;
 	width: 200px;
@@ -94,25 +97,34 @@ table {
 		
 		
 		?>
+	<div id="horizontal">
+	<div>
 	<form action="addMusic.php" method="post">
 		<input type="submit" value="Edit Music" />
 		<p></p>
 	</form>
-
+	</div>
+	<div> <pre>  </pre> </div>
+	<div>
 	<form action="selectRoom.php" method="post">
 		<input type="submit" value="Edit Rooms" />
-		<p></p>
+		<p> </p>
 	</form>
-
+	</div>
+	<div> <pre>  </pre> </div>
+	<div>
 	<form action="changeVolume.php" method="post">
 		<input type="submit" value="Change Volume" />
 		<p></p>
 	</form>
-
+	</div>
+	<div> <pre>  </pre> </div>
+	<div>
 	<form action="playlistView.php" method="post">
 		<input type="submit" value="Edit Playlists" />
 	</form>
-
+	</div>
+	</div>
 <br>
 	
 	<form action="playAlbum.php" method="post">

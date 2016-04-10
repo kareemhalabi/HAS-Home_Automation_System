@@ -103,7 +103,7 @@ public class TestHASControllerPlay
 	}
 
 	@Test
-	public void testPlaySongSingleRoom()
+	public void testPlayPlayableSingleRoom()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
@@ -123,9 +123,8 @@ public class TestHASControllerPlay
 	}
 
 	@Test
-	public void testPlayNoSongSingleRoom()
+	public void testPlayNoPlayableSingleRoom()
 	{
-		String error = "";
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 		Room room = h.getRoom(0);
@@ -135,15 +134,14 @@ public class TestHASControllerPlay
 			hc.playSingleRoom(null, room);
 		} catch (InvalidInputException e)
 		{
-			error = e.getMessage();
+			fail();
 		}
 
-		assertEquals("A playable must be selected! ", error);
 		assertFalse(room.hasPlayable());
 	}
 	
 	@Test
-	public void testPlaySongNoSingleRoom()
+	public void testPlayPlayableNoSingleRoom()
 	{
 		String error = "";
 		HAS h = HAS.getInstance();
@@ -163,7 +161,7 @@ public class TestHASControllerPlay
 	}
 	
 	@Test
-	public void testPlaySongRoomGroup()
+	public void testPlayPlayableRoomGroup()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
@@ -193,9 +191,8 @@ public class TestHASControllerPlay
 	}
 
 	@Test
-	public void testPlayNoSongRoomGroup()
+	public void testPlayNoPlayableRoomGroup()
 	{
-		String error = "";
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 
@@ -216,10 +213,9 @@ public class TestHASControllerPlay
 			hc.playRoomGroup(null, rg);
 		} catch (InvalidInputException e)
 		{
-			error = e.getMessage();
+			fail();
 		}
 
-		assertEquals("A playable must be selected! ", error);
 		assertFalse(rg.hasPlayable());
 	}
 

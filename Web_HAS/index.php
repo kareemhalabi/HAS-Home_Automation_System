@@ -73,6 +73,7 @@ table {
 		require_once "model/Room.php";
 		require_once "model/RoomGroup.php";
 		require_once "persistence/PersistenceHAS.php";
+		require_once (__DIR__ . '\controller\Controller.php');
 		
 		session_start ();
 		
@@ -86,6 +87,9 @@ table {
 			array_push($songName, $songs->getName());
 		}
 		
+		$c = new Controller();
+		$songarray = array();
+		$songarray = $c->sortbyAlbum();
 		//sorting method in controller that takes the songs->getAlbums->getNames and sorts by album name 
 		//into a new array that is returned with a list of songs that is in album name order
 		//
@@ -148,6 +152,15 @@ table {
 
 
 	<br>
+	<?php 
+	if(count($hm->getSongs()) > 0){
+	echo "<p>" . array_values($songarray)[0] . "</p>";
+	foreach ($songarray as $mySong){
+		echo "<p>" . $mySong->getName() . "</p>";
+	}
+	}
+	?>
+	<br>
 	
 	
 <form name="songlist">
@@ -185,6 +198,6 @@ foreach($hm->getRooms() as $room){
 endif;
 ?>
 </form>
-
+<?php $pm->writeDataToStore($hm);?>
 </body>
 </html>

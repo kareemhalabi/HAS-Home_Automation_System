@@ -86,7 +86,6 @@ public class Room implements Comparable<Room>
 		return has;
 	}
 
-	// the playing of the playable is set here
 	public boolean setPlayable(Playable aNewPlayable)
 	{
 		boolean wasSet = false;
@@ -103,14 +102,9 @@ public class Room implements Comparable<Room>
 	public String toString()
 	{
 		String outputString = "";
-		return super.toString() + "[" + "name" + ":" + getName() + ","
-				+ "volume" + ":" + getVolume() + "," + "mute" + ":" + getMute()
-				+ "]" + System.getProperties().getProperty("line.separator")
-				+ "  " + "playable = "
-				+ (getPlayable() != null
-						? Integer.toHexString(
-								System.identityHashCode(getPlayable()))
-						: "null")
+		return super.toString() + "[" + "name" + ":" + getName() + "," + "volume" + ":" + getVolume() + "," + "mute"
+				+ ":" + getMute() + "]" + System.getProperties().getProperty("line.separator") + "  " + "playable = "
+				+ (getPlayable() != null ? Integer.toHexString(System.identityHashCode(getPlayable())) : "null")
 				+ outputString;
 	}
 

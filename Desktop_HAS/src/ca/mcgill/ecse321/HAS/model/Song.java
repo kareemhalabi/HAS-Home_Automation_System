@@ -239,17 +239,15 @@ public class Song extends Playable implements Comparable<Song>
 	// line 14 "../../../../../../../../ump/160303721337/model.ump"
 	public void play()
 	{
+
 	}
 
 	public String toString()
 	{
 		String outputString = "";
-		return super.toString() + "[" + "duration" + ":" + getDuration() + ","
-				+ "position" + ":" + getPosition() + "]"
-				+ System.getProperties().getProperty("line.separator") + "  "
-				+ "album = "
-				+ (getAlbum() != null ? Integer.toHexString(
-						System.identityHashCode(getAlbum())) : "null")
+		return super.toString() + "[" + "duration" + ":" + getDuration() + "," + "position" + ":" + getPosition() + "]"
+				+ System.getProperties().getProperty("line.separator") + "  " + "album = "
+				+ (getAlbum() != null ? Integer.toHexString(System.identityHashCode(getAlbum())) : "null")
 				+ outputString;
 	}
 

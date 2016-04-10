@@ -48,9 +48,11 @@ public class TestPersistence {
 		
 		h.getAlbum(0).addSong("Sintara", 2000, 1);
 		h.getAlbum(1).addSong("The Cave", 100, 2);
+		h.getAlbum(1).addSong("Why?", 120, 3);
 		
 		h.addSong(h.getAlbum(0).getSong(0));
 		h.addSong(h.getAlbum(1).getSong(0));
+		h.addSong(h.getAlbum(1).getSong(1));
 		
 		h.addRoom(room1);
 		h.addRoom(room2);
@@ -97,8 +99,8 @@ public class TestPersistence {
 		assertEquals(0, h.getAlbums().size());
 		
 		//load model
-		h = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-		if(h == null)
+		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
+		if(h2 == null)
 		{
 			fail("Could not load file.");
 		}
@@ -107,51 +109,58 @@ public class TestPersistence {
 		Date d2 = new Date(2009,10,9);
 		
 		//check for albums
-		assertEquals(2, h.getAlbums().size());
+		assertEquals(2, h2.getAlbums().size());
 		
 		//check album number 1
-		assertEquals("Flume", h.getAlbum(0).getName().toString());
-		assertEquals("Indie", h.getAlbum(0).getGenre());
-		assertEquals("Flume", h.getAlbum(0).getMainArtist().getName());
-		assertEquals(d1, h.getAlbum(0).getReleaseDate());
+		assertEquals("Flume", h2.getAlbum(0).getName().toString());
+		assertEquals("Indie", h2.getAlbum(0).getGenre());
+		assertEquals("Flume", h2.getAlbum(0).getMainArtist().getName());
+		assertEquals(d1, h2.getAlbum(0).getReleaseDate());
 		
 		//check songs in the album 1
-		assertEquals("Sintara", h.getAlbum(0).getSong(0).getName());
-		assertEquals(2000, h.getAlbum(0).getSong(0).getDuration());
-		assertEquals(1, h.getAlbum(0).getSong(0).getPosition());
+		assertEquals("Sintara", h2.getAlbum(0).getSong(0).getName());
+		assertEquals(2000, h2.getAlbum(0).getSong(0).getDuration());
+		assertEquals(1, h2.getAlbum(0).getSong(0).getPosition());
 		
 		
 		//check album number 2
-		assertEquals("Sigh No More", h.getAlbum(1).getName());
-		assertEquals("Folk", h.getAlbum(1).getGenre());
-		assertEquals("Mumford and Sons", h.getAlbum(1).getMainArtist().getName());
-		assertEquals(d2, h.getAlbum(1).getReleaseDate());
+		assertEquals("Sigh No More", h2.getAlbum(1).getName());
+		assertEquals("Folk", h2.getAlbum(1).getGenre());
+		assertEquals("Mumford and Sons", h2.getAlbum(1).getMainArtist().getName());
+		assertEquals(d2, h2.getAlbum(1).getReleaseDate());
 		
 		//check songs in album 2
-		assertEquals("The Cave", h.getAlbum(1).getSong(0).getName());
-		assertEquals(100, h.getAlbum(1).getSong(0).getDuration());
-		assertEquals(2, h.getAlbum(1).getSong(0).getPosition());
+		assertEquals("The Cave", h2.getAlbum(1).getSong(0).getName());
+		assertEquals(100, h2.getAlbum(1).getSong(0).getDuration());
+		assertEquals(2, h2.getAlbum(1).getSong(0).getPosition());
 		
 		//check song 1 independently
-		assertEquals("Sintara", h.getSong(0).getName());
-		assertEquals(2000, h.getSong(0).getDuration());
-		assertEquals(1, h.getSong(0).getPosition());
+		assertEquals("Sintara", h2.getSong(0).getName());
+		assertEquals(2000, h2.getSong(0).getDuration());
+		assertEquals(1, h2.getSong(0).getPosition());
 		
 		//check song 2 independently
-		assertEquals("The Cave", h.getSong(1).getName());
-		assertEquals(100, h.getSong(1).getDuration());
-		assertEquals(2, h.getSong(1).getPosition());
+		assertEquals("The Cave", h2.getSong(1).getName());
+		assertEquals(100, h2.getSong(1).getDuration());
+		assertEquals(2, h2.getSong(1).getPosition());
 		
-		assertEquals(3, h.getRoomGroup(0).getRooms().size());
-		assertEquals("Kitchen", h.getRoomGroup(0).getRoom(0).getName());
-		assertEquals(7, h.getRoomGroup(0).getRoom(0).getVolume());
-		assertEquals(7, h.getRoom(0).getVolume());
+		assertEquals("Why?", h2.getSong(2).getName());
+		assertEquals(120, h2.getSong(2).getDuration());
+		assertEquals(3, h2.getSong(2).getPosition());
 		
-		assertEquals("Living Room", h.getRoom(1).getName());
+		assertEquals(3, h2.getRoomGroup(0).getRooms().size());
+		assertEquals("Kitchen", h2.getRoomGroup(0).getRoom(0).getName());
+		assertEquals(7, h2.getRoomGroup(0).getRoom(0).getVolume());
+		assertEquals(7, h2.getRoom(0).getVolume());
 		
-		assertTrue(h.getRoomGroup(0).getRoom(1).getMute());
-		assertTrue(h.getRoom(1).getMute());
+		assertEquals("Living Room", h2.getRoom(1).getName());
 		
+		assertTrue(h2.getRoomGroup(0).getRoom(1).getMute());
+		assertTrue(h2.getRoom(1).getMute());
+		
+		assertEquals("Playlist1", h2.getPlaylist(0).getName());
+		assertEquals("Sintara", h2.getPlaylist(0).getSong(0).getName());
+		assertEquals("The Cave", h2.getPlaylist(0).getSong(1).getName());
 	}
 
 }

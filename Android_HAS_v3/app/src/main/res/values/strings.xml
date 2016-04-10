@@ -43,5 +43,6 @@
     <string name="room_spinner_label">Add Room</string>
     <string name="addRoomToRoomGroup_button">Add Room to Group</string>
     <string name="in_room_label">In Room:</string>
+    <string name="in_room_group_label">In group:</string>
 
 </resources>

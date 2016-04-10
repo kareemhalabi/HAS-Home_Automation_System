@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ca.mcgill.ecse321.HAS.model.Room;
 import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.android_has_v3.R;
 
@@ -27,9 +26,7 @@ public class RoomGroupAdapter extends BaseAdapter{
     }
 
     @Override
-    public int getCount() {
-        return roomGroups.size();
-    }
+    public int getCount() { return roomGroups.size(); }
 
     @Override
     public Object getItem(int position) {

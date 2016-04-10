@@ -16,6 +16,8 @@ public class RoomGroup implements Comparable<RoomGroup>
 
 	// RoomGroup Attributes
 	private String name;
+	private int volume;
+	private boolean mute;
 
 	// RoomGroup Associations
 	private List<Room> rooms;
@@ -235,5 +237,25 @@ public class RoomGroup implements Comparable<RoomGroup>
 	{
 		assert (o != null);
 		return name.compareTo(o.getName());
+	}
+
+	public int getVolume()
+	{
+		return volume;
+	}
+
+	public void setVolume(int volume)
+	{
+		this.volume = volume;
+	}
+
+	public boolean getMute()
+	{
+		return mute;
+	}
+
+	public void setMute(boolean mute)
+	{
+		this.mute = mute;
 	}
 }

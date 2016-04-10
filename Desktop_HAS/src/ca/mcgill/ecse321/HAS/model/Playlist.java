@@ -7,7 +7,7 @@ import java.util.*;
 
 // line 73 "../../../../../../../../ump/160303721337/model.ump"
 // line 137 "../../../../../../../../ump/160303721337/model.ump"
-public class Playlist extends Playable
+public class Playlist extends Playable implements Comparable<Playlist>
 {
 
 	// ------------------------
@@ -178,6 +178,13 @@ public class Playlist extends Playable
 
 	public void play()
 	{
+	}
+	
+	@Override
+	public int compareTo(Playlist o)
+	{
+		assert (o != null);
+		return this.getName().compareTo(o.getName());
 	}
 
 }

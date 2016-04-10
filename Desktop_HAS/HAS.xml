@@ -1,61 +1,46 @@
 <HAS id="1">
-  <rooms id="2">
-    <room id="3">
-      <name>Hello</name>
-      <volume>50</volume>
-      <mute>true</mute>
-    </room>
-    <room id="4">
-      <name>My Name is Kristina</name>
-      <volume>50</volume>
-      <mute>true</mute>
-    </room>
-  </rooms>
-  <artists id="5">
-    <artist id="6">
-      <name>Louise Attaque</name>
-      <songs id="7"/>
-      <albums id="8">
-        <album id="9">
-          <name>Louise Attaque</name>
-          <genre>Folk</genre>
-          <releaseDate id="10">1997-03-20</releaseDate>
-          <songs id="11">
-            <song id="12">
-              <name>Amours</name>
-              <duration>117</duration>
-              <position>1</position>
-              <ftArtists id="13"/>
-              <album reference="9"/>
+  <rooms id="2"/>
+  <artists id="3">
+    <artist id="4">
+      <name>Mumford and Sons</name>
+      <albums id="5">
+        <album id="6">
+          <name>The Wilder</name>
+          <genre>Indie Rock</genre>
+          <releaseDate id="7">2015-05-04</releaseDate>
+          <songs id="8">
+            <song id="9">
+              <name>The Wolf</name>
+              <duration>221</duration>
+              <position>3</position>
+              <album reference="6"/>
             </song>
-            <song id="14">
-              <name>J&apos;T&apos;emmene Au Vent</name>
-              <duration>184</duration>
-              <position>2</position>
-              <ftArtists id="15"/>
-              <album reference="9"/>
+            <song id="10">
+              <name>Please work</name>
+              <duration>12</duration>
+              <position>10</position>
+              <album reference="6"/>
             </song>
           </songs>
-          <mainArtist reference="6"/>
+          <artist reference="4"/>
+        </album>
+        <album id="11">
+          <name>Babel</name>
+          <genre>Folk</genre>
+          <releaseDate id="12">2016-03-08</releaseDate>
+          <songs id="13"/>
+          <artist reference="4"/>
         </album>
       </albums>
     </artist>
   </artists>
-  <albums id="16">
-    <album reference="9"/>
+  <albums id="14">
+    <album reference="6"/>
+    <album reference="11"/>
   </albums>
-  <playlists id="17"/>
-  <songs id="18">
-    <song reference="12"/>
-    <song reference="14"/>
+  <playlists id="15"/>
+  <songs id="16">
+    <song reference="9"/>
+    <song reference="10"/>
   </songs>
-  <roomGroups id="19">
-    <ca.mcgill.ecse321.HAS.model.RoomGroup id="20">
-      <name>Kristina&apos;s Room Groups</name>
-      <rooms id="21">
-        <room reference="3"/>
-        <room reference="4"/>
-      </rooms>
-    </ca.mcgill.ecse321.HAS.model.RoomGroup>
-  </roomGroups>
 </HAS>

@@ -5,12 +5,9 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -19,14 +16,10 @@ import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
-import ca.mcgill.ecse321.HAS.model.Playlist;
-import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
-//TODO: check if it is needed to create a @Before
 public class TestHASController
 {
-	// TODO: Initialized variables
 	String name = "Flume";
 	String genre = "Indie";
 	String artName = "Oscar";
@@ -41,8 +34,9 @@ public class TestHASController
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
-		PersistenceXStream.setFilename("test" + File.separator + "ca" + File.separator + "mcgill" + File.separator
-				+ "ecse321" + File.separator + "controller" + File.separator + "data.xml");
+		PersistenceXStream.setFilename("test" + File.separator + "ca"
+				+ File.separator + "mcgill" + File.separator + "ecse321"
+				+ File.separator + "controller" + File.separator + "data.xml");
 		PersistenceXStream.setAlias("HAS", HAS.class);
 		PersistenceXStream.setAlias("album", Album.class);
 		PersistenceXStream.setAlias("artist", Artist.class);
@@ -55,6 +49,11 @@ public class TestHASController
 		h.delete();
 	}
 
+	// Both createAlbum and addSong are tested within in order to avoid
+	// 1) having to re-copy the same createAlbum before proceeding to AddSong
+	// 2) test all connections between artists, albums and songs
+	// Intermediary checks are present in order to be able to locate a test
+	// failure should a specific step of the process fail
 	@Test
 	public void testCreateAlbumAndAddSong()
 	{
@@ -72,24 +71,28 @@ public class TestHASController
 			fail();
 		}
 
+		// Persistence is simultaneously tested to check that createAlbum has
+		// indeed written the correct data into the xml file.
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 		checkResultAlbum(h2, name, genre, artName, d1);
+		assertEquals(1, h2.getAlbums().size());
 
-		assertEquals(1, h.getAlbums().size());
-
+		// an arbitrary featured artist is entered into the HAS system in order
+		// to fully check the functionality of addSongtoAlbum().
 		List<Artist> featured = new ArrayList<Artist>();
-
 		Artist ft1 = new Artist("Adele");
 		featured.add(ft1);
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
+					songPosition1, featured);
 		} catch (InvalidInputException e)
 		{
 			fail();
 		}
 
+		//Check the persistence once again to ensure proper functionality
 		HAS h3 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 		checkResultSong(h3, testSongName1, songDuration1, songPosition1);
 	}
@@ -102,7 +105,7 @@ public class TestHASController
 		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
-		String name1 = null;
+		String name1 = "";
 
 		Artist ar1 = new Artist(artName);
 
@@ -197,7 +200,7 @@ public class TestHASController
 		assertEquals(0, h.getAlbums().size());
 
 		@SuppressWarnings("deprecation")
-		Date d4 = new Date(116, 3, 2);
+		Date d4 = new Date(116, 3, 9);
 
 		Artist ar1 = new Artist(artName);
 
@@ -254,7 +257,7 @@ public class TestHASController
 	}
 
 	@Test
-	public void testCreateArtistNull()
+	public void testCreateArtistNoName()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
@@ -305,7 +308,8 @@ public class TestHASController
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1, songPosition1, featured);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration1,
+					songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -329,7 +333,8 @@ public class TestHASController
 
 		try
 		{
-			hc.addSongtoAlbum(null, testSongName1, songDuration1, songPosition1, featured);
+			hc.addSongtoAlbum(null, testSongName1, songDuration1, songPosition1,
+					featured);
 		}
 
 		catch (InvalidInputException e)
@@ -368,7 +373,8 @@ public class TestHASController
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration2, songPosition1, featured);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration2,
+					songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -408,7 +414,8 @@ public class TestHASController
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition2, featured);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
+					songPosition2, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -424,7 +431,6 @@ public class TestHASController
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
-		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
 		Artist ar1 = new Artist(artName);
@@ -444,7 +450,8 @@ public class TestHASController
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
+					songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
@@ -453,14 +460,13 @@ public class TestHASController
 		}
 		assertEquals(0, h.getAlbum(0).getSong(0).getFtArtists().size());
 	}
-	
+
 	@Test
 	public void addSongManyFeatured()
 
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
-		String error = "";
 		assertEquals(0, h.getAlbums().size());
 
 		Artist ar1 = new Artist(artName);
@@ -478,7 +484,7 @@ public class TestHASController
 
 		List<Artist> featured = new ArrayList<Artist>();
 		Artist ft1 = new Artist("Adele");
-		Artist ft2 =  new Artist("Black Jack");
+		Artist ft2 = new Artist("Black Jack");
 		Artist ft3 = new Artist("Keiko");
 		featured.add(ft1);
 		featured.add(ft2);
@@ -486,84 +492,76 @@ public class TestHASController
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, featured);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
+					songPosition1, featured);
 		}
 
 		catch (InvalidInputException e)
 		{
 			fail();
 		}
-		
+
 		assertEquals(3, h.getAlbum(0).getSong(0).getFtArtists().size());
-		assertEquals("Adele", h.getAlbum(0).getSong(0).getFtArtist(0).getName());
-		assertEquals("Black Jack", h.getAlbum(0).getSong(0).getFtArtist(1).getName());
-		assertEquals("Keiko", h.getAlbum(0).getSong(0).getFtArtist(2).getName());
+		assertEquals("Adele",
+				h.getAlbum(0).getSong(0).getFtArtist(0).getName());
+		assertEquals("Black Jack",
+				h.getAlbum(0).getSong(0).getFtArtist(1).getName());
+		assertEquals("Keiko",
+				h.getAlbum(0).getSong(0).getFtArtist(2).getName());
 	}
 
 	@Test
-	public void testSortArtists()
+	public void testAddSongSamePosition()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 
-		String[] names =
-		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
-		for (String name : names)
-			h.addArtist(new Artist(name));
-		hc.sortArtists();
+		assertEquals(0, h.getAlbums().size());
 
-		Arrays.sort(names);
-		for (int i = 0; i < names.length; i++)
+		Artist ar1 = new Artist(artName);
+
+		try
 		{
-			assertTrue(names[i].equals(h.getArtist(i).getName()));
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			fail();
 		}
+
+		assertEquals(1, h.getAlbums().size());
+
+		List<Artist> featured = new ArrayList<Artist>();
+
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
+					songPosition1, featured);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		String errors = "";
+
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), "Please fail", songDuration1,
+					songPosition1, null);
+		} catch (InvalidInputException e)
+		{
+			errors = e.getMessage();
+		}
+
+		assertEquals(
+				"A song already occupies this position, please choose another position!",
+				errors);
 	}
 
-	@Test
-	public void testSortAlbums()
-	{
-		HAS h = HAS.getInstance();
-		HASController hc = new HASController();
-
-		String[] names =
-		{ "Bob", "Jeb", "Oscar", "Vlad", "Aidan", "Kristina", "Aurélie", "Andrew", "Wang", "Gabe" };
-
-		@SuppressWarnings("deprecation")
-		Date d1 = new Date(116, 02, 8);
-		
-		Artist Bob = new Artist("Bob the Artist");
-		h.addArtist(Bob);
-
-		for (String name : names)
-		{
-			try{
-			hc.createAlbum(name, "Sort Yourself", d1, Bob);
-			}
-			catch(InvalidInputException e)
-			{
-				fail();
-			}
-		}
-		
-		hc.sortAlbums();
-		List<Album> sortedAlbums = h.getAlbums();
-
-		Arrays.sort(names);
-		for (int i = 0; i < names.length; i++)
-		{
-			assertTrue(names[i].equals(h.getAlbum(i).getName()));
-		}
-		
-		Artist bob = h.getArtist(0);
-		List<Album> albums = bob.getAlbums();
-		
-		for(Album a: sortedAlbums)
-		{
-			assertTrue(albums.contains(a));
-		}
-	}
-
-	private void checkResultSong(HAS h, String testSongName1, int songDuration1, int songPosition1)
+	private void checkResultSong(	HAS h, String testSongName1, int songDuration1,
+									int songPosition1)
 	{
 		assertEquals(testSongName1, h.getAlbum(0).getSong(0).getName());
 		assertEquals(songDuration1, h.getAlbum(0).getSong(0).getDuration());
@@ -574,7 +572,8 @@ public class TestHASController
 		assertEquals(songPosition1, h.getSong(0).getPosition());
 	}
 
-	private void checkResultAlbum(HAS h, String name, String genre, String artName, Date date)
+	private void checkResultAlbum(	HAS h, String name, String genre,
+									String artName, Date date)
 	{
 		assertEquals(1, h.getAlbums().size());
 		assertEquals(name, h.getAlbum(0).getName());

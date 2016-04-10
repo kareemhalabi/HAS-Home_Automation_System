@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="Desktop_HAS" basedir="." default="compile">
 
-	<property name="src.dir"     		value="src"/>
-	<property name="test.dir"     		value="test"/>
-	<property name="test.report.dir" 	value="test_reports"/>
-	<property name="build.dir"   		value="build"/>
-	<property name="classes.dir" 		value="${build.dir}/classes"/>
-	<property name="jar.dir"     		value="${build.dir}/jar"/>
-	<property name="desktop.jar.file" 	value="${jar.dir}/${ant.project.name}.jar"/>
-	<property name="android.jar.file"	value="../Android_HAS_v3/app/libs/HAS_for_Android.jar"/>
-	<property name="lib.dir"     		value="lib"/>
-	<property name="main.class"			value="ca.mcgill.ecse321.HAS.application.HASApp"/>
+	<property name="src.dir"     value="src"/>
+	<property name="test.dir"     value="test"/>
+	<property name="test.report.dir" value="test_reports"/>
+	<property name="build.dir"   value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir"     value="${build.dir}/jar"/>
+	<property name="lib.dir"     value="lib"/>
+	<property name="main.class"	value="ca.mcgill.ecse321.HAS.application.HASApp"/>
     
 	<path id="HAS.classpath">
         <pathelement location="${classes.dir}"/>
 		<path refid="libraries.path"/>
-<!--        <fileset dir="${lib.dir}">
-        	<include name="**/*.jar"/>
-        	<exclude name="**/junit.jar"/>
-        	<exclude name="**/org.hamcrest.core*.jar"/>
-        </fileset> -->
     </path>
 	
 	<path id="libraries.path">
@@ -44,7 +37,7 @@
 	<target name="compile" depends="clean">
     	<mkdir dir="${classes.dir}"/>
 		
-    	<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"> <!-- Excludes view for now -->
+    	<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
     		<classpath refid="HAS.classpath"/>
     	</javac>
 
@@ -66,16 +59,11 @@
 			
 			<formatter type="xml" usefile="true" />
 			<test todir="${test.report.dir}" name="ca.mcgill.ecse321.HAS.AllTests"/>
-<!--        	<batchtest todir="${test.report.dir}" >
-        		<fileset dir="${classes.dir}">
-        			<include name="**/AllTests.class" />
-                </fileset>
-            </batchtest> -->
         </junit>
     </target>
 	
 	<target name="Android_jar" depends="test">
-		<jar destfile="${android.jar.file}">
+		<jar destfile="../Android_HAS_v3/app/libs/HAS_for_Android.jar">
 			<fileset dir="${classes.dir}">
 				<include name="ca/mcgill/ecse321/HAS/controller/**"/>
 				<include name="ca/mcgill/ecse321/HAS/model/**"/>
@@ -90,28 +78,20 @@
 	</target>
 	
 	
-	<target name="Desktop_jar" depends="test">
+	<target name="Desktop_jar" depends="compile">
 		<mkdir dir="${jar.dir}"/>
 		
-		<manifestclasspath property="manifest.classpath" jarfile="${desktop.jar.file}">
+		<manifestclasspath property="manifest.classpath" jarfile="${jar.dir}/${ant.project.name}.jar">
             <classpath refid="HAS.classpath"/>
         </manifestclasspath>
 		
-		<jar destfile="${desktop.jar.file}" excludes="**/*Test*.class" 
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" excludes="**/*Test*.class" 
 			basedir="${classes.dir}">
 			<manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
 				<attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>	
 		</jar>
-	</target>
-	
-	<target name="run" depends="Desktop_jar">
-		<java fork="true" jar="${desktop.jar.file}"/>
-	</target>
-	
-	<target name="re-run" description="Run an already compiled and tested jar">
-		<java fork="true" jar="${desktop.jar.file}"/>
 	</target>
 	
 </project>

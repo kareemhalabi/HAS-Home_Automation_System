@@ -1,0 +1,14 @@
+<HAS id="1">
+  <rooms id="2"/>
+  <artists id="3">
+    <artist id="4">
+      <name>Bob</name>
+      <songs id="5"/>
+      <albums id="6"/>
+    </artist>
+  </artists>
+  <albums id="7"/>
+  <playlists id="8"/>
+  <songs id="9"/>
+  <roomGroups id="10"/>
+</HAS>

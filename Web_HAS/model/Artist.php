@@ -287,6 +287,16 @@ class Artist
   {
     return $this == $compareTo;
   }
+  
+  static function cmp_obj($a, $b){
+  	$al = strtolower($a->getName());
+  	$bl = strtolower($b->getName());
+  	if($al ==$bl){
+  		return 0;
+  	}
+  	return ($al > $bl) ? +1: -1;
+  	 
+  }
 
   public function delete()
   {

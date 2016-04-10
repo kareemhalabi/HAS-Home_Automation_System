@@ -6,7 +6,6 @@
 <style>
 .smallBox{
 	border: 2px solid blue;
-	width: 250px;
 	margin: auto;
 }
 .error {
@@ -23,6 +22,9 @@ body { text-align:center; }
 		<h1>Adjust Volume</h1>
 
 	</div>
+	<form action="index.php" method="post" style="float: left;">
+		<input type="submit" value="Go Home" />
+</form><br>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -91,8 +93,6 @@ body { text-align:center; }
 		</p>
 	</form>
 	
-	<form action="index.php" method="post">
-		<input type="submit" value="Home" />
-	</form>
+	
 </body>
 </html>

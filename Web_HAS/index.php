@@ -43,6 +43,7 @@ tr:hover{
 table {
     border: 1px solid blue;
 }
+
 </style>
 <meta charset="UTF-8">
 <title>HAS</title>
@@ -88,7 +89,9 @@ table {
 		}
 		
 		$c = new Controller();
-		$songarray = array();
+		$songarrayAlbum = array();
+		$songarrayAritst = array();
+		
 		
 		?>
 	<form action="addMusic.php" method="post">
@@ -110,8 +113,12 @@ table {
 		<input type="submit" value="Edit Playlists" />
 	</form>
 
-
+<br>
+	
 	<form action="playAlbum.php" method="post">
+	<div class="smallBox">
+<h2>Play</h2>
+</div>
 	<?php
 	echo "<p>Albums: <select name='albumspinner'>";
 	foreach ( $hm->getAlbums () as $album ) {
@@ -156,15 +163,16 @@ table {
 	<h2>
 	My Music Library</h2>
 	</div>
-	
+<!-- Sort by... two buttons, clicking one refreshes index, stores $c->sortby... into a $_SESSION variable, inside table call$_SESSION variable -->
+	<input type="radio" name="sort" value="album" checked>Sort by Album<input type="radio" name="sort" value="artist">Sort by Artist<br>
 <table id="table" align="center" >
 <tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>
 <?php 
-if(count($songarray)==0){
-	$songarray = $c->sortbyAlbum();
+if(count($songarrayAlbum)==0){
+	$songarrayAlbum = $c->sortbyAlbum();
 }
-foreach ($songarray as $song): ?>
+foreach ($songarrayAlbum as $song): ?>
       <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td><td>" . $song->getDuration() . "</td><td>" . $song->getAlbum()->getGenre() . "</td></tr>"; ?>
 <?php endforeach; ?>
   </tbody>

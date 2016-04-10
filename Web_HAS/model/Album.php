@@ -208,8 +208,14 @@ class Album extends Playable
     return $this == $compareTo;
   }
   
-  public function compareTo($compareTo){
-  	return $this->getName() == $compareTo->getName();
+  static function cmp_obj($a, $b){
+  	$al = strtolower($a->getName());
+  	$bl = strtolower($b->getName());
+  	if($al ==$bl){
+  		return 0;
+  	}
+  	return ($al > $bl) ? +1: -1;
+  	
   }
   
 

@@ -89,10 +89,6 @@ table {
 		
 		$c = new Controller();
 		$songarray = array();
-		$songarray = $c->sortbyAlbum();
-		//sorting method in controller that takes the songs->getAlbums->getNames and sorts by album name 
-		//into a new array that is returned with a list of songs that is in album name order
-		//
 		
 		?>
 	<form action="addMusic.php" method="post">
@@ -152,17 +148,21 @@ table {
 
 
 	<br>
-	<?php 
-	if(count($hm->getSongs()) > 0){
-	echo "<p>" . array_values($songarray)[0] . "</p>";
-	foreach ($songarray as $mySong){
-		echo "<p>" . $mySong->getName() . "</p>";
-	}
-	}
+	
+<form action="index.php" method="post">
+<?php 
+	$songarray = $c->sortbyAlbum();
 	?>
-	<br>
-	
-	
+<input type="submit" value="Sort by Album">
+</form>
+
+<form action="index.php" method="post">
+<?php 
+	$songarray = $c->sortbyArtist();
+?>
+<input type="submit" value="Sort by Artist">
+</form>
+
 <form name="songlist">
 <?php if (count($songName) > 0): ?>
 <div class="smallBox">
@@ -172,14 +172,20 @@ table {
 <table id="table" align="center" >
 <tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>
-<?php foreach ($hm->getSongs() as $song): ?>
+<?php 
+if(count($songarray)==0){
+	$songarray = $c->sortbyAlbum();
+}
+foreach ($songarray as $song): ?>
       <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td><td>" . $song->getDuration() . "</td><td>" . $song->getAlbum()->getGenre() . "</td></tr>"; ?>
 <?php endforeach; ?>
   </tbody>
 </table>
 <?php endif; ?>
 </form>
+
 <br>
+
 <form name="currentPlayables">
 <?php if (count($hm->getRooms()) > 0):?>
 <div class="smallBox">
@@ -193,6 +199,18 @@ foreach($hm->getRooms() as $room){
 		echo "<p>" . $room->getName() . ": " . $room->getPlayable()->getName() . "</p>";
 	}else{
 		echo "<p>" . $room->getName() . ": Nothing </p>";
+	}
+}
+endif;
+?>
+<?php if (count($hm->getRoomGroups()) > 0):?>
+<?php 
+foreach($hm->getRoomGroups() as $group){
+	//DOESNT WORK
+	if($group->hasPlayable()){
+		echo "<p>" . $group->getName() . ": " . $group->getPlayable()->getName() . "</p>";
+	}else{
+		echo "<p>" . $group->getName() . ": Nothing </p>";
 	}
 }
 endif;

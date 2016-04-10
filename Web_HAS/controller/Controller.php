@@ -72,7 +72,7 @@ class Controller {
 			throw new Exception ( "Position needs to be greater than 0! " );
 		} else if ($myAlbum == null) {
 			throw new Exception ( "Album does not exist! " );
-		} else {
+		}else {
 			
 			$song = new Song ( $songName, $duration, $position, $myAlbum );
 			$hm->addSong ( $song );
@@ -339,20 +339,37 @@ class Controller {
 		
 		//sort each album
 		$albums = $hm->getAlbums();
-	
-		sort($albums);
+		$sortedSongs = array();
 		
-		//combine each album.getSongs into an array
-		$orderedSongs = array();
+	
+		usort($albums, array("Album", "cmp_obj"));
+		
 		foreach($albums as $album){
-			array_merge($orderedSongs, $album->getSongs());
+			$sortedSongs = array_merge($sortedSongs, $album->getSongs());
 		}
 		
-		return $orderedSongs;
+		return $sortedSongs;
 		
 
 	}
 	// TODO
 	public function sortbyArtist() {
+		$pm = new PersistenceHAS();
+		$hm = $pm->loadDataFromStore();
+		
+		$artists = $hm->getArtists();
+		$sortedAlbums = array();
+		$sortedSongs = array();
+		
+		usort($artists, array("Artist", "cmp_obj"));
+		
+		foreach($artists as $artist){
+			$sortedAlbums = array_merge($sortedAlbums, $artist->getAlbums());
+		}
+		foreach($sortedAlbums as $album){
+			$sortedSongs = array_merge($sortedSongs, $album->getSongs());
+		}
+		
+		return $sortedSongs;
 	}
 }

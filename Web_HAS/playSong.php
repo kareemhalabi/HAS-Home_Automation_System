@@ -24,6 +24,7 @@ body {
 		<input type="submit" value="Go Home" />
 </form>
 <audio src=""></audio>
+<br>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -105,9 +106,6 @@ body {
 		</form>
 		
 		
-	<form action="index.php" method="post">
-		<input type="submit" value="Home" />
-	</form>
 	<?php $pm->writeDataToStore($hm);?>
 	</body>
 	</html>

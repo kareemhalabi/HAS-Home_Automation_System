@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.android_has_v3.PlayableItemClickListener;
 import ca.mcgill.ecse321.android_has_v3.R;
 import ca.mcgill.ecse321.android_has_v3.artists.ArtistAdapter;
 
@@ -29,6 +30,7 @@ public class PlaylistNavFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_playlist_nav, container, false);
 
         ListView listView = (ListView) v.findViewById(R.id.playlist_list_view);
+        listView.setOnItemClickListener(new PlayableItemClickListener());
 
         HAS h = HAS.getInstance();
 

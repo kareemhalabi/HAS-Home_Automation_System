@@ -3,11 +3,16 @@ package ca.mcgill.ecse321.android_has_v3;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Playable;
+import ca.mcgill.ecse321.HAS.model.Room;
+import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.android_has_v3.roomgroups.RoomGroupAdapter;
 import ca.mcgill.ecse321.android_has_v3.rooms.RoomAdapter;
 
@@ -46,8 +51,37 @@ public class SendPlayable extends AppCompatActivity {
 
         ListView roomListView = (ListView) findViewById(R.id.room_list_view);
         roomListView.setAdapter(new RoomAdapter(getApplicationContext(), h.getRooms()));
+        roomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Room selectedRoom = (Room) parent.getAdapter().getItem(position);
+                    selectedRoom.setPlayable(selectedPlayable);
+
+                    String confirmationMessage = "Playing: " + selectedPlayable.getName() + " in " +
+                            selectedRoom.getName();
+                    Toast confirmation = Toast.makeText(getApplicationContext(),
+                            confirmationMessage, Toast.LENGTH_SHORT);
+                    confirmation.show();
+                    finish();
+                }
+            }
+        );
 
         ListView roomGroupListView = (ListView) findViewById(R.id.room_group_list_view);
         roomGroupListView.setAdapter(new RoomGroupAdapter(getApplicationContext(), h.getRoomGroups()));
+        roomGroupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RoomGroup selectedRoomGroup = (RoomGroup) parent.getAdapter().getItem(position);
+                selectedRoomGroup.setPlayable(selectedPlayable);
+
+                String confirmationMessage = "Playing: " + selectedPlayable.getName() + " in " +
+                        selectedRoomGroup.getName();
+                Toast confirmation = Toast.makeText(getApplicationContext(),
+                        confirmationMessage, Toast.LENGTH_SHORT);
+                confirmation.show();
+                finish();
+            }
+        });
     }
 }

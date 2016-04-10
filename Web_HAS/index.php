@@ -149,19 +149,6 @@ table {
 
 	<br>
 	
-<form action="index.php" method="post">
-<?php 
-	$songarray = $c->sortbyAlbum();
-	?>
-<input type="submit" value="Sort by Album">
-</form>
-
-<form action="index.php" method="post">
-<?php 
-	$songarray = $c->sortbyArtist();
-?>
-<input type="submit" value="Sort by Artist">
-</form>
 
 <form name="songlist">
 <?php if (count($songName) > 0): ?>
@@ -169,6 +156,7 @@ table {
 	<h2>
 	My Music Library</h2>
 	</div>
+	
 <table id="table" align="center" >
 <tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>

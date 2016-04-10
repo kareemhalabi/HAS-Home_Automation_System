@@ -46,26 +46,25 @@ public class RoomGroupAdapter extends BaseAdapter{
 
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.listview_item_room_group, null);
+            vi = inflater.inflate(R.layout.listview_item, null);
 
         RoomGroup roomGroup = roomGroups.get(position);
 
-        TextView roomGroupName = (TextView) vi.findViewById(R.id.room_group_nameTextView);
+        TextView roomGroupName = (TextView) vi.findViewById(R.id.top_left_TextView);
         roomGroupName.setText(roomGroup.getName());
 
+        TextView numberOfRooms = (TextView) vi.findViewById(R.id.top_right_TextView);
+        String numRooms = "" + roomGroup.numberOfRooms() + " Room";
+        if(roomGroup.numberOfRooms() != 1) {
+            numRooms += "s";
+        }
+        numberOfRooms.setText(numRooms);
 
         if(roomGroup.hasPlayable()) {
-            TextView playableName = (TextView) vi.findViewById(R.id.room_group_playableNameTextView);
+            TextView playableName = (TextView) vi.findViewById(R.id.bottom_left_TextView);
             String nowPlaying = "Playing: " + roomGroup.getPlayable().getName();
             playableName.setText(nowPlaying);
         }
-
-        TextView numberOfRooms = (TextView) vi.findViewById(R.id.room_group_size_TextView);
-        String numRooms = "" + roomGroup.numberOfRooms() + " Room";
-        if(roomGroup.numberOfRooms() != 1)
-            numRooms += "s";
-        numberOfRooms.setText(numRooms);
-
         return vi;
     }
 }

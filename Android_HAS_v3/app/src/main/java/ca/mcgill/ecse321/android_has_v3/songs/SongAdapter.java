@@ -51,21 +51,21 @@ public class SongAdapter extends BaseAdapter{
 
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.listview_item_song, null);
+            vi = inflater.inflate(R.layout.listview_item, null);
 
         Song song = songs.get(position);
 
-        TextView songName = (TextView) vi.findViewById(R.id.song_nameTextView);
+        TextView songName = (TextView) vi.findViewById(R.id.top_left_TextView);
         songName.setText(song.getName());
 
         // duration appears as "m...mm:ss"
-        TextView songDuration = (TextView) vi.findViewById(R.id.song_duratonTextView);
+        TextView songDuration = (TextView) vi.findViewById(R.id.top_right_TextView);
         int duration = song.getDuration();
         String formattedDuration = String.format("%d:%02d", (duration/60), (duration%60));
         songDuration.setText(formattedDuration);
 
         // artist appears as "By: MainArtist ft FtArtist1, FtArtist2, ... , FtArtistN"
-        TextView songArtist = (TextView) vi.findViewById(R.id.song_artistsTextView);
+        TextView songArtist = (TextView) vi.findViewById(R.id.bottom_left_TextView);
         String formattedArtist = "By: " + song.getAlbum().getMainArtist().getName();
         if(song.hasFtArtists()) {
             formattedArtist += " ft ";
@@ -78,7 +78,7 @@ public class SongAdapter extends BaseAdapter{
         songArtist.setText(formattedArtist);
 
         // album appears as "Album:position"
-        TextView songAlbum = (TextView) vi.findViewById(R.id.song_albumTextView);
+        TextView songAlbum = (TextView) vi.findViewById(R.id.bottom_right_TextView);
         String formattedAlbum = song.getAlbum().getName() + ": " + song.getPosition();
         songAlbum.setText(formattedAlbum);
 

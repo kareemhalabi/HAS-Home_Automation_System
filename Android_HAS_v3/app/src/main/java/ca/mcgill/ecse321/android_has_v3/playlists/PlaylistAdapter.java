@@ -38,13 +38,13 @@ public class PlaylistAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.listview_item_playlist, null);
+            vi = inflater.inflate(R.layout.listview_item, null);
 
         Playlist playlist = playlists.get(position);
-        TextView playlistName = (TextView) vi.findViewById(R.id.playlist_nameTextView);
+        TextView playlistName = (TextView) vi.findViewById(R.id.top_left_TextView);
         playlistName.setText(playlist.getName());
 
-        TextView numberOfSongs = (TextView) vi.findViewById(R.id.playlist_song_number_TextView);
+        TextView numberOfSongs = (TextView) vi.findViewById(R.id.bottom_left_TextView);
 
         String numSongs = "" + playlist.numberOfSongs() + " Song";
         if(playlist.numberOfSongs() != 1)

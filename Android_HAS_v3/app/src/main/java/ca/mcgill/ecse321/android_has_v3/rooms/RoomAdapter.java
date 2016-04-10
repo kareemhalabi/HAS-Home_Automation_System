@@ -47,26 +47,26 @@ public class RoomAdapter extends BaseAdapter{
 
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.listview_item_room, null);
+            vi = inflater.inflate(R.layout.listview_item, null);
 
         Room room = rooms.get(position);
 
-        TextView roomName = (TextView) vi.findViewById(R.id.room_nameTextView);
+        TextView roomName = (TextView) vi.findViewById(R.id.top_left_TextView);
         roomName.setText(room.getName());
 
-        TextView roomVolume = (TextView) vi.findViewById(R.id.room_volumeTextView);
+        TextView roomVolume = (TextView) vi.findViewById(R.id.top_right_TextView);
         int volumeAmount = room.getVolume();
         String volume = "Volume: " + volumeAmount;
         roomVolume.setText(volume);
 
         if(room.hasPlayable()) {
-            TextView playableName = (TextView) vi.findViewById(R.id.room_playableNameTextView);
+            TextView playableName = (TextView) vi.findViewById(R.id.bottom_left_TextView);
             String nowPlaying = "Playing: " + room.getPlayable().getName();
             playableName.setText(nowPlaying);
         }
 
         if(room.getMute()) {
-            TextView muteStatus = (TextView) vi.findViewById(R.id.room_muteTextView);
+            TextView muteStatus = (TextView) vi.findViewById(R.id.bottom_right_TextView);
             muteStatus.setText("Muted");
         }
 

@@ -7,9 +7,23 @@
 .error {
 	color: #FF0000;
 }
+.boxed{
+	border: 2px solid red;
+	margin: auto;
+}
+body {
+	 text-align:center; 
+	}
 </style>
 </head>
 <body>
+<div class="boxed" > 
+<h1>Please Choose a Location</h1>
+</div>
+<form action="index.php" method="post" style="float: left;">
+		<input type="submit" value="Go Home" />
+</form>
+<audio src=""></audio>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -50,7 +64,7 @@
 		
 		<form action="playSongRoom.php" method="post">
 		<?php
-		echo "Which room or group of rooms would you like to play the song: {$name}";
+		echo "Play {$name} in a Room?";
 		?>
 		<?php 
 		echo "<p>Room: <select name='roomspinner'>";
@@ -71,6 +85,9 @@
 		
 		
 		<form action="playSongRG.php" method="post">
+		<?php
+		echo "Play {$name} in a Room Group?";
+		?>
 		<?php 
 		echo "<p>Group: <select name='groupspinner'>";
 		foreach ( $hm->getRoomGroups() as $group) {

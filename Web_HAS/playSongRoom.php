@@ -45,7 +45,6 @@ $song = $_SESSION['song'];
 $songName = $song->getName();
 
 $name = $myRoom->getName();
-
 $c = new Controller();
 $c->playPlayableRoom($myRoom, $song);
 ?>
@@ -54,5 +53,6 @@ $c->playPlayableRoom($myRoom, $song);
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
+	<?php $pm->writeDataToStore($hm);?>
 </body>
 </html>

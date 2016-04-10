@@ -7,7 +7,7 @@ import java.util.*;
 
 // line 36 "../../../../../../../../ump/160303721337/model.ump"
 // line 173 "../../../../../../../../ump/160303721337/model.ump"
-public class RoomGroup implements Comparable<RoomGroup>
+public class RoomGroup extends Location implements Comparable<RoomGroup>
 {
 
 	// ------------------------
@@ -15,7 +15,6 @@ public class RoomGroup implements Comparable<RoomGroup>
 	// ------------------------
 
 	// RoomGroup Attributes
-	private String name;
 
 	// RoomGroup Associations
 	private List<Room> rooms;
@@ -25,9 +24,9 @@ public class RoomGroup implements Comparable<RoomGroup>
 	// CONSTRUCTOR
 	// ------------------------
 
-	public RoomGroup(String aName, Room... allRooms)
+	public RoomGroup(String aName, int aVolume, boolean aMute, Room... allRooms)
 	{
-		name = aName;
+		super(aName, aVolume, aMute);
 		rooms = new ArrayList<Room>();
 		boolean didAddRooms = setRooms(allRooms);
 		if (!didAddRooms)
@@ -40,19 +39,6 @@ public class RoomGroup implements Comparable<RoomGroup>
 	// ------------------------
 	// INTERFACE
 	// ------------------------
-
-	public boolean setName(String aName)
-	{
-		boolean wasSet = false;
-		name = aName;
-		wasSet = true;
-		return wasSet;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
 
 	public Room getRoom(int index)
 	{
@@ -234,6 +220,6 @@ public class RoomGroup implements Comparable<RoomGroup>
 	public int compareTo(RoomGroup o)
 	{
 		assert (o != null);
-		return name.compareTo(o.getName());
+		return this.getName().compareTo(o.getName());
 	}
 }

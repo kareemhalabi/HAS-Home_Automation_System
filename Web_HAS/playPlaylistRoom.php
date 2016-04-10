@@ -56,5 +56,6 @@ $c->playPlayableRoom($myRoom, $playlist);
 <form action="index.php" method="post">
 		<input type="submit" value="Home" />
 	</form>
+	<?php $pm->writeDataToStore($hm);?>
 </body>
 </html>

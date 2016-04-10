@@ -142,8 +142,7 @@ div, h3, p { text-align:center; }
 		</p>
 	</form>
 	
-		
-		
-		</span>
+</body>
+</html>
 	
 		

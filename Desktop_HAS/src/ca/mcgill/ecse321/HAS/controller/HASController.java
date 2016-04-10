@@ -74,7 +74,7 @@ public class HASController
 			error = error + "Release date cannot be in the future! ";
 		if (ar == null)
 			error = error + "Album must have an artist! ";
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		Album a = new Album(name, genre, releaseDate, ar);
@@ -111,26 +111,28 @@ public class HASController
 
 		if (a == null)
 			error = error + "Song must belong to an album! ";
-		// TODO
-		// if (!h.getAlbums().contains(a))
-		// error = error + "Album does not exist! ";
-
 		if (aName == null || aName.trim().length() == 0)
 			error = error + "Song must have a name! ";
-
 		if (aDuration <= 0)
 			error = error + "Song must have a duration! ";
 		if (aPosition <= 0)
 			error = error + "Song must have a position! ";
+		if (a != null)
+		{
+			for (Song s : a.getSongs())
+			{
+				if (aPosition == s.getPosition())
+					error = error
+							+ "A song already occupies this position, please choose another position!";
+			}
+		}
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		Song newSong = new Song(aName, aDuration, aPosition, a);
 		h.addSong(newSong);
 
-		// TODO: CHECK IF CAN BE REMOVED, lines wouldn't execute if the list has
-		// no entries
 		if (ftArtists != null)
 		{
 			for (Artist ftar : ftArtists)
@@ -139,6 +141,32 @@ public class HASController
 
 		sortSongs(a);
 
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	/**
+	 * Adds a featured artist to a song
+	 * 
+	 * @param song
+	 *            The song
+	 * @param ar
+	 *            The featured artist
+	 * @throws InvalidInputException
+	 */
+	public void addFeaturedArtist(Song song, Artist ar)
+			throws InvalidInputException
+	{
+		HAS h = HAS.getInstance();
+		String error = "";
+		if (song == null)
+			error = error + "Must select a song to add a featured artist!";
+		if (ar == null)
+			error = error + "Must select a featured artist!";
+
+		if (error.trim().length() > 0)
+			throw new InvalidInputException(error);
+
+		song.addFtArtist(ar);
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
@@ -163,7 +191,7 @@ public class HASController
 		if (songs == null || songs.size() == 0)
 			error = error + "Playlist must have at least one song!";
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		Song initialSong = songs.get(0);
@@ -175,6 +203,8 @@ public class HASController
 
 		h.addPlaylist(newPlaylist);
 		addSongtoPlaylist(newPlaylist, modifiedSongs);
+
+		sortPlaylists();
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -200,7 +230,7 @@ public class HASController
 		if (songs == null || songs.size() == 0)
 			error = error + "Must select at least one song to add to playlist!";
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		for (Song song : songs)
@@ -227,11 +257,13 @@ public class HASController
 
 		if (name == null || name.trim().length() == 0)
 			error = error + "Room must have a name!";
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		Room newRoom = new Room(name, volume, mute);
 		h.addRoom(newRoom);
+
+		sortRooms();
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -249,6 +281,8 @@ public class HASController
 			throws InvalidInputException
 	{
 		HAS h = HAS.getInstance();
+		int volume = 50;
+		boolean mute = true;
 
 		String error = "";
 
@@ -257,11 +291,11 @@ public class HASController
 		if (rooms == null || rooms.size() == 0)
 			error = error + "Room Group must have at least one room!";
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		Room initialRoom = rooms.get(0);
-		RoomGroup newRG = new RoomGroup(name, initialRoom);
+		RoomGroup newRG = new RoomGroup(name, volume, mute, initialRoom);
 		h.addRoomGroup(newRG);
 
 		List<Room> modifiedRooms = new ArrayList<Room>();
@@ -270,6 +304,8 @@ public class HASController
 
 		modifiedRooms.remove(0);
 		addRoomToRoomGroup(newRG, modifiedRooms);
+
+		sortRoomGroups();
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -295,7 +331,7 @@ public class HASController
 		if (rooms == null)
 			error = error
 					+ "Must select at least one room to add to room group!";
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		for (Room room : rooms)
@@ -323,7 +359,7 @@ public class HASController
 			error = error + "Must select a room to set the volume in!";
 		if (volumeLevel < 0)
 			error = error + "Must select a positive volume level!";
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		if (volumeLevel > 100)
@@ -363,12 +399,14 @@ public class HASController
 			error = error + "Must select a room group to set the volume in!";
 		if (volumeLevel < 0)
 			error = error + "Must select a positive volume level!";
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		if (volumeLevel > 100)
 			volumeLevel = 100;
 
+		rg.setVolume(volumeLevel);
+		
 		if (volumeLevel == 0)
 		{
 			for (Room r : rg.getRooms())
@@ -409,13 +447,10 @@ public class HASController
 		if (room == null)
 			error = error + "Must select a room to mute!";
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
-		if (mute == true)
-			room.setMute(true);
-		else
-			room.setMute(false);
+			room.setMute(mute);
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -438,18 +473,12 @@ public class HASController
 		if (rg == null)
 			error = error + "Must select a room group to mute!";
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
-		if (mute == true)
-		{
+			rg.setMute(mute);
 			for (Room r : rg.getRooms())
-				r.setMute(true);
-		} else
-		{
-			for (Room r : rg.getRooms())
-				r.setMute(false);
-		}
+				r.setMute(mute);
 
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
@@ -461,18 +490,23 @@ public class HASController
 	{
 		HAS h = HAS.getInstance();
 		List<Artist> artists = h.getArtists();
-		List<Artist> sortedArtists = new ArrayList<Artist>();
-		for (Artist a : artists)
-			sortedArtists.add(a);
 
-		Collections.sort(sortedArtists);
-		for (Artist a : sortedArtists)
+		if (artists.size() > 1)
+
 		{
-			h.removeArtist(a);
-		}
-		for (Artist a : sortedArtists)
-		{
-			h.addArtist(a);
+			List<Artist> sortedArtists = new ArrayList<Artist>();
+			for (Artist a : artists)
+				sortedArtists.add(a);
+
+			Collections.sort(sortedArtists);
+			for (Artist a : sortedArtists)
+			{
+				h.removeArtist(a);
+			}
+			for (Artist a : sortedArtists)
+			{
+				h.addArtist(a);
+			}
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(h);
@@ -486,18 +520,22 @@ public class HASController
 		HAS h = HAS.getInstance();
 
 		List<Album> albums = h.getAlbums();
-		List<Album> sortedAlbums = new ArrayList<Album>();
-		for (Album a : albums)
-			sortedAlbums.add(a);
 
-		Collections.sort(sortedAlbums);
-		for (Album a : sortedAlbums)
+		if (albums.size() > 1)
 		{
-			h.removeAlbum(a);
-		}
-		for (Album a : sortedAlbums)
-		{
-			h.addAlbum(a);
+			List<Album> sortedAlbums = new ArrayList<Album>();
+			for (Album a : albums)
+				sortedAlbums.add(a);
+
+			Collections.sort(sortedAlbums);
+			for (Album a : sortedAlbums)
+			{
+				h.removeAlbum(a);
+			}
+			for (Album a : sortedAlbums)
+			{
+				h.addAlbum(a);
+			}
 		}
 
 		PersistenceXStream.saveToXMLwithXStream(h);
@@ -507,7 +545,7 @@ public class HASController
 	 * Sorts the songs in an album based on position
 	 * 
 	 * @param a
-	 *            Album whose songs are to be sorted
+	 *            Album to be sorted
 	 */
 	public void sortSongs(Album a)
 	{
@@ -541,28 +579,86 @@ public class HASController
 	}
 
 	/**
-	 * Adds a featured artist to a song
-	 * 
-	 * @param song
-	 *            The song
-	 * @param ar
-	 *            The featured artist
-	 * @throws InvalidInputException
+	 * Sorts the playlists within the HAS system alphabetically
 	 */
-	public void addFeaturedArtist(Song song, Artist ar)
-			throws InvalidInputException
+	public void sortPlaylists()
 	{
 		HAS h = HAS.getInstance();
-		String error = "";
-		if (song == null)
-			error = error + "Must select a song to add a featured artist!";
-		if (ar == null)
-			error = error + "Must select a featured artist!";
+		List<Playlist> playlists = h.getPlaylists();
 
-		if (error.length() > 0)
-			throw new InvalidInputException(error);
+		if (playlists.size() > 1)
+		{
+			List<Playlist> sortedPlaylists = new ArrayList<Playlist>();
+			for (Playlist p : playlists)
+				sortedPlaylists.add(p);
 
-		song.addFtArtist(ar);
+			Collections.sort(sortedPlaylists);
+			for (Playlist p : sortedPlaylists)
+			{
+				h.removePlaylist(p);
+			}
+			for (Playlist p : sortedPlaylists)
+			{
+				h.addPlaylist(p);
+			}
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	/**
+	 * Sorts the rooms within the HAS system alphabetically
+	 */
+	public void sortRooms()
+	{
+		HAS h = HAS.getInstance();
+		List<Room> rooms = h.getRooms();
+
+		if (rooms.size() > 1)
+		{
+			List<Room> sortedRooms = new ArrayList<Room>();
+			for (Room r : rooms)
+				sortedRooms.add(r);
+
+			Collections.sort(sortedRooms);
+			for (Room r : sortedRooms)
+			{
+				h.removeRoom(r);
+			}
+			for (Room r : sortedRooms)
+			{
+				h.addRoom(r);
+			}
+		}
+
+		PersistenceXStream.saveToXMLwithXStream(h);
+	}
+
+	/**
+	 * Sorts the room groups within the HAS system alphabetically
+	 */
+	public void sortRoomGroups()
+	{
+		HAS h = HAS.getInstance();
+		List<RoomGroup> rgs = h.getRoomGroups();
+
+		if (rgs.size() > 1)
+		{
+			List<RoomGroup> sortedRgs = new ArrayList<RoomGroup>();
+			for (RoomGroup r : rgs)
+				sortedRgs.add(r);
+
+			Collections.sort(sortedRgs);
+			for (RoomGroup r : sortedRgs)
+			{
+				h.removeRoomGroup(r);
+			}
+			for (RoomGroup r : sortedRgs)
+			{
+				h.addRoomGroup(r);
+			}
+		}
+
 		PersistenceXStream.saveToXMLwithXStream(h);
 	}
 
@@ -579,12 +675,10 @@ public class HASController
 			throws InvalidInputException
 	{
 		String error = "";
-		if (play == null)
-			error = error + "A playable must be selected! ";
 		if (room == null)
 			error = error + "A room must be selected! ";
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		room.setPlayable(play);
@@ -603,12 +697,10 @@ public class HASController
 			throws InvalidInputException
 	{
 		String error = "";
-		if (play == null)
-			error = error + "A playable must be selected! ";
 		if (rg == null)
 			error = error + "A room group must be selected! ";
 
-		if (error.length() > 0)
+		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
 
 		rg.setPlayable(play);

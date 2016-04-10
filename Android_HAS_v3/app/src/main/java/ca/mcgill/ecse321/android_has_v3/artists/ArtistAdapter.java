@@ -38,20 +38,20 @@ public class ArtistAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if(vi == null)
-            vi = inflater.inflate(R.layout.listview_item_artist, null);
+            vi = inflater.inflate(R.layout.listview_item, null);
 
         Artist artist = artists.get(position);
-        TextView artistName = (TextView) vi.findViewById(R.id.artist_nameTextView);
+        TextView artistName = (TextView) vi.findViewById(R.id.top_left_TextView);
         artistName.setText(artists.get(position).getName());
 
-        TextView numberOfAlbums = (TextView) vi.findViewById(R.id.artist_album_number_TextView);
+        TextView numberOfAlbums = (TextView) vi.findViewById(R.id.bottom_left_TextView);
 
         String numAlbums = "" + artist.numberOfAlbums() + " Album";
         if(artist.numberOfAlbums() != 1)
             numAlbums += "s";
         numberOfAlbums.setText(numAlbums);
 
-        TextView numberOfFtSongs = (TextView) vi.findViewById(R.id.artist_ftSong_number_TextView);
+        TextView numberOfFtSongs = (TextView) vi.findViewById(R.id.bottom_right_TextView);
         if(artist.numberOfSongs() !=0) {
             String numFtSongs = "Featured in " + artist.numberOfSongs() + " song";
             if (artist.numberOfSongs() != 1)

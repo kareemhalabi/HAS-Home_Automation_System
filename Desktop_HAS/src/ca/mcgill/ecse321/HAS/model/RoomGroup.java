@@ -16,6 +16,8 @@ public class RoomGroup implements Comparable<RoomGroup>
 
 	// RoomGroup Attributes
 	private String name;
+	private int volume;
+	private boolean mute;
 
 	// RoomGroup Associations
 	private List<Room> rooms;
@@ -32,7 +34,8 @@ public class RoomGroup implements Comparable<RoomGroup>
 		boolean didAddRooms = setRooms(allRooms);
 		if (!didAddRooms)
 		{
-			throw new RuntimeException("Unable to create RoomGroup, must have at least 1 rooms");
+			throw new RuntimeException(
+					"Unable to create RoomGroup, must have at least 1 rooms");
 		}
 	}
 
@@ -142,7 +145,8 @@ public class RoomGroup implements Comparable<RoomGroup>
 			verifiedRooms.add(aRoom);
 		}
 
-		if (verifiedRooms.size() != newRooms.length || verifiedRooms.size() < minimumNumberOfRooms())
+		if (verifiedRooms.size() != newRooms.length
+				|| verifiedRooms.size() < minimumNumberOfRooms())
 		{
 			return wasSet;
 		}
@@ -199,6 +203,11 @@ public class RoomGroup implements Comparable<RoomGroup>
 	public boolean setPlayable(Playable aNewPlayable)
 	{
 		boolean wasSet = false;
+
+		for (Room room : rooms)
+		{
+			room.setPlayable(aNewPlayable);
+		}
 		playable = aNewPlayable;
 		wasSet = true;
 		return wasSet;
@@ -214,8 +223,12 @@ public class RoomGroup implements Comparable<RoomGroup>
 	{
 		String outputString = "";
 		return super.toString() + "[" + "name" + ":" + getName() + "]"
-				+ System.getProperties().getProperty("line.separator") + "  " + "playable = "
-				+ (getPlayable() != null ? Integer.toHexString(System.identityHashCode(getPlayable())) : "null")
+				+ System.getProperties().getProperty("line.separator") + "  "
+				+ "playable = "
+				+ (getPlayable() != null
+						? Integer.toHexString(
+								System.identityHashCode(getPlayable()))
+						: "null")
 				+ outputString;
 	}
 
@@ -224,5 +237,25 @@ public class RoomGroup implements Comparable<RoomGroup>
 	{
 		assert (o != null);
 		return name.compareTo(o.getName());
+	}
+
+	public int getVolume()
+	{
+		return volume;
+	}
+
+	public void setVolume(int volume)
+	{
+		this.volume = volume;
+	}
+
+	public boolean getMute()
+	{
+		return mute;
+	}
+
+	public void setMute(boolean mute)
+	{
+		this.mute = mute;
 	}
 }

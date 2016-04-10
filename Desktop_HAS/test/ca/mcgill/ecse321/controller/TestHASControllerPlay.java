@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +18,7 @@ import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.HAS.model.Room;
+import ca.mcgill.ecse321.HAS.model.RoomGroup;
 import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
@@ -56,8 +59,6 @@ public class TestHASControllerPlay
 			// check that no error has occurred in the creation of the album
 			fail();
 		}
-
-		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 
 		// new song 1 on album 1
 		String testSongName1 = "testName";
@@ -102,7 +103,6 @@ public class TestHASControllerPlay
 	}
 
 	@Test
-	//	TODO; EXPECT TO FAIL
 	public void testPlaySongSingleRoom()
 	{
 		HAS h = HAS.getInstance();
@@ -161,26 +161,84 @@ public class TestHASControllerPlay
 
 		assertEquals("A room must be selected! ", error);
 	}
-
+	
 	@Test
-	//TODO: EXPECT TO FAIL
-	public void testPlayAlbumSingleRoom()
+	public void testPlaySongRoomGroup()
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
-		Album a = h.getAlbum(0);
-		Room room = h.getRoom(0);
+
+		List<Room> rooms = new ArrayList<Room>();
+		rooms.add(h.getRoom(0));
 
 		try
 		{
-			hc.playSingleRoom(a, room);
+			hc.createRoomGroup("RoomGroup1", rooms);
 		} catch (InvalidInputException e)
 		{
 			fail();
 		}
 
-		//iterated through both
-		assertEquals("Flume", room.getPlayable().getName());
-		assertTrue(room.hasPlayable());
+		RoomGroup rg = h.getRoomGroup(0);
+		try
+		{
+			hc.playRoomGroup(h.getSong(0), rg);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		assertEquals("testName", rg.getPlayable().getName());
+		assertTrue(rg.hasPlayable());
 	}
+
+	@Test
+	public void testPlayNoSongRoomGroup()
+	{
+		String error = "";
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+
+		List<Room> rooms = new ArrayList<Room>();
+		rooms.add(h.getRoom(0));
+
+		try
+		{
+			hc.createRoomGroup("RoomGroup1", rooms);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		RoomGroup rg = h.getRoomGroup(0);
+		try
+		{
+			hc.playRoomGroup(null, rg);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("A playable must be selected! ", error);
+		assertFalse(rg.hasPlayable());
+	}
+
+	@Test
+	public void testPlaySongNoRoomGroup()
+	{
+		String error = "";
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		try
+		{
+			hc.playRoomGroup(h.getSong(0), null);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("A room group must be selected! ", error);
+	}
+
+	
 }

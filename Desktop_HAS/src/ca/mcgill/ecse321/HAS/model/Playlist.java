@@ -7,7 +7,7 @@ import java.util.*;
 
 // line 73 "../../../../../../../../ump/160303721337/model.ump"
 // line 137 "../../../../../../../../ump/160303721337/model.ump"
-public class Playlist extends Playable
+public class Playlist extends Playable implements Comparable<Playlist>
 {
 
 	// ------------------------
@@ -28,7 +28,8 @@ public class Playlist extends Playable
 		boolean didAddSongs = setSongs(allSongs);
 		if (!didAddSongs)
 		{
-			throw new RuntimeException("Unable to create Playlist, must have at least 1 songs");
+			throw new RuntimeException(
+					"Unable to create Playlist, must have at least 1 songs");
 		}
 	}
 
@@ -114,7 +115,8 @@ public class Playlist extends Playable
 			verifiedSongs.add(aSong);
 		}
 
-		if (verifiedSongs.size() != newSongs.length || verifiedSongs.size() < minimumNumberOfSongs())
+		if (verifiedSongs.size() != newSongs.length
+				|| verifiedSongs.size() < minimumNumberOfSongs())
 		{
 			return wasSet;
 		}
@@ -176,8 +178,13 @@ public class Playlist extends Playable
 
 	public void play()
 	{
-		for (Song s : songs)
-			s.play();
+	}
+	
+	@Override
+	public int compareTo(Playlist o)
+	{
+		assert (o != null);
+		return this.getName().compareTo(o.getName());
 	}
 
 }

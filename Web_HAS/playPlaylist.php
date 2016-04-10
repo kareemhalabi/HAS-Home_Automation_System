@@ -7,9 +7,25 @@
 .error {
 	color: #FF0000;
 }
+.boxed{
+	border: 2px solid red;
+	margin: auto;
+}
+body {
+	 text-align:center; 
+	}
 </style>
 </head>
 <body>
+<div class="boxed" > 
+<h1>Please Choose a Location</h1>
+</div>
+<form action="index.php" method="post" style="float: left;">
+		<input type="submit" value="Go Home" />
+</form><br>
+<p>
+
+</p>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -88,9 +104,7 @@
 		</form>
 		
 		
-	<form action="index.php" method="post">
-		<input type="submit" value="Home" />
-	</form>
+	
 	<?php $pm->writeDataToStore($hm);?>
 	</body>
 	</html>

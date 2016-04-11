@@ -62,6 +62,14 @@ public class RoomGroupAdapter extends BaseAdapter{
             String nowPlaying = "Playing: " + roomGroup.getPlayable().getName();
             playableName.setText(nowPlaying);
         }
+
+        TextView volumeAndMute = (TextView) vi.findViewById(R.id.bottom_right_TextView);
+        String volumeAndMuteLabel = "Volume: " + roomGroup.getVolume();
+        if(roomGroup.getMute()) {
+            volumeAndMuteLabel += " (Muted)";
+        }
+        volumeAndMute.setText(volumeAndMuteLabel);
+
         return vi;
     }
 }

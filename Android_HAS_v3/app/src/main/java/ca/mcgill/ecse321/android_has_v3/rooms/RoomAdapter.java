@@ -65,10 +65,12 @@ public class RoomAdapter extends BaseAdapter{
             playableName.setText(nowPlaying);
         }
 
+
+        TextView muteStatus = (TextView) vi.findViewById(R.id.bottom_right_TextView);
         if(room.getMute()) {
-            TextView muteStatus = (TextView) vi.findViewById(R.id.bottom_right_TextView);
             muteStatus.setText("Muted");
         }
+        else muteStatus.setText("");
 
         return vi;
     }

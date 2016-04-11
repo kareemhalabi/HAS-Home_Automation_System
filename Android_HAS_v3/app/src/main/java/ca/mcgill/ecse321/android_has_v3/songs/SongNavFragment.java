@@ -7,11 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.List;
+
 import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.android_has_v3.PlayableItemClickListener;
 import ca.mcgill.ecse321.android_has_v3.R;
 
 public class SongNavFragment extends Fragment {
+
+    //required to update sorted song list
+    private SongAdapter adapter;
+    private static List<Song> songs;
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+        adapter.setSongs(songs);
+    }
 
     public SongNavFragment() {
         // Required empty public constructor
@@ -33,7 +45,10 @@ public class SongNavFragment extends Fragment {
 
         HAS h = HAS.getInstance();
 
-        SongAdapter adapter = new SongAdapter(getActivity().getApplicationContext(), h.getSongs());
+        if(songs == null)
+            songs = h.getSongs();
+
+        adapter = new SongAdapter(getActivity().getApplicationContext(), songs);
         listView.setAdapter(adapter);
 
         return v;

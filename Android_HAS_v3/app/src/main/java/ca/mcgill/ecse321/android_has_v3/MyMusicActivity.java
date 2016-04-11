@@ -13,6 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ca.mcgill.ecse321.HAS.controller.HASController;
+import ca.mcgill.ecse321.HAS.model.Album;
+import ca.mcgill.ecse321.HAS.model.Artist;
+import ca.mcgill.ecse321.HAS.model.HAS;
+import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.android_has_v3.albums.AddAlbumActivity;
 import ca.mcgill.ecse321.android_has_v3.albums.AlbumNavFragment;
 import ca.mcgill.ecse321.android_has_v3.artists.AddArtistActivity;
@@ -29,6 +37,8 @@ import ca.mcgill.ecse321.android_has_v3.songs.SongNavFragment;
 public class MyMusicActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,12 @@ public class MyMusicActivity extends AppCompatActivity
         onNavigationItemSelected(HASAndroidApplication.getCurrentMenu());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        HASAndroidApplication.getCurrentMenu().setChecked(true);
+        onNavigationItemSelected(HASAndroidApplication.getCurrentMenu());
+    }
 
 
     @Override
@@ -74,43 +90,43 @@ public class MyMusicActivity extends AppCompatActivity
         HASAndroidApplication.setCurrentMenu(item);
 
         int id = item.getItemId();
-        Fragment fragment = null;
+        currentFragment = null;
 
         switch (id){
             case R.id.nav_artists:
-                fragment = new ArtistNavFragment();
+                currentFragment = new ArtistNavFragment();
                 setTitle("Artists");
                 break;
 
             case R.id.nav_albums:
-                fragment = new AlbumNavFragment();
+                currentFragment = new AlbumNavFragment();
                 setTitle("Albums");
                 break;
 
             case R.id.nav_songs:
-                fragment = new SongNavFragment();
+                currentFragment = new SongNavFragment();
                 setTitle("Songs");
                 break;
 
             case R.id.nav_playlists:
-                fragment = new PlaylistNavFragment();
+                currentFragment = new PlaylistNavFragment();
                 setTitle("Playlists");
                 break;
 
             case R.id.nav_rooms:
-                fragment = new RoomNavFragment();
+                currentFragment = new RoomNavFragment();
                 setTitle("Rooms");
                 break;
 
             case R.id.nav_room_groups:
-                fragment = new RoomGroupNavFragment();
+                currentFragment = new RoomGroupNavFragment();
                 setTitle("Room Groups ");
                 break;
         }
 
-        //sets the new fragment
+        //sets the new currentFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_container, currentFragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -148,10 +164,30 @@ public class MyMusicActivity extends AppCompatActivity
     }
 
     public void sortByAlbum(View v) {
-        //TODO implement sorting
+        HASController hc = new HASController();
+        HAS h = HAS.getInstance();
+        hc.sortAlbums();
+        List<Song> songsSortedByAlbum = new ArrayList<Song>();
+
+        for(Album a: h.getAlbums()) {
+            songsSortedByAlbum.addAll(a.getSongs());
+        }
+
+        assert currentFragment instanceof SongNavFragment;
+        ((SongNavFragment) currentFragment).setSongs(songsSortedByAlbum);
     }
 
     public void sortByArtist(View v) {
-        //TODO implement sorting
+        HASController hc = new HASController();
+        HAS h = HAS.getInstance();
+        hc.sortArtists();
+        List<Song> songsSortedByArtist = new ArrayList<Song>();
+        for(Artist ar : h.getArtists()) {
+            for(Album al: ar.getAlbums()) {
+                songsSortedByArtist.addAll(al.getSongs());
+            }
+        }
+        assert currentFragment instanceof SongNavFragment;
+        ((SongNavFragment) currentFragment).setSongs(songsSortedByArtist);
     }
 }

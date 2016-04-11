@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import ca.mcgill.ecse321.HAS.model.HAS;
@@ -14,6 +15,12 @@ import ca.mcgill.ecse321.android_has_v3.LocationItemClickListener;
 import ca.mcgill.ecse321.android_has_v3.R;
 
 public class RoomNavFragment extends Fragment {
+
+    private static RoomAdapter adapter;
+
+    public static RoomAdapter getAdapter() {
+        return adapter;
+    }
 
     public RoomNavFragment() {
         // Required empty public constructor
@@ -33,7 +40,7 @@ public class RoomNavFragment extends Fragment {
 
         HAS h = HAS.getInstance();
 
-        RoomAdapter adapter = new RoomAdapter(getActivity().getApplicationContext(), h.getRooms());
+        adapter = new RoomAdapter(getActivity().getApplicationContext(), h.getRooms());
         adapter.notifyDataSetChanged(); //sometimes doesn't update automatically
         listView.setAdapter(adapter);
 

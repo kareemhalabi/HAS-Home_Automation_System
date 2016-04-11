@@ -16,6 +16,12 @@ import ca.mcgill.ecse321.android_has_v3.R;
 public class RoomGroupNavFragment extends Fragment {
 
 
+    private static RoomGroupAdapter adapter;
+
+    public static RoomGroupAdapter getAdapter() {
+        return adapter;
+    }
+
     public RoomGroupNavFragment() {
         // Required empty public constructor
     }
@@ -33,11 +39,10 @@ public class RoomGroupNavFragment extends Fragment {
 
         HAS h = HAS.getInstance();
 
-        RoomGroupAdapter adapter = new RoomGroupAdapter(getActivity().getApplicationContext(), h.getRoomGroups());
+        adapter = new RoomGroupAdapter(getActivity().getApplicationContext(), h.getRoomGroups());
         adapter.notifyDataSetChanged(); //sometimes doesn't update automatically
         listView.setAdapter(adapter);
 
         return v;
     }
-
 }

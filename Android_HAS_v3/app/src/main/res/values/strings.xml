@@ -47,5 +47,6 @@
     <string name="mute_label">Mute?</string>
     <string name="volume_label">Volume:</string>
     <string name="save">Save</string>
+    <string name="creators">Created by: Kareem Halabi, Aurelie Pluche, Kristina Pearkes, Aidan Piwowar and Alex Orzechowski</string>
 
 </resources>

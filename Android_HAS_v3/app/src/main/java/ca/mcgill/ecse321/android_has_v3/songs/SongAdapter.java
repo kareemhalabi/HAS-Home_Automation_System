@@ -20,6 +20,11 @@ public class SongAdapter extends BaseAdapter{
 
     private List<Song> songs;
 
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+        this.notifyDataSetChanged();
+    }
+
     public List<Song> getSongs() {
         return songs;
     }

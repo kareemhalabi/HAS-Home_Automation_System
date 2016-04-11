@@ -11,14 +11,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.mcgill.ecse321.HAS.controller.HASController;
+import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.Location;
+import ca.mcgill.ecse321.HAS.model.Room;
+import ca.mcgill.ecse321.HAS.model.RoomGroup;
+import ca.mcgill.ecse321.android_has_v3.roomgroups.RoomGroupNavFragment;
+import ca.mcgill.ecse321.android_has_v3.rooms.RoomNavFragment;
 
 public class LocationSettingsActivity extends AppCompatActivity {
 
     private static Location location;
 
-    public int volumeSliderValue;
-    private boolean muteChecked;
+    private CheckBox muteCheckBox;
+    private SeekBar volumeSeekBar;
 
     public static void setLocation(Location alocation) {
         location = alocation;
@@ -30,13 +35,13 @@ public class LocationSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_location_settings);
         setTitle(location.getName());
 
-        final SeekBar volumeSeekBar = (SeekBar) findViewById(R.id.volume_seekBar);
+        volumeSeekBar = (SeekBar) findViewById(R.id.volume_seekBar);
         volumeSeekBar.setProgress(location.getVolume());
 
         final TextView volumeTextView = (TextView) findViewById(R.id.volume_TextView);
-        volumeTextView.setText(""+location.getVolume());
+        volumeTextView.setText("" + location.getVolume());
 
-        final CheckBox muteCheckBox = (CheckBox) findViewById(R.id.mute_CheckBox);
+        muteCheckBox = (CheckBox) findViewById(R.id.mute_CheckBox);
         muteCheckBox.setChecked(location.getMute());
 
         assert volumeSeekBar != null;
@@ -45,21 +50,16 @@ public class LocationSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int volume, boolean fromUser) {
-                volumeSliderValue = volume;
-                volumeTextView.setText("" + volumeSliderValue);
+                volumeTextView.setText("" + volume);
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if(volumeSliderValue == 0)
-                    muteChecked = true;
-                else
-                    muteChecked = false;
-
-                muteCheckBox.setChecked(muteChecked);
+                muteCheckBox.setChecked(seekBar.getProgress() == 0);
             }
         });
     }
@@ -67,16 +67,30 @@ public class LocationSettingsActivity extends AppCompatActivity {
     public void saveChanges(View v) {
         HASController hc = new HASController();
 
-        location.setVolume(volumeSliderValue);
-        location.setMute(muteChecked);
+        //No controller methods for location object
+        try {
+            if(location instanceof Room) {
+                hc.setRoomVolumeLevel((Room) location, volumeSeekBar.getProgress());
+                hc.setRoomMute((Room) location, muteCheckBox.isChecked());
+                RoomNavFragment.getAdapter().notifyDataSetChanged();
+            }
+            else if(location instanceof RoomGroup) {
+                hc.setRoomGroupVolumeLevel((RoomGroup) location, volumeSeekBar.getProgress());
+                hc.setRoomGroupMute((RoomGroup) location, muteCheckBox.isChecked());
+                RoomGroupNavFragment.getAdapter().notifyDataSetChanged();
+            }
 
-        String confirmationMessage = location.getName() + " volmue: " + volumeSliderValue;
-        if(muteChecked)
+        } catch (InvalidInputException e) {} //UI prevents invalid input
+
+
+        String confirmationMessage = location.getName() + " volmue: " + volumeSeekBar.getProgress();
+        if(muteCheckBox.isChecked())
             confirmationMessage += " (Muted)";
 
         Toast confirmation = Toast.makeText(getApplicationContext(),
                 confirmationMessage, Toast.LENGTH_SHORT);
         confirmation.show();
+
         finish();
     }
 }

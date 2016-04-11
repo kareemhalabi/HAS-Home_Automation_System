@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.Room;
-import ca.mcgill.ecse321.HAS.model.Song;
 import ca.mcgill.ecse321.android_has_v3.R;
 
 public class RoomAdapter extends BaseAdapter{

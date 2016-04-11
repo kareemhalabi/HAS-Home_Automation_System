@@ -74,15 +74,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:id="@+id/ftartistspinner"/>
-            
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:onClick="addftArtist"
-                android:text="@string/addftArtist_button"/>
+
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:onClick="addftArtist"
+            android:text="@string/addftArtist_button"/>
+
+        <View
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="fill_parent"
+            android:background="#FFFFFF"/>
 
         <Button
             android:layout_width="wrap_content"

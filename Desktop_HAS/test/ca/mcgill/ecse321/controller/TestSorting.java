@@ -109,12 +109,29 @@ public class TestSorting
 	{
 		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
+		
+		h.delete();
+		assertEquals(0,h.getAlbums().size());
+		
 		@SuppressWarnings("deprecation")
 		Date d1 = new Date(116, 02, 8);
-
-		Album a = new Album("Jack", "Bring me food", d1,
-				new Artist("Jack the Reaper"));
-		h.addAlbum(a);
+		try
+		{
+			hc.createArtist("Jack the Reaper");
+			hc.createArtist("Adele");
+		}
+		catch(Exception e)
+		{
+			fail();
+		}
+		try
+		{
+			hc.createAlbum("Jack", "Bring me food", d1, h.getArtist(0));
+		}
+		catch(Exception e)
+		{
+			fail();
+		}
 
 		String[] names =
 		{ "Wind Rises", "Dark Horses", "Leo's Oscar", "Life", "KIA", "IKEA",
@@ -122,27 +139,40 @@ public class TestSorting
 		int[] position =
 		{ 2, 3, 7, 8, 1, 4, 9, 10, 6, 5 };
 		int i = 0;
+		
+		List<Artist> ftArt = new ArrayList<Artist>();
+		ftArt.add(h.getArtist(1));
 
 		for (String name : names)
 		{
-			Song song = new Song(name, 123, position[i], a);
-			a.addSong(song);
+			try
+			{
+				hc.addSongtoAlbum(h.getAlbum(0), name, 123, position[i], ftArt);
+			}
+			catch(Exception e)
+			{
+				fail();
+			}
 			i++;
 		}
 
-		hc.sortSongs(a);
+		hc.sortSongs(h.getAlbum(0));
+		
+		assertEquals("Jack", h.getAlbum(0).getName());
+		Album a = h.getAlbum(0);
 
 		for (int j = 0; j < names.length - 1; j++)
 		{
-			assertEquals(a.getSong(j).getPosition(), j + 1);
+			assertEquals(a.getSong(j).getPosition(), j+1);
 		}
 
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
 
 		for (int j = 0; j < names.length - 1; j++)
 		{
-			assertEquals(h2.getAlbum(1).getSong(j).getPosition(), j + 1);
+			assertEquals(h2.getAlbum(0).getSong(j).getPosition(), j + 1);
 		}
+		
 	}
 
 	@Test

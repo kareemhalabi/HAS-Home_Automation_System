@@ -569,8 +569,7 @@ public class HASController
 
 				for (Song s : sortedSongs)
 				{
-					a.addSong(s);
-					h.addSong(s);
+					s.setAlbum(a);
 				}
 			}
 		}

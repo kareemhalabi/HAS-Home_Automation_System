@@ -559,6 +559,76 @@ public class TestHASController
 				"A song already occupies this position, please choose another position!",
 				errors);
 	}
+	
+	@Test
+	public void testCreateAlbumAndAddThreeSongs()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		assertEquals(0, h.getAlbums().size());
+
+		Artist ar1 = new Artist(artName);
+
+		try
+		{
+			hc.createAlbum(name, genre, d1, ar1);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		// Persistence is simultaneously tested to check that createAlbum has
+		// indeed written the correct data into the xml file.
+		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
+		checkResultAlbum(h2, name, genre, artName, d1);
+		assertEquals(1, h2.getAlbums().size());
+
+		// an arbitrary featured artist is entered into the HAS system in order
+		// to fully check the functionality of addSongtoAlbum().
+		List<Artist> featured = new ArrayList<Artist>();
+		Artist ft1 = new Artist("Adele");
+		featured.add(ft1);
+
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
+					songPosition1, featured);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), "Food", 123,
+					3, featured);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), "Lap", 123,
+					4, featured);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+		
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), "Dragons", 123,
+					5, featured);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
+
+		//Check the persistence once again to ensure proper functionality
+		HAS h3 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
+		checkResultSong(h3, testSongName1, songDuration1, songPosition1);
+	}
 
 	private void checkResultSong(	HAS h, String testSongName1, int songDuration1,
 									int songPosition1)

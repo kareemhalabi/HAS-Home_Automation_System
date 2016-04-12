@@ -76,6 +76,11 @@ class Controller {
 		
 		if ($songName == null || strlen ( $songName ) == 0) {
 			throw new Exception ( "Song name cannot be empty! " );
+			foreach($myAlbum->getSongs() as $existingSong){
+				if (strcmp($existingSong->getName(), $songName) == 0){
+					throw new Exception ("Song already exists!");
+				}
+			}
 		} else if ($duration <= 0 || $duration == null) {
 			throw new Exception ( "Duration needs to be greater than 0! " );
 		} else if ($position <= 0 || $position == null) {

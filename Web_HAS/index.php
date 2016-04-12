@@ -12,6 +12,16 @@ $("#table tr").click(function(){
 	   }
 	   window.location.href="playSong.php?name="+$(this).find('td:first').html();    
 	});
+$('input[type="radio"]').click(function(){
+	if($(this).attr("value")=="album"){
+		$(".sort").not(".album").hide();
+		$(".album").show();
+	}
+	if($(this).attr("value")=="artist"){
+		$(".sort").not(".artist").hide();
+		$(".artist").show();
+	}
+});
 
 });
 </script>
@@ -95,6 +105,8 @@ table {
 		$songarrayAlbum = array();
 		$songarrayAritst = array();
 		
+		$songarrayAlbum = $c->sortbyAlbum();
+		$songarrayArtist = $c->sortbyArtist();
 		
 		?>
 	<div id="horizontal">
@@ -170,13 +182,17 @@ table {
 	
 
 <form name="songlist">
-<?php if (count($songName) > 0): ?>
 <div class="smallBox">
 	<h2>
 	My Music Library</h2>
 	</div>
 <!-- Sort by... two buttons, clicking one refreshes index, stores $c->sortby... into a $_SESSION variable, inside table call$_SESSION variable -->
-	<input type="radio" name="sort" value="album" checked>Sort by Album<input type="radio" name="sort" value="artist">Sort by Artist<br>
+<div>
+	<label><input type="radio" name="sort" value="album">Sort by Album</label>
+	<label><input type="radio" name="sort" value="artist">Sort by Artist</label>
+	</div><br>
+	<?php if (count($songName) > 0): ?>
+	<div class="album sort">
 <table id="table" align="center" >
 <tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
   <tbody>
@@ -189,6 +205,24 @@ foreach ($songarrayAlbum as $song): ?>
 <?php endforeach; ?>
   </tbody>
 </table>
+</div>
+<?php endif;?>
+
+<?php if (count($songName) > 0): ?>
+<div class="artist sort">
+<table id="table" align="center" >
+<tr><th>Song</th><th>Album</th><th>Artist</th><th>Duration(sec)</th><th>Genre</th></tr>
+  <tbody>
+<?php 
+if(count($songarrayArtist)==0){
+	$songarrayArtist = $c->sortbyArtist();
+}
+foreach ($songarrayArtist as $song): ?>
+      <?php echo "<tr><td>" . $song->getName() . "</td><td>" . $song->getAlbum()->getName() . "</td><td>" . $song->getAlbum()->getMainArtist()->getName() . "</td><td>" . $song->getDuration() . "</td><td>" . $song->getAlbum()->getGenre() . "</td></tr>"; ?>
+<?php endforeach; ?>
+  </tbody>
+</table>
+</div>
 <?php endif; ?>
 </form>
 

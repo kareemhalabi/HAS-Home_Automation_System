@@ -16,6 +16,14 @@ body { text-align:center; }
 	color: #FF0000;
 }
 </style>
+<script>
+function noPlayableFunction(){
+	alert("No music is currently playing! First play something to be able to change volume"); 
+}
+function noRoomFunction(){
+	alert("No music is playing now and you don't have any locations to play in yet! Click Edit Rooms to add a Location");
+}
+</script>
 </head>
 <body>
 	<div class="smallBox" > 
@@ -42,8 +50,31 @@ body { text-align:center; }
 		// Retrieve the data from the model
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
+		if($hm->hasRooms()==false){
+			showRoomError();
+		}
+		elseif ($hm->getRoom_index(0)->hasPlayable()==false){
+			showPlayableError();
+		}
+		if($hm->hasRoomGroups()==false) {
+			showRoomError();
+		}
+		elseif ($hm->getRoomGroup_index(0)->hasPlayable()==false){
+			showPlayableError();
+		}
+		function showRoomError(){
+			echo '<script>noRoomFunction()</script>';
+			echo '<meta http-equiv="refresh" content="0;url=index.php">';
+			exit();
+		}
+		function showPlayableError(){
+			echo '<script>noPlayableFunction()</script>';
+			echo '<meta http-equiv="refresh" content="0;url=index.php">';
+			exit();
+		}
 		
 		?>
+	
 		<form action="changeRoomVolume.php" method="post">
 		<?php
 		echo "Enter a new volume for the room";

@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import ca.mcgill.ecse321.controller.TestHASController;
+import ca.mcgill.ecse321.controller.TestHASControllerAddSong;
 import ca.mcgill.ecse321.controller.TestHASControllerPlay;
 import ca.mcgill.ecse321.controller.TestHASControllerPlaylistAndRoom;
 import ca.mcgill.ecse321.controller.TestSorting;
@@ -14,7 +15,7 @@ import ca.mcgill.ecse321.persistence.TestPersistence;
 @SuiteClasses(
 { TestHASController.class, TestPersistence.class,
 		TestHASControllerPlaylistAndRoom.class, TestHASControllerPlay.class,
-		TestSorting.class })
+		TestSorting.class, TestHASControllerAddSong.class })
 
 public class AllTests
 {

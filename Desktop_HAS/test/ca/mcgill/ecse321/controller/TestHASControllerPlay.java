@@ -24,12 +24,26 @@ import ca.mcgill.ecse321.HAS.persistence.PersistenceXStream;
 
 public class TestHASControllerPlay
 {
+	String name = "Flume";
+	String genre = "Indie";
+	String artName = "Oscar";
+	@SuppressWarnings("deprecation")
+	Date d1 = new Date(107, 01, 25);
+	Artist ar1 = new Artist(artName);
+	String testSongName1 = "testName";
+	String testSongName2 = "testName2";
+	int songDuration1 = 5;
+	int songDuration2 = 123;
+	int songPosition1 = 1;
+	int songPosition2 = 2;
+	String roomName = "RoomName";
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
-		PersistenceXStream.setFilename("test" + File.separator + "ca" + File.separator + "mcgill" + File.separator
-				+ "ecse321" + File.separator + "controller" + File.separator + "data.xml");
+		PersistenceXStream.setFilename("test" + File.separator + "ca"
+				+ File.separator + "mcgill" + File.separator + "ecse321"
+				+ File.separator + "controller" + File.separator + "data.xml");
 		PersistenceXStream.setAlias("HAS", HAS.class);
 		PersistenceXStream.setAlias("album", Album.class);
 		PersistenceXStream.setAlias("artist", Artist.class);
@@ -39,39 +53,20 @@ public class TestHASControllerPlay
 	public void setUp() throws Exception
 	{
 		HAS h = HAS.getInstance();
-		assertEquals(0, h.getPlaylists().size());
-
 		HASController hc = new HASController();
-
-		String name = "Flume";
-		String genre = "Indie";
-		String artName = "Oscar";
-		@SuppressWarnings("deprecation")
-		Date d1 = new Date(107, 01, 25);
-
-		Artist ar1 = new Artist(artName);
 
 		try
 		{
 			hc.createAlbum(name, genre, d1, ar1);
 		} catch (InvalidInputException e)
 		{
-			// check that no error has occurred in the creation of the album
 			fail();
 		}
 
-		// new song 1 on album 1
-		String testSongName1 = "testName";
-		String testSongName2 = "testName2";
-		int songDuration1 = 5;
-		int songDuration2 = 123;
-		int songPosition1 = 1;
-		int songPosition2 = 2;
-
-		// add song to an album
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1, songPosition1, null);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
+					songPosition1, null);
 		} catch (InvalidInputException e)
 		{
 			fail();
@@ -79,13 +74,13 @@ public class TestHASControllerPlay
 
 		try
 		{
-			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration2, songPosition2, null);
+			hc.addSongtoAlbum(h.getAlbum(0), testSongName2, songDuration2,
+					songPosition2, null);
 		} catch (InvalidInputException e)
 		{
 			fail();
 		}
 
-		String roomName = "RoomName";
 		try
 		{
 			hc.createRoom(roomName);
@@ -102,6 +97,9 @@ public class TestHASControllerPlay
 		h.delete();
 	}
 
+	/**
+	 * Tests playing of playable in single room
+	 */
 	@Test
 	public void testPlayPlayableSingleRoom()
 	{
@@ -122,6 +120,9 @@ public class TestHASControllerPlay
 		assertTrue(room.hasPlayable());
 	}
 
+	/**
+	 * Tests playing of playable in single room without playable
+	 */
 	@Test
 	public void testPlayNoPlayableSingleRoom()
 	{
@@ -139,7 +140,10 @@ public class TestHASControllerPlay
 
 		assertFalse(room.hasPlayable());
 	}
-	
+
+	/**
+	 * Tests playing of playable in single room without room
+	 */
 	@Test
 	public void testPlayPlayableNoSingleRoom()
 	{
@@ -159,7 +163,10 @@ public class TestHASControllerPlay
 
 		assertEquals("A room must be selected! ", error);
 	}
-	
+
+	/**
+	 * Tests playing of playable in room group
+	 */
 	@Test
 	public void testPlayPlayableRoomGroup()
 	{
@@ -190,6 +197,9 @@ public class TestHASControllerPlay
 		assertTrue(rg.hasPlayable());
 	}
 
+	/**
+	 * Tests playing of playable in room group no playable
+	 */
 	@Test
 	public void testPlayNoPlayableRoomGroup()
 	{
@@ -219,6 +229,9 @@ public class TestHASControllerPlay
 		assertFalse(rg.hasPlayable());
 	}
 
+	/**
+	 * Tests playing of playable in room group no group
+	 */
 	@Test
 	public void testPlaySongNoRoomGroup()
 	{
@@ -236,5 +249,4 @@ public class TestHASControllerPlay
 		assertEquals("A room group must be selected! ", error);
 	}
 
-	
 }

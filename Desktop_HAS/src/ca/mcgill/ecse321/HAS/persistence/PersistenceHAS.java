@@ -37,35 +37,28 @@ public class PersistenceHAS
 		HAS h = HAS.getInstance();
 		PersistenceHAS.initializeXStream();
 		HAS h2 = (HAS) PersistenceXStream.loadFromXMLwithXStream();
-		if (h2 != null)
+		if (h2 != null && h.getAlbums().size() == 0
+				&& h.getArtists().size() == 0 && h.getSongs().size() == 0
+				&& h.getRooms().size() == 0 && h.getRoomGroups().size() == 0
+				&& h.getPlaylists().size() == 0)
 		{
-			Iterator<Album> alIt = h2.getAlbums().iterator();
-			while (alIt.hasNext())
-				h.addAlbum(alIt.next());
+			for (Album a : h2.getAlbums())
+				h.addAlbum(a);
 
-			Iterator<Artist> arIt = h2.getArtists().iterator();
-			while (arIt.hasNext())
-				h.addArtist(arIt.next());
+			for (Artist ar : h2.getArtists())
+				h.addArtist(ar);
 
-			Iterator<Playlist> pIt = h2.getPlaylists().iterator();
-			while (pIt.hasNext())
-				h.addPlaylist(pIt.next());
+			for (Playlist p : h2.getPlaylists())
+				h.addPlaylist(p);
 
-			Iterator<Room> rIt = h2.getRooms().iterator();
-			while (rIt.hasNext())
-				h.addRoom(rIt.next());
+			for (Room r : h2.getRooms())
+				h.addRoom(r);
 
-			Iterator<RoomGroup> rgIt = h2.getRoomGroups().iterator();
-			while (rgIt.hasNext())
-				h.addRoomGroup(rgIt.next());
-			
-			Iterator<Song> sIt = h2.getSongs().iterator();
-			while (sIt.hasNext())
-				h.addSong(sIt.next());
+			for (RoomGroup rg : h2.getRoomGroups())
+				h.addRoomGroup(rg);
 
-			/*
-			 * for(Song s : h2.getSongs()) h.addSong(s);
-			 */
+			for (Song s : h2.getSongs())
+				h.addSong(s);
 		}
 	}
 

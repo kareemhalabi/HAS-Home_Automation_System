@@ -19,10 +19,7 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     	$this->pm = new PersistenceHAS();
     	$this->hm = $this->pm->loadDataFromStore();
     	$this->hm->delete();
-    	$this->pm->writeDataToStore($this->hm);
-    	
-    	
-    	
+    	$this->pm->writeDataToStore($this->hm);	
     }
     protected function tearDown()
     {
@@ -362,5 +359,60 @@ class HASControllerTest extends PHPUnit_Framework_TestCase{
     		$this->assertEquals(true, $myRoomGroup->hasPlayable());
     		
     	}
+    	public function testSortByAlbum(){
+    		//Create a list of albums
+    		try{
+    			$this->c->createArtist("Adele");
+    			$this->c->createArtist("Bob Marley");
+    			$this->c->createAlbum("C", "Pop", 02-02-2016, "Adele");
+    			$this->c->createAlbum("A", "Pop", 02-09-2016, "Adele");
+    			$this->c->createAlbum("B", "Reggae", 02-02-2016, "Bob Marley");
+    			$this->c->createSong("Hello", 170, 1, "C");
+    			$this->c->createSong("Rolling in the Deep", 130, 2, "A");
+    			$this->c->createSong("Jammin", 155, 3, "B");
+    		}
+    		catch (Exception $e){
+    			$this->fail();
+    		}
+    		$sortedSongs=array();
+    		//Call the Method
+    		try{
+    			$this->c->sortbyAlbum();
+    			$sortedSongs=$this->c->sortbyAlbum();
+    		}
+    		catch(Exception $e){
+    			$this->fail();
+    		}
+    		//Check what was saved 
+    		$this->hm = $this->pm->loadDataFromStore();    		
+    		$songName= array_values($sortedSongs)[0]->getName();
+    		$this->assertEquals($songName, $this->hm->getAlbum_index(1)->getSong_index(0)->getName());
+    	}
+    public function testsortbyArtist(){
+    	//Create some artists
+    	try {
+    		$this->c->createArtist("Adele");
+    		$this->c->createArtist("Bob Marley");
+    		$this->c->createAlbum("C", "Pop", 02-02-2016, "Adele");
+    		$this->c->createAlbum("A", "Pop", 02-09-2016, "Adele");
+    		$this->c->createAlbum("B", "Reggae", 02-02-2016, "Bob Marley");
+    		$this->c->createSong("Hello", 170, 1, "C");
+    		$this->c->createSong("Rolling in the Deep", 130, 2, "A");
+    		$this->c->createSong("Jammin", 155, 3, "B");
+    	} catch (Exception $e) {    
+    		$this->fail();
+    	}
+    	$sortedSongs=array();
+    	try{
+    		$this->c->sortbyAlbum();
+    		$sortedSongs=$this->c->sortbyAlbum();
+    	}
+    	catch(Exception $e){
+    		$this->fail();
+    	}
+    	$this->hm = $this->pm->loadDataFromStore();
+    	$songName= array_values($sortedSongs)[0]->getName();
+    	$this->assertEquals($songName, $this->hm->getAlbum_index(1)->getSong_index(0)->getName());
+    }
 }
 ?>

@@ -1,10 +1,12 @@
 package ca.mcgill.ecse321.android_has.rooms;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import ca.mcgill.ecse321.HAS.model.HAS;
@@ -30,9 +32,18 @@ public class RoomNavFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_room_nav, container, false);
+        View v = inflater.inflate(R.layout.fragment_nav, container, false);
 
-        ListView listView = (ListView) v.findViewById(R.id.room_list_view);
+        Button addRoomBtn = (Button) v.findViewById(R.id.add_button);
+        addRoomBtn.setText(getResources().getString(R.string.addRoom_button));
+        addRoomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRoom();
+            }
+        });
+
+        ListView listView = (ListView) v.findViewById(R.id.list_view);
         listView.setOnItemClickListener(new LocationItemClickListener());
 
         HAS h = HAS.getInstance();
@@ -42,5 +53,11 @@ public class RoomNavFragment extends Fragment {
         listView.setAdapter(adapter);
 
         return v;
+    }
+
+    public void addRoom() {
+        Intent intent = new Intent(getActivity().getApplicationContext(),
+                AddRoomActivity.class);
+        startActivity(intent);
     }
 }

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:onClick="addRoom"
-            android:text="@string/addroom_button"/>
+            android:text="@string/addRoom_button"/>
 
     </LinearLayout>
 

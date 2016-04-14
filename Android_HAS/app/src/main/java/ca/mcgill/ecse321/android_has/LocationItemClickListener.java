@@ -12,7 +12,6 @@ public class LocationItemClickListener implements AdapterView.OnItemClickListene
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(parent.getContext(), LocationSettingsActivity.class);
         LocationSettingsActivity.setLocation((Location) parent.getAdapter().getItem(position));
-
         parent.getContext().startActivity(intent);
     }
 }

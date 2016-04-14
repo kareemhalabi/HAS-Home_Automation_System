@@ -1,11 +1,13 @@
 package ca.mcgill.ecse321.android_has.roomgroups;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import ca.mcgill.ecse321.HAS.model.HAS;
@@ -32,9 +34,18 @@ public class RoomGroupNavFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_room_group_nav, container, false);
+        View v =  inflater.inflate(R.layout.fragment_nav, container, false);
 
-        ListView listView = (ListView) v.findViewById(R.id.room_group_list_view);
+        Button addRoomGroupBtn = (Button) v.findViewById(R.id.add_button);
+        addRoomGroupBtn.setText(getResources().getString(R.string.addRoomGroup_button));
+        addRoomGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRoomGroup();
+            }
+        });
+
+        ListView listView = (ListView) v.findViewById(R.id.list_view);
         listView.setOnItemClickListener(new LocationItemClickListener());
 
         HAS h = HAS.getInstance();
@@ -44,5 +55,11 @@ public class RoomGroupNavFragment extends Fragment {
         listView.setAdapter(adapter);
 
         return v;
+    }
+
+    public void addRoomGroup() {
+        Intent intent = new Intent(getActivity().getApplicationContext(),
+                AddRoomGroupActivity.class);
+        startActivity(intent);
     }
 }

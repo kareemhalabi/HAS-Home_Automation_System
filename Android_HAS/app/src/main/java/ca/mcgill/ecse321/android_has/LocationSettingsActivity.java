@@ -77,7 +77,7 @@ public class LocationSettingsActivity extends AppCompatActivity {
                 RoomGroupNavFragment.getAdapter().notifyDataSetChanged();
             }
 
-        } catch (InvalidInputException e) {} //UI prevents invalid input
+        } catch (InvalidInputException e) {} //UI already prevents invalid input
 
 
         String confirmationMessage = location.getName() + " - Volmue: " + volumeSeekBar.getProgress();

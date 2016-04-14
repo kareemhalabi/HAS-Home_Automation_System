@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:onClick="addArtist"
-            android:text="@string/addartist_button"/>
+            android:text="@string/addArtist_button"/>
 
     </LinearLayout>
 </RelativeLayout>

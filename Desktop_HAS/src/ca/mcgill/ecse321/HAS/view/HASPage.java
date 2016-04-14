@@ -1173,12 +1173,14 @@ public class HASPage extends JFrame {
 
 			txtRoomName.setText("");
 
+			// if there are rooms update room list
 			if (!roomsString.isEmpty()) {
 				roomList.setListData(roomsString.values().toArray());
 				roomList.clearSelection();
 				txtRoomGroupName.setText("");
 			}
 
+			// initialize data for rooms list
 			rooms = new HashMap<Integer, Room>();
 			Iterator<Room> roomIt2 = h.getRooms().iterator();
 			Integer index6 = 0;
@@ -1188,6 +1190,7 @@ public class HASPage extends JFrame {
 				index6++;
 			}
 
+			// initialize data for roomgroups list
 			roomGroups = new HashMap<Integer, RoomGroup>();
 			Iterator<RoomGroup> roomgIt = h.getRoomGroups().iterator();
 			Integer index7 = 0;
@@ -1203,6 +1206,7 @@ public class HASPage extends JFrame {
 		if (error_PP == null || error_PP.length() == 0)
 
 		{
+			// initialize data for song list
 			songsString = new HashMap<Integer, String>();
 			Iterator<Song> songIt = h.getSongs().iterator();
 			Integer index5 = 0;
@@ -1214,6 +1218,7 @@ public class HASPage extends JFrame {
 
 			txtRoomName.setText("");
 
+			// set song list
 			if (!songsString.isEmpty()) {
 				songList.setListData(songsString.values().toArray());
 				songList.clearSelection();
@@ -1224,6 +1229,7 @@ public class HASPage extends JFrame {
 		// music page
 		if (error_MP == null || error_MP.length() == 0) {
 
+			// update location combobox
 			locationMap = new HashMap<Integer, String>();
 			locationCB.removeAllItems();
 
@@ -1244,20 +1250,9 @@ public class HASPage extends JFrame {
 			selectedLocation = -1;
 			locationCB.setSelectedIndex(selectedLocation);
 
-			// artists = new HashMap<Integer, Artist>();
-			// albumArtistCB.removeAllItems();
-			// Iterator<Artist> arIt = h.getArtists().iterator();
-			// index = 0;
-			// while (arIt.hasNext()) {
-			// Artist ar = arIt.next();
-			// artists.put(index, ar);
-			// albumArtistCB.addItem(ar.getName());
-			// index++;
-			// }
-			// selectedArtist = -1;
-			// albumArtistCB.setSelectedIndex(selectedArtist);
 		}
 
+		// reset textfields and spinners
 		txtAlbumName.setText("");
 		txtAlbumGenre.setText("");
 		albumReleaseDatePicker.getModel().setValue(null);
@@ -1268,6 +1263,7 @@ public class HASPage extends JFrame {
 
 	}
 
+	// create room
 	private void createRoomActionPerformed(java.awt.event.ActionEvent evt) {
 
 		HASController hc = new HASController();
@@ -1281,6 +1277,7 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// get selected rooms for roomgroup creation
 	private void roomListSelectionListener(ListSelectionEvent e) {
 		HAS h = HAS.getInstance();
 
@@ -1296,6 +1293,7 @@ public class HASPage extends JFrame {
 		}
 	}
 
+	// create room group from selected songs
 	private void createRoomGroupActionPerformed(java.awt.event.ActionEvent evt) {
 		HASController hc = new HASController();
 		error_RP = "";
@@ -1309,8 +1307,7 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
-	// Create playlist functions
-
+	// get songs selections for playlist creation
 	private void songListSelectionListener(ListSelectionEvent e) {
 		HAS h = HAS.getInstance();
 
@@ -1327,6 +1324,7 @@ public class HASPage extends JFrame {
 		}
 	}
 
+	// create playlist from selected songs
 	private void createPlaylistActionPerformed(java.awt.event.ActionEvent evt) {
 		error_PP = "";
 		HASController hc = new HASController();
@@ -1338,6 +1336,7 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// create artist
 	private void addArtistActionPerformed(java.awt.event.ActionEvent evt) {
 		HASController hc = new HASController();
 		error_AP = null;
@@ -1349,15 +1348,17 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// create album with associated artist
 	private void addAlbumActionPerformed(java.awt.event.ActionEvent evt) {
 		error_AP = "";
 		if (selectedArtist < 0)
 			error_AP = error_AP + "Album must have an artist!";
 		if (albumReleaseDatePicker.getModel().getValue() == null) {
-			error_AP = error_AP + "Album must have a release date! ";
+			error_AP = error_AP + " Album must have a release date! ";
 		}
 		error_AP = error_AP.trim();
 		if (error_AP.length() == 0) {
+
 			// call the method to create an album
 			HASController hc = new HASController();
 			Date selectedDate = (java.sql.Date) albumReleaseDatePicker.getModel().getValue();
@@ -1375,6 +1376,7 @@ public class HASPage extends JFrame {
 
 	}
 
+	// get featuring artist selection
 	private void featuringArtistListSelectionListener(ListSelectionEvent e) {
 		HAS h = HAS.getInstance();
 
@@ -1382,7 +1384,6 @@ public class HASPage extends JFrame {
 		if (!adjust) {
 			JList list = (JList) e.getSource();
 			int artistSelections[] = list.getSelectedIndices();
-			// Object selectionValues[] = list.getSelectedValues();
 			fArtistSelectionList = new ArrayList<Artist>();
 			for (int i = 0; i < artistSelections.length; i++) {
 				fArtistSelectionList.add(i, h.getArtist(artistSelections[i]));
@@ -1390,6 +1391,7 @@ public class HASPage extends JFrame {
 		}
 	}
 
+	// add song to album
 	private void addSongActionPerformed(java.awt.event.ActionEvent evt) {
 		error_AP = "";
 		if (selectedAlbum < 0)
@@ -1399,7 +1401,7 @@ public class HASPage extends JFrame {
 		if (error_AP.length() == 0) {
 
 			HASController hc = new HASController();
-			try { // TODO:need to fix
+			try {
 
 				hc.addSongtoAlbum(albums.get(selectedAlbum), txtSongName.getText(),
 						(Integer) (songDurSpin.getModel().getValue()), (Integer) (songPosSpin.getModel().getValue()),
@@ -1413,6 +1415,7 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// get selected row of table
 	private void tableListSelectionListener(ListSelectionEvent e) {
 		HAS h = HAS.getInstance();
 
@@ -1423,7 +1426,8 @@ public class HASPage extends JFrame {
 		}
 
 	}
-	// update table data to be sorted by Album
+
+	// fill table data, sorted by Album
 	private void resetData() {
 		HAS h = HAS.getInstance();
 		sortedByArtist = false;
@@ -1452,58 +1456,65 @@ public class HASPage extends JFrame {
 		tableModel.fireTableDataChanged();
 
 	}
-	// update table data to be sorted by Artist
+
+	// fill table data, sorted by Artist
 	private void resetDataArtist() {
 		HAS h = HAS.getInstance();
 		sortedByArtist = true;
 		data.clear();
-		if (h.getArtists().size() > 0) {
-			for (int in = 0; in < h.getArtists().size(); in++) {
-				if (h.getArtist(in).getAlbums().size() > 0) {
-					for (int jn = 0; jn < h.getArtist(in).getAlbums().size(); jn++) {
-						if (h.getArtist(in).getAlbum(jn).getSongs().size() > 0)
-							for (int kn = 0; kn < h.getArtist(in).getAlbum(jn).getSongs().size(); kn++) {
 
-								Vector tablerowA = new Vector();
+		for (int in = 0; in < h.getArtists().size(); in++) {
+			if (h.getArtist(in).getAlbums().size() > 0) {
+				for (int jn = 0; jn < h.getArtist(in).getAlbums().size(); jn++) {
+					if (h.getArtist(in).getAlbum(jn).getSongs().size() > 0)
+						for (int kn = 0; kn < h.getArtist(in).getAlbum(jn).getSongs().size(); kn++) {
 
-								tablerowA.addElement(h.getArtist(in).getName());
-								tablerowA.addElement(h.getArtist(in).getAlbum(jn).getName());
-								tablerowA.addElement(h.getArtist(in).getAlbum(jn).getSong(kn).getName());
-								tablerowA.addElement(h.getArtist(in).getAlbum(jn).getSong(kn).getDuration());
-								tablerowA.addElement(h.getArtist(in).getAlbum(jn).getReleaseDate().toString());
-								tablerowA.addElement(h.getArtist(in).getAlbum(jn).getSong(kn).getPosition());
+							Vector tablerowA = new Vector();
 
-								data.addElement(tablerowA);
-							}
+							tablerowA.addElement(h.getArtist(in).getName());
+							tablerowA.addElement(h.getArtist(in).getAlbum(jn).getName());
+							tablerowA.addElement(h.getArtist(in).getAlbum(jn).getSong(kn).getName());
+							tablerowA.addElement(h.getArtist(in).getAlbum(jn).getSong(kn).getDuration());
+							tablerowA.addElement(h.getArtist(in).getAlbum(jn).getReleaseDate().toString());
+							tablerowA.addElement(h.getArtist(in).getAlbum(jn).getSong(kn).getPosition());
 
-					}
+							data.addElement(tablerowA);
+						}
+
 				}
 			}
 		}
+
 		table.setModel(tableModel);
 		tableModel.fireTableDataChanged();
 
 	}
 
+	// play song in selected location
 	private void playSltSongActionPerformed(java.awt.event.ActionEvent evt) {
 		HASController hc = new HASController();
+		HAS h = HAS.getInstance();
 		error_MP = "";
+
+		// check if location has been selected
 		if (row > -1) {
+
+			// gets song from list depending on how the table is sorted
 			albumListSortByArtist();
 			if (sortedByArtist == false) {
 				albumListSortByAlbum();
 			}
 
-			if (selectedLocation > roomsString.size() - 1) {
+			if (selectedLocation > h.getRooms().size() - 1) {
 				try {
-					hc.playRoomGroup(playSong, roomGroups.get(selectedLocation - rooms.size()));
+					hc.playRoomGroup(playSong, h.getRoomGroup(selectedLocation - h.getRooms().size()));
 					nowPlaying = playSong.getName();
 				} catch (InvalidInputException e) {
 					error_MP = e.getMessage();
 				}
 			} else {
 				try {
-					hc.playSingleRoom(playSong, rooms.get(selectedLocation));
+					hc.playSingleRoom(playSong, h.getRoom(selectedLocation));
 					nowPlaying = playSong.getName();
 				} catch (InvalidInputException e) {
 					error_MP = e.getMessage();
@@ -1515,6 +1526,7 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// find album/song of selected row in JTable when it is sorted by artist
 	private void albumListSortByArtist() {
 
 		sortedByArtist = true;
@@ -1540,6 +1552,7 @@ public class HASPage extends JFrame {
 		playSong = s.get(row);
 	}
 
+	// find album/song of selected row in JTable when it is sorted by album
 	private void albumListSortByAlbum() {
 		sortedByArtist = false;
 		HAS h = HAS.getInstance();
@@ -1563,9 +1576,12 @@ public class HASPage extends JFrame {
 		playSong = s.get(row);
 	}
 
+	// play album in selected location
 	private void playAlbumActionPerformed(java.awt.event.ActionEvent evt) {
 		HASController hc = new HASController();
+		HAS h = HAS.getInstance();
 
+		// check that an album has been selected
 		if (row > -1) {
 			error_MP = "";
 			albumListSortByArtist();
@@ -1573,10 +1589,10 @@ public class HASPage extends JFrame {
 				albumListSortByAlbum();
 			}
 
-			if (selectedLocation > (roomsString.size() - 1)) {
+			if (selectedLocation > (h.getRooms().size() - 1)) {
 				try {
 
-					hc.playRoomGroup(playAlbum, roomGroups.get(selectedLocation - rooms.size() - 1));
+					hc.playRoomGroup(playAlbum, h.getRoomGroup(selectedLocation - h.getRooms().size() - 1));
 					nowPlaying = playAlbum.getName();
 
 				} catch (InvalidInputException e) {
@@ -1584,7 +1600,7 @@ public class HASPage extends JFrame {
 				}
 			} else {
 				try {
-					hc.playSingleRoom(playAlbum, rooms.get(selectedLocation));
+					hc.playSingleRoom(playAlbum, h.getRoom(selectedLocation));
 					nowPlaying = playAlbum.getName();
 				} catch (InvalidInputException e) {
 					error_MP = e.getMessage();
@@ -1596,13 +1612,14 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// change volume in selected location
 	private void volumeChange() {
 		error_CP = "";
 		HASController hc = new HASController();
 		HAS h = HAS.getInstance();
-		if (selectedctrlocation > (roomsString.size() - 1)) {
+		if (selectedctrlocation > (h.getRooms().size() - 1)) {
 			try {
-				hc.setRoomGroupVolumeLevel(h.getRoomGroup(selectedctrlocation - rooms.size()), sliderVol);
+				hc.setRoomGroupVolumeLevel(h.getRoomGroup(selectedctrlocation - h.getRooms().size()), sliderVol);
 
 			} catch (InvalidInputException e) {
 				error_CP = e.getMessage();
@@ -1617,6 +1634,7 @@ public class HASPage extends JFrame {
 		refreshVol();
 	}
 
+	// change volume in all locations
 	private void mVolumeChange() {
 		error_CP = "";
 		HAS h = HAS.getInstance();
@@ -1639,6 +1657,7 @@ public class HASPage extends JFrame {
 		refreshVol();
 	}
 
+	// mute in selected location
 	private void muteChange() {
 		error_CP = "";
 		HASController hc = new HASController();
@@ -1657,9 +1676,11 @@ public class HASPage extends JFrame {
 				error_CP = e.getMessage();
 			}
 		}
+		
 		refreshMute();
 	}
 
+	// mute all locations
 	private void mMuteChange() {
 		error_CP = "";
 		HASController hc = new HASController();
@@ -1684,10 +1705,13 @@ public class HASPage extends JFrame {
 		refreshMute();
 	}
 
+	// play playlist in room or roomgroup
 	private void playPlaylistActionPerformed(java.awt.event.ActionEvent evt) {
 		error_PPP = "";
 		HASController hc = new HASController();
 		HAS h = HAS.getInstance();
+
+		// check if a playlist is selected
 		if (selectedPlaylist > -1) {
 			if (selected3Location > (roomsString.size() - 1)) {
 				try {
@@ -1710,6 +1734,7 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// stop playable in the selected location
 	private void stopActionPerformed(java.awt.event.ActionEvent evt) {
 		error_CP = "";
 		HASController hc = new HASController();
@@ -1733,6 +1758,7 @@ public class HASPage extends JFrame {
 		setPlayinglbl();
 	}
 
+	// stop playable in all locations
 	private void stopAllActionPerformed(java.awt.event.ActionEvent evt) {
 		error_PPP = "";
 		HASController hc = new HASController();
@@ -1748,8 +1774,10 @@ public class HASPage extends JFrame {
 		refreshData();
 	}
 
+	// update volume bar when the location is changed
 	private void refreshVol() {
 		HAS h = HAS.getInstance();
+		// check if it is a room or roomGroup
 		if (selectedctrlocation > h.getRooms().size() - 1) {
 			Integer sliderVols = h.getRoomGroup(selectedctrlocation - rooms.size()).getVolume();
 			sliderVolume.setValue(sliderVols);
@@ -1759,6 +1787,7 @@ public class HASPage extends JFrame {
 		}
 	}
 
+	// update mute box for current room or roomGroup
 	private void refreshMute() {
 		HAS h = HAS.getInstance();
 
@@ -1772,6 +1801,7 @@ public class HASPage extends JFrame {
 
 	}
 
+	// update the now playing label to show the currently playing playable
 	private void setPlayinglbl() {
 		HAS h = HAS.getInstance();
 		if (selectedctrlocation > h.getRooms().size() - 1) {
@@ -1791,7 +1821,5 @@ public class HASPage extends JFrame {
 		}
 
 	}
-
-	// TODO change the ranges of values for songDurationSpinner and //
 
 }

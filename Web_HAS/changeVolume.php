@@ -32,7 +32,11 @@ function noRoomFunction(){
 	</div>
 	<form action="index.php" method="post" style="float: left;">
 		<input type="submit" value="Go Home" />
-</form><br>
+</form>
+<br>
+<p>
+
+</p>
 		<?php
 		// pull data from model folder
 		require_once "model/Playable.php";
@@ -50,16 +54,11 @@ function noRoomFunction(){
 		// Retrieve the data from the model
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
-		if($hm->hasRooms()==false){
+		if($hm->hasRooms()==false){ //If no rooms exist, notify the user when they try to change volume because nothing can play until the system has a Room.
 			showRoomError();
 		}
-		elseif ($hm->getRoom_index(0)->hasPlayable()==false){
-			showPlayableError();
-		}
-		if($hm->hasRoomGroups()==false) {
-			showRoomError();
-		}
-		elseif ($hm->getRoomGroup_index(0)->hasPlayable()==false){
+		//If there's nothing playing, notify the user when they try to change volume
+		if ($hm->getRoom_index(0)->hasPlayable()==false && ($hm->hasRoomGroups()==true && $hm->getRoomGroup_index(0)->hasPlayable()==false)){
 			showPlayableError();
 		}
 		function showRoomError(){
@@ -72,9 +71,7 @@ function noRoomFunction(){
 			echo '<meta http-equiv="refresh" content="0;url=index.php">';
 			exit();
 		}
-		
 		?>
-	
 		<form action="changeRoomVolume.php" method="post">
 		<?php
 		echo "Enter a new volume for the room";

@@ -28,6 +28,14 @@ $('input[type="radio"]').click(function(){
 
 <style>
 body { text-align:center; }
+h1 {
+	font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
+	font-size: 23px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 800;
+	line-height: 25.3px;
+}
 .error {
 	color: #FF0000;
 }
@@ -38,6 +46,7 @@ body { text-align:center; }
 	border: 2px solid blue;
 	width: 200px;
 	margin: auto;
+	background-color:  #F0F0F0;
 }
 der: 1px #DDD solid; padding: 5px; cursor: pointer;}
 
@@ -52,6 +61,8 @@ tr:hover{
 }
 .boxed {
   	border: 2px solid blue;
+  	background-color:  #F0F0F0;
+}
 }
 table {
     border: 1px solid blue;
@@ -69,7 +80,7 @@ table {
 
 </head>
 <div class="boxed" > 
-<h1>WELCOME TO HAS ONLINE</h1>
+<h1>Welcome To HAS Online</h1>
 
 </div>
 <body>

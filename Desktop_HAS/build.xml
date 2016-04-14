@@ -63,7 +63,7 @@
     </target>
 	
 	<target name="Android_jar" depends="test">
-		<jar destfile="../Android_HAS_v3/app/libs/HAS_for_Android.jar">
+		<jar destfile="../Android_HAS/app/libs/HAS_for_Android.jar">
 			<fileset dir="${classes.dir}">
 				<include name="ca/mcgill/ecse321/HAS/controller/**"/>
 				<include name="ca/mcgill/ecse321/HAS/model/**"/>

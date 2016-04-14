@@ -63,7 +63,7 @@ tr:hover{
   	border: 2px solid blue;
   	background-color:  #F0F0F0;
 }
-}
+
 table {
     border: 1px solid blue;
 }
@@ -105,7 +105,6 @@ table {
 		// Retrieve the data from the model
 		$pm = new PersistenceHAS ();
 		$hm = $pm->loadDataFromStore ();
-		
 		
 		$songName = array();
 		foreach ($hm->getSongs() as $songs){
@@ -199,7 +198,7 @@ table {
 	</div>
 <!-- Sort by... two buttons, clicking one refreshes index, stores $c->sortby... into a $_SESSION variable, inside table call$_SESSION variable -->
 <div>
-	<label><input type="radio" name="sort" value="album">Sort by Album</label>
+	<label><input type="radio" name="sort" value="album" checked>Sort by Album</label>
 	<label><input type="radio" name="sort" value="artist">Sort by Artist</label>
 	</div><br>
 	<?php if (count($songName) > 0): ?>

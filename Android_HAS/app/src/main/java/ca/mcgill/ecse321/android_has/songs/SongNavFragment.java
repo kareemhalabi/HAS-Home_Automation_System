@@ -20,8 +20,8 @@ public class SongNavFragment extends Fragment {
     private SongAdapter adapter;
     private static List<Song> songs;
 
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
+    public void setSongs(List<Song> newSongs) {
+        songs = newSongs;
         adapter.setSongs(songs);
     }
 

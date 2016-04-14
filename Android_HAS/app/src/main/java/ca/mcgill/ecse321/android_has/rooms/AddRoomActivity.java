@@ -53,6 +53,5 @@ public class AddRoomActivity extends AppCompatActivity {
         }
         else
             refreshError();
-
     }
 }

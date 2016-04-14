@@ -16,8 +16,6 @@ import ca.mcgill.ecse321.android_has.R;
 
 public class SongAdapter extends BaseAdapter{
 
-    Context context;
-
     private List<Song> songs;
 
     public void setSongs(List<Song> songs) {
@@ -25,13 +23,9 @@ public class SongAdapter extends BaseAdapter{
         this.notifyDataSetChanged();
     }
 
-    public List<Song> getSongs() {
-        return songs;
-    }
     private static LayoutInflater inflater = null;
 
     public SongAdapter(Context context, List<Song> songs) {
-        this.context = context;
         this.songs = songs;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

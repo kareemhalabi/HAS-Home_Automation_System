@@ -22,6 +22,7 @@ public class AddRoomGroupActivity extends AppCompatActivity {
     private String error = null;
     private ArrayList<Room> allRooms;
     private ArrayList<Room> roomsToAdd;
+    private TextView roomGroupName;
     private Spinner roomSpinner;
 
     @Override
@@ -33,12 +34,12 @@ public class AddRoomGroupActivity extends AppCompatActivity {
         HAS h = HAS.getInstance();
 
         //Initialize Room Group name text field
-        TextView roomGroupName = (TextView) findViewById(R.id.newroomgroup_name);
+        roomGroupName = (TextView) findViewById(R.id.newroomgroup_name);
         roomGroupName.setText("");
 
         roomsToAdd = new ArrayList<Room>();
 
-        //Iniitally populate rooms from HAS
+        //Initially populate rooms from HAS
         allRooms = new ArrayList<Room>(h.getRooms());
         roomSpinner= (Spinner) findViewById(R.id.room_spinner);
         refreshRooms();
@@ -81,14 +82,13 @@ public class AddRoomGroupActivity extends AppCompatActivity {
         error = null;
         HASController hc = new HASController();
 
-        TextView roomGroupName = (TextView) findViewById(R.id.newroomgroup_name);
         try {
             hc.createRoomGroup(roomGroupName.getText().toString(), roomsToAdd);
         } catch (InvalidInputException e) {
             error = e.getMessage();
         }
 
-        //confims addition of roomGroup and closes the activity
+        //confirms addition of roomGroup and closes the activity
         if(error == null || error.length() == 0) {
             String confirmationMessage = "Added room group: " + roomGroupName.getText();
             Toast confirmation = Toast.makeText(getApplicationContext(),

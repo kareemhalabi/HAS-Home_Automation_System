@@ -45,7 +45,6 @@ public class LocationSettingsActivity extends AppCompatActivity {
         assert volumeSeekBar != null;
         volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int volume, boolean fromUser) {
                 volumeTextView.setText("" + volume);

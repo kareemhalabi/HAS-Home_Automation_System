@@ -15,12 +15,10 @@ import ca.mcgill.ecse321.android_has.R;
 
 public class PlaylistAdapter extends BaseAdapter {
 
-    Context context;
-    List<Playlist> playlists;
+    private List<Playlist> playlists;
     private static LayoutInflater inflater = null;
 
     public PlaylistAdapter(Context context, List<Playlist> playlists) {
-        this.context = context;
         this.playlists = playlists;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

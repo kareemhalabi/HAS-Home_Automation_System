@@ -15,12 +15,10 @@ import ca.mcgill.ecse321.android_has.R;
 
 public class RoomAdapter extends BaseAdapter{
 
-    Context context;
-    List<Room> rooms;
+    private List<Room> rooms;
     private static LayoutInflater inflater = null;
 
     public RoomAdapter(Context context, List<Room> rooms) {
-        this.context = context;
         this.rooms = rooms;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

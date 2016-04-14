@@ -15,12 +15,10 @@ import ca.mcgill.ecse321.android_has.R;
 
 public class RoomGroupAdapter extends BaseAdapter{
 
-    Context context;
-    List<RoomGroup> roomGroups;
+    private List<RoomGroup> roomGroups;
     private static LayoutInflater inflater = null;
 
     public RoomGroupAdapter(Context context, List<RoomGroup> roomGroups) {
-        this.context = context;
         this.roomGroups = roomGroups;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

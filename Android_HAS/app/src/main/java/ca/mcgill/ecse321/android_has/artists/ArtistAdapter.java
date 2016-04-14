@@ -15,12 +15,10 @@ import ca.mcgill.ecse321.android_has.R;
 
 public class ArtistAdapter extends BaseAdapter {
 
-    Context context;
-    List<Artist> artists;
+    private List<Artist> artists;
     private static LayoutInflater inflater = null;
 
     public ArtistAdapter(Context context, List<Artist> artists) {
-        this.context = context;
         this.artists = artists;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

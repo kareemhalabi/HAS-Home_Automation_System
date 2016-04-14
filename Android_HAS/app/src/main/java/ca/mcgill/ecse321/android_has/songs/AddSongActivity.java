@@ -26,7 +26,11 @@ public class AddSongActivity extends AppCompatActivity {
     private HashMap<Integer, Album> albums;
     private ArrayList<Artist> artists;
     private ArrayList<Artist> ftArtists;
-    private Spinner ftArtsitsSpinner;
+    private Spinner ftArtistsSpinner;
+    private TextView songName;
+    private Spinner albumSpinner;
+    private TextView songDuration;
+    private TextView songPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,7 @@ public class AddSongActivity extends AppCompatActivity {
         HAS h = HAS.getInstance();
 
         // Initialize the data in the album spinner
-        Spinner albumSpinner = (Spinner) findViewById(R.id.albumspinner);
+        albumSpinner = (Spinner) findViewById(R.id.albumspinner);
         ArrayAdapter<CharSequence> albumAdapter = new
                 ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
         albumAdapter.setDropDownViewResource(
@@ -54,22 +58,22 @@ public class AddSongActivity extends AppCompatActivity {
         albumSpinner.setAdapter(albumAdapter);
 
         // Initialize song name text field
-        TextView songName = (TextView) findViewById(R.id.newsong_name);
+        songName = (TextView) findViewById(R.id.newsong_name);
         songName.setText("");
 
         // Initialize song name text field
-        TextView songDuration = (TextView) findViewById(R.id.newsong_duration);
+        songDuration = (TextView) findViewById(R.id.newsong_duration);
         songDuration.setText("");
 
         // Initialize song name text field
-        TextView songPosition = (TextView) findViewById(R.id.newsong_position);
+        songPosition = (TextView) findViewById(R.id.newsong_position);
         songPosition.setText("");
 
         ftArtists = new ArrayList<Artist>();
 
         //Initially populate artists from HAS
         artists = new ArrayList<Artist>(h.getArtists());
-        ftArtsitsSpinner = (Spinner) findViewById(R.id.ftartistspinner);
+        ftArtistsSpinner = (Spinner) findViewById(R.id.ftartistspinner);
         refreshftArtists();
     }
 
@@ -83,7 +87,7 @@ public class AddSongActivity extends AppCompatActivity {
         for(int i = 0; i < artists.size(); i++) {
             ftArtistAdapter.add(artists.get(i).getName());
         }
-        ftArtsitsSpinner.setAdapter(ftArtistAdapter);
+        ftArtistsSpinner.setAdapter(ftArtistAdapter);
     }
 
     public void refreshError() {
@@ -96,15 +100,7 @@ public class AddSongActivity extends AppCompatActivity {
         error = null;
         HASController hc = new HASController();
 
-        Spinner albumSpinner = (Spinner) findViewById(R.id.albumspinner);
         int selectedAlbum = albumSpinner.getSelectedItemPosition();
-
-        TextView songName = (TextView) findViewById(R.id.newsong_name);
-
-        TextView songDuration = (TextView) findViewById(R.id.newsong_duration);
-
-        TextView songPosition = (TextView) findViewById(R.id.newsong_position);
-
 
         // if no text is in songDuration, the duration defaults to 0 so
         // that hc can print an error
@@ -141,7 +137,7 @@ public class AddSongActivity extends AppCompatActivity {
 
     public void addftArtist(View view) {
         //Prevent adding the same ftArtist
-        int selectedftArtist = ftArtsitsSpinner.getSelectedItemPosition();
+        int selectedftArtist = ftArtistsSpinner.getSelectedItemPosition();
         if (selectedftArtist >= 0) {
             Artist aftArtist = artists.get(selectedftArtist);
             ftArtists.add(aftArtist);
@@ -152,6 +148,5 @@ public class AddSongActivity extends AppCompatActivity {
             error = "No ft Artists available!";
             refreshError();
         }
-
     }
 }

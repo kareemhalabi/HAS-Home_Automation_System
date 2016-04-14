@@ -23,6 +23,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
     private ArrayList<Song> allSongs;
     private ArrayList<Song> playlistSongs;
     private Spinner songSpinner;
+    private TextView playlistName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
         HAS h = HAS.getInstance();
 
         //Initialize playlist name text field
-        TextView playlistName = (TextView) findViewById(R.id.newplaylist_name);
+        playlistName = (TextView) findViewById(R.id.newplaylist_name);
         playlistName.setText("");
 
         playlistSongs = new ArrayList<Song>();
@@ -81,16 +82,15 @@ public class AddPlaylistActivity extends AppCompatActivity {
         error = null;
         HASController hc = new HASController();
 
-        TextView playListName = (TextView) findViewById(R.id.newplaylist_name);
         try {
-            hc.createPlaylist(playListName.getText().toString(), playlistSongs);
+            hc.createPlaylist(playlistName.getText().toString(), playlistSongs);
         } catch (InvalidInputException e) {
             error = e.getMessage();
         }
 
         //confirms the addition of a playlist and closes the activity
         if(error == null || error.length() == 0) {
-            String confirmationMessage = "Added playlist: " + playListName.getText();
+            String confirmationMessage = "Added playlist: " + playlistName.getText();
             Toast confirmation = Toast.makeText(getApplicationContext(),
                     confirmationMessage, Toast.LENGTH_SHORT);
             confirmation.show();

@@ -13,8 +13,6 @@ import ca.mcgill.ecse321.android_has.R;
 
 public class PlaylistNavFragment extends Fragment {
 
-
-
     public PlaylistNavFragment() {
         // Required empty public constructor
     }

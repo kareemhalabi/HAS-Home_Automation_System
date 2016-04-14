@@ -27,6 +27,9 @@ public class AddAlbumActivity extends AppCompatActivity {
     //data elements
     private String error = null;
     private HashMap<Integer, Artist> artists;
+    private TextView newAlbumName;
+    private Spinner artistSpinner;
+    private TextView newAlbumGenre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +40,11 @@ public class AddAlbumActivity extends AppCompatActivity {
         HAS h = HAS.getInstance();
 
         // Initialize album name text field
-        TextView newAlbumName = (TextView) findViewById(R.id.newalbum_name);
+        newAlbumName = (TextView) findViewById(R.id.newalbum_name);
         newAlbumName.setText("");
 
         // Initialize the data in the artist spinner
-        Spinner artistSpinner = (Spinner) findViewById(R.id.artistspinner);
+        artistSpinner = (Spinner) findViewById(R.id.artistspinner);
         ArrayAdapter<CharSequence> artistAdapter = new
                 ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
         artistAdapter.setDropDownViewResource(
@@ -58,7 +61,7 @@ public class AddAlbumActivity extends AppCompatActivity {
         artistSpinner.setAdapter(artistAdapter);
 
         // Initialize album genre text field
-        TextView newAlbumGenre = (TextView) findViewById(R.id.newalbum_genre);
+        newAlbumGenre = (TextView) findViewById(R.id.newalbum_genre);
         newAlbumGenre.setText("");
 
         // Initialize album release date to today
@@ -72,12 +75,7 @@ public class AddAlbumActivity extends AppCompatActivity {
         error = null;
         HASController hc = new HASController();
 
-        TextView albumName = (TextView) findViewById(R.id.newalbum_name);
-
-        Spinner artistSpinner = (Spinner) findViewById(R.id.artistspinner);
         int selectedArtist = artistSpinner.getSelectedItemPosition();
-
-        TextView albumGenre = (TextView) findViewById(R.id.newalbum_genre);
 
         TextView releaseDate = (TextView) findViewById(R.id.albumReleasedate);
         DateFormat dft = new SimpleDateFormat("dd-MM-yyyy");
@@ -85,21 +83,21 @@ public class AddAlbumActivity extends AppCompatActivity {
         try {
             date = new Date(dft.parse(releaseDate.getText().toString()).getTime());
         } catch (ParseException e) {
-            error = "Date not formatted correclty!";
+            error = "Date not formatted correctly!";
         }
 
         try {
-            hc.createAlbum(albumName.getText().toString(),
-                    albumGenre.getText().toString(),
+            hc.createAlbum(newAlbumName.getText().toString(),
+                    newAlbumGenre.getText().toString(),
                     date,
                     artists.get(selectedArtist));
         } catch (InvalidInputException e) {
             error = e.getMessage();
         }
 
-        //confirms the addition of a song and closes the activity
+        //confirms the addition of an Album and closes the activity
         if(error == null || error.length() == 0) {
-            String confirmationMessage = "Added Album: " + albumName.getText();
+            String confirmationMessage = "Added Album: " + newAlbumName.getText();
             Toast confirmation = Toast.makeText(getApplicationContext(),
                     confirmationMessage, Toast.LENGTH_SHORT);
             confirmation.show();

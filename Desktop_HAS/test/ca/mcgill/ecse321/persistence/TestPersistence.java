@@ -31,7 +31,7 @@ public class TestPersistence {
 		int volume = 50;
 		boolean mute = true;
 		
-		Date d1 = new Date(2007,01,25);
+		Date d1 = new Date(27,01,25);
 		Date d2 = new Date(2009,10,9);
 		
 		Artist ar1 = new Artist("Flume");
@@ -46,10 +46,20 @@ public class TestPersistence {
 		
 		RoomGroup roomGroup = new RoomGroup("Group1", volume, mute, room1);
 		
-		h.addAlbum(a1);
+//		h.addAlbum(a1);
+//		h.addAlbum(a2);
+		
+		hc.createArtist("Flume");
+		hc.createArtist("Mumford and Sons");
+		hc.createAlbum("Flume", "Indie", d1, h.getArtist(0));
+		
+		List<Artist> list = new ArrayList<Artist>();
+		list.add(h.getArtist(1));
+		hc.addSongtoAlbum(h.getAlbum(0), "Sintara", 2000, 1, list);
+		
 		h.addAlbum(a2);
 		
-		h.getAlbum(0).addSong("Sintara", 2000, 1);
+		//h.getAlbum(0).addSong("Sintara", 2000, 1);
 		h.getAlbum(1).addSong("The Cave", 100, 2);
 		h.getAlbum(1).addSong("Why?", 120, 3);
 		
@@ -75,6 +85,7 @@ public class TestPersistence {
 		List<Song> songs = h.getSongs();
 		
 		hc.createPlaylist("Playlist1", songs);
+		hc.addFeaturedArtist(h.getSong(0), ar2);
 	}
 
 	@After
@@ -108,7 +119,7 @@ public class TestPersistence {
 			fail("Could not load file.");
 		}
 		
-		Date d1 = new Date(2007,01,25);
+		Date d1 = new Date(27,01,25);
 		Date d2 = new Date(2009,10,9);
 		
 		//check for albums
@@ -164,6 +175,9 @@ public class TestPersistence {
 		assertEquals("Playlist1", h2.getPlaylist(0).getName());
 		assertEquals("Sintara", h2.getPlaylist(0).getSong(0).getName());
 		assertEquals("The Cave", h2.getPlaylist(0).getSong(1).getName());
+		
+		assertEquals("Mumford and Sons", h2.getSong(0).getFtArtist(0).getName());
+		assertTrue(h2.getSong(0).hasFtArtists());
 	}
 
 }

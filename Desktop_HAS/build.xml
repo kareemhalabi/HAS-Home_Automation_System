@@ -93,5 +93,13 @@
 				<attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>	
 		</jar>
-	</target>	
+	</target>
+
+	<target name="run" depends="Desktop_jar">
+		<java fork="true" jar="${jar.dir}/${ant.project.name}.jar"/>
+	</target>
+
+	<target name="re-run" description="Executes jar without re-compiling">
+		<java fork="true" jar="${jar.dir}/${ant.project.name}.jar"/>
+	</target>
 </project>

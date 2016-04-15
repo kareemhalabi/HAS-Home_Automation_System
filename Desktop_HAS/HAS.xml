@@ -1,0 +1,34 @@
+<HAS id="1">
+  <rooms id="2"/>
+  <artists id="3">
+    <artist id="4">
+      <name>An Artist</name>
+      <songs id="5"/>
+      <albums id="6">
+        <album id="7">
+          <name>An Album</name>
+          <genre>A Genre</genre>
+          <releaseDate id="8">2016-04-12</releaseDate>
+          <songs id="9">
+            <song id="10">
+              <name>A Song</name>
+              <duration>100</duration>
+              <position>1</position>
+              <ftArtists id="11"/>
+              <album reference="7"/>
+            </song>
+          </songs>
+          <mainArtist reference="4"/>
+        </album>
+      </albums>
+    </artist>
+  </artists>
+  <albums id="12">
+    <album reference="7"/>
+  </albums>
+  <playlists id="13"/>
+  <songs id="14">
+    <song reference="10"/>
+  </songs>
+  <roomGroups id="15"/>
+</HAS>

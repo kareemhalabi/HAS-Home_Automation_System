@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.android_has.songs;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import ca.mcgill.ecse321.HAS.model.Album;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.android_has.R;
+import ca.mcgill.ecse321.android_has.albums.AddAlbumActivity;
 
 public class AddSongActivity extends AppCompatActivity {
 
@@ -93,6 +95,18 @@ public class AddSongActivity extends AppCompatActivity {
     public void refreshError() {
         TextView errorMessage = (TextView) findViewById(R.id.add_song_errorMessage);
         errorMessage.setText(error);
+
+        //re-populate artists list
+        if(!error.equals("No ft Artists available!")) {
+            ftArtists.clear();
+            artists = new ArrayList<>(HAS.getInstance().getArtists());
+            refreshftArtists();
+        }
+    }
+
+    public void addAlbum(View v) {
+        Intent intent = new Intent(this, AddAlbumActivity.class);
+        startActivity(intent);
     }
 
     public void addSong(View v) {

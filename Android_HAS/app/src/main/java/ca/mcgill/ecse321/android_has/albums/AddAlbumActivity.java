@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.android_has.albums;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,8 @@ import ca.mcgill.ecse321.HAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.HAS.model.Artist;
 import ca.mcgill.ecse321.HAS.model.HAS;
 import ca.mcgill.ecse321.android_has.R;
+import ca.mcgill.ecse321.android_has.artists.AddArtistActivity;
+import ca.mcgill.ecse321.android_has.songs.AddSongActivity;
 
 public class AddAlbumActivity extends AppCompatActivity {
 
@@ -68,6 +71,11 @@ public class AddAlbumActivity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         setDate(R.id.albumReleasedate, c.get(Calendar.DAY_OF_MONTH),
                 c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+    }
+
+    public void addArtist(View v) {
+        Intent intent = new Intent(this, AddArtistActivity.class);
+        startActivity(intent);
     }
 
     public void addAlbum(View v) {

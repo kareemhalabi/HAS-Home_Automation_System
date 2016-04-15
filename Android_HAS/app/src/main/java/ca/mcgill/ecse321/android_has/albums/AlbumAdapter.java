@@ -55,7 +55,8 @@ public class AlbumAdapter extends BaseAdapter{
                 c.get(Calendar.MONTH) + 1, c.get(Calendar.YEAR)));
 
         TextView mainArtist = (TextView) vi.findViewById(R.id.bottom_left_TextView);
-        mainArtist.setText(album.getMainArtist().getName());
+        String artist = "By: " + album.getMainArtist().getName();
+        mainArtist.setText(artist);
 
         TextView genre = (TextView) vi.findViewById(R.id.bottom_right_TextView);
         genre.setText(album.getGenre());

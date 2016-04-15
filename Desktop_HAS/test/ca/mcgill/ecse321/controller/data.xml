@@ -1,8 +1,32 @@
 <HAS id="1">
   <rooms id="2"/>
   <artists id="3"/>
-  <albums id="4"/>
-  <playlists id="5"/>
-  <songs id="6"/>
-  <roomGroups id="7"/>
+  <albums id="4">
+    <album id="5">
+      <name>Flume</name>
+      <genre>Indie</genre>
+      <releaseDate id="6">2016-03-08</releaseDate>
+      <songs id="7">
+        <ca.mcgill.ecse321.HAS.model.Song id="8">
+          <name>Name</name>
+          <duration>12</duration>
+          <position>2</position>
+          <ftArtists id="9"/>
+          <album reference="5"/>
+        </ca.mcgill.ecse321.HAS.model.Song>
+      </songs>
+      <mainArtist id="10">
+        <name>Oscar</name>
+        <songs id="11"/>
+        <albums id="12">
+          <album reference="5"/>
+        </albums>
+      </mainArtist>
+    </album>
+  </albums>
+  <playlists id="13"/>
+  <songs id="14">
+    <ca.mcgill.ecse321.HAS.model.Song reference="8"/>
+  </songs>
+  <roomGroups id="15"/>
 </HAS>

@@ -39,9 +39,9 @@ public class MyMusicActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Sets the song view as the default on startup
+        //Sets the artist view as the default on startup
         if(HASAndroidApplication.getCurrentMenu() == null)
-            HASAndroidApplication.setCurrentMenu(navigationView.getMenu().getItem(2));
+            HASAndroidApplication.setCurrentMenu(navigationView.getMenu().getItem(0));
         HASAndroidApplication.getCurrentMenu().setChecked(true);
         onNavigationItemSelected(HASAndroidApplication.getCurrentMenu());
     }
@@ -102,6 +102,11 @@ public class MyMusicActivity extends AppCompatActivity
             case R.id.nav_room_groups:
                 currentFragment = new RoomGroupNavFragment();
                 setTitle("Room Groups");
+                break;
+
+            case R.id.nav_about:
+                currentFragment = new AboutNavFragment();
+                setTitle("About");
                 break;
         }
 

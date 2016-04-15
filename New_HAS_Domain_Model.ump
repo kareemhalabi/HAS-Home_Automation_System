@@ -1,0 +1,125 @@
+/*
+*To fix a know error with the generated php code, replace "class *Playable{" with "abstract class Playable{".
+*/
+namespace ca.mcgill.ecse321.HAS.model;
+
+class Song
+{
+  isA Playable;
+  int duration;
+  int position;
+  * ftSongs -- * Artist ftArtists;
+}
+
+class HAS
+{
+  singleton;
+  1 -> * Room;
+  1 -> * Artist;
+  1 -> * Album;
+  1 -> * Playlist;
+  1 -> * Song;
+  1 -> * RoomGroup;
+}
+
+class Room
+{
+  isA Location;
+}
+
+class RoomGroup {
+  isA Location;
+  * -> 1..* Room;
+  }
+
+class Artist
+{
+  name;
+}
+
+class Album
+{  
+  isA Playable;
+  genre;
+  Date releaseDate;
+  1 -- 0..* Song;
+  * -- 1 Artist mainArtist; 
+}
+
+class Playlist
+{
+   isA Playable;
+  * -> 1..* Song;
+}
+
+class Playable {
+  abstract;
+  name;
+}
+
+
+class Location
+{
+  abstract;
+  name;
+  int volume;
+  boolean mute;
+  * -> 0..1 Playable;
+}//$?[End_of_model]$?
+
+class Song
+{
+  position 134 297 109 75;
+  position.association Artist:ftArtists__Song:ftSongs 95,0 36,58;
+}
+
+class HAS
+{
+  position 260 27 109 45;
+  position.association Album__HAS 56,45 97,0;
+  position.association HAS__Playlist 0,18 109,14;
+  position.association HAS__Song 8,45 16,0;
+  position.association HAS__Room 109,20 0,11;
+  position.association HAS__RoomGroup 109,41 30,0;
+  position.association Artist__HAS 30,45 30,0;
+}
+
+class Room
+{
+  position 680 89 109 45;
+}
+
+class RoomGroup
+{
+  position 603 196 109 45;
+  position.association Room__RoomGroup 73,0 30,45;
+}
+
+class Artist
+{
+  position 254 153 112 58;
+}
+
+class Album
+{
+  position 379 224 146 75;
+  position.association Album__Song 8,75 109,28;
+  position.association Album__Artist:mainArtist 0,27 112,48;
+}
+
+class Playlist
+{
+  position 21 101 109 45;
+  position.association Playlist__Song 74,45 0,12;
+}
+
+class Playable
+{
+  position 307 356 112 73;
+}
+
+class Location
+{
+  position 489 335 121 107;
+  position.association Location__Playable 0,40 112,41;
+}

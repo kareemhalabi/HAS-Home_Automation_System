@@ -32,6 +32,7 @@
     
 	<target name="clean">
 		<delete dir="${build.dir}"/>
+		<delete dir="${test.report.dir}"/>
 	</target>
 	
 	<target name="compile" depends="clean">
@@ -78,7 +79,7 @@
 	</target>
 	
 	
-	<target name="Desktop_jar" depends="compile">
+	<target name="Desktop_jar" depends="test">
 		<mkdir dir="${jar.dir}"/>
 		
 		<manifestclasspath property="manifest.classpath" jarfile="${jar.dir}/${ant.project.name}.jar">
@@ -92,6 +93,5 @@
 				<attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>	
 		</jar>
-	</target>
-	
+	</target>	
 </project>

@@ -157,8 +157,11 @@ public class HASController
 			error += "Must select a song to add a featured artist!";
 		if (ar == null)
 			error += "Must select a featured artist!";
-		if(ar == song.getAlbum().getMainArtist())
-			error += "Album artist cannot be a featured artist!";
+		if (song != null)
+		{
+			if (ar == song.getAlbum().getMainArtist())
+				error += "Album artist cannot be a featured artist!";
+		}
 
 		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);
@@ -671,7 +674,7 @@ public class HASController
 	{
 		String error = "";
 		if (room == null)
-			error +=  "A room must be selected! ";
+			error += "A room must be selected! ";
 
 		if (error.trim().length() > 0)
 			throw new InvalidInputException(error);

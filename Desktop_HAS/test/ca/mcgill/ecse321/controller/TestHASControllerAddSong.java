@@ -48,6 +48,7 @@ public class TestHASControllerAddSong
 	@Before
 	public void setUp() throws Exception
 	{
+		HAS h = HAS.getInstance();
 		HASController hc = new HASController();
 		try
 		{
@@ -58,6 +59,14 @@ public class TestHASControllerAddSong
 		}
 
 		featured.add(ft1);
+
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), "Name", 12, 2, null);
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
 	}
 
 	@After
@@ -223,12 +232,23 @@ public class TestHASControllerAddSong
 
 	{
 		HAS h = HAS.getInstance();
+
+		h.delete();
+
 		HASController hc = new HASController();
 		Artist ft2 = new Artist("Black Jack");
 		Artist ft3 = new Artist("Keiko");
 		featured.add(ft2);
 		featured.add(ft3);
 
+		try
+		{
+			hc.createArtist("Bob");
+			hc.createAlbum("Bob's Singles", "Folk", d1, h.getArtist(0));
+		} catch (InvalidInputException e)
+		{
+			fail();
+		}
 		try
 		{
 			hc.addSongtoAlbum(h.getAlbum(0), testSongName1, songDuration1,
@@ -351,6 +371,29 @@ public class TestHASControllerAddSong
 
 		assertEquals("Must select a featured artist!", error);
 		assertFalse(song.hasFtArtists());
+	}
+
+	/**
+	 * Test the addition of a featured artist association to a song when putting
+	 * the main artist as a featured artist
+	 */
+	@Test
+	public void testAddFeaturedArtistAsMain()
+	{
+		HAS h = HAS.getInstance();
+		HASController hc = new HASController();
+		String error = "";
+		featured.add(ar1);
+
+		try
+		{
+			hc.addSongtoAlbum(h.getAlbum(0), "Fall", 12, 5, featured);
+		} catch (InvalidInputException e)
+		{
+			error = e.getMessage();
+		}
+
+		assertEquals("Album artist cannot be a featured artist!", error);
 	}
 
 }

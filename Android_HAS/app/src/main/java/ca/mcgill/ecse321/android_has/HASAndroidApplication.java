@@ -12,12 +12,6 @@ import ca.mcgill.ecse321.HAS.persistence.PersistenceHAS;
  * Kristina Pearkes
  * Aidan Piwowar
  * Aurélie Pluche
- *
- * This application has been tested on a physical Samsung Galaxy S6 running Android 5.1.1 
- * It has also been tested on a Genymotion emulator running Android 5.1.1
- *
- * This application was compiled on Android studio 2.0, if you are using a previous version
- * change the version in this Project's build.gradle
  */
 
 public class HASAndroidApplication extends Application {

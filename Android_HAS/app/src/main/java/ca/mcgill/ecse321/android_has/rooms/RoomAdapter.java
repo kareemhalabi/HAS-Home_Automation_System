@@ -55,10 +55,12 @@ public class RoomAdapter extends BaseAdapter{
         String volume = "Volume: " + volumeAmount;
         roomVolume.setText(volume);
 
+        TextView playableName = (TextView) vi.findViewById(R.id.bottom_left_TextView);
         if(room.hasPlayable()) {
-            TextView playableName = (TextView) vi.findViewById(R.id.bottom_left_TextView);
             String nowPlaying = "Playing: " + room.getPlayable().getName();
             playableName.setText(nowPlaying);
+        } else {
+            playableName.setText("");
         }
 
 

@@ -55,10 +55,12 @@ public class RoomGroupAdapter extends BaseAdapter{
         }
         numberOfRooms.setText(numRooms);
 
+        TextView playableName = (TextView) vi.findViewById(R.id.bottom_left_TextView);
         if(roomGroup.hasPlayable()) {
-            TextView playableName = (TextView) vi.findViewById(R.id.bottom_left_TextView);
             String nowPlaying = "Playing: " + roomGroup.getPlayable().getName();
             playableName.setText(nowPlaying);
+        } else {
+            playableName.setText("");
         }
 
         TextView volumeAndMute = (TextView) vi.findViewById(R.id.bottom_right_TextView);
